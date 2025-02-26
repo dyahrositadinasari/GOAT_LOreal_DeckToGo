@@ -268,7 +268,7 @@ client = bigquery.Client(credentials=credentials, project=PROJECT_ID)
 # client = bigquery.Client()
    
 # SQL query
-query = ""
+query = """
 SELECT 
 [Brand]
 ,SUM([Views]) as [Views]
