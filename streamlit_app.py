@@ -1,25 +1,14 @@
 import streamlit as st
+from streamlit_open_menu import open_menu
 
 st.title("GOAT L'Oreal PPT Report Automation")
 st.write("Please select the report type")
 
-#---PAGE SET-UP---
-pages = {
-    "📊" + "Monthly Reporting L'Oreal": {
-        "file": "pages/reporting_loreal_monthly.py"
-    },
-    "📈" + "Quarter Reporting L'Oreal": {
-        "file": "pages/reporting_loreal_quarterly.py"
-    },
-    "📉" + "Annual Reporting L'Oreal": {
-        "file": "pages/reporting_loreal_yearly.py"
-    }
-}
+with st.sidebar:
+    selected =option_menu(
+        menu_title = "Select Report",
+        options = ["Monthly Reporting LÓreal", "Quarter Reporting LÓreal", "Annual Reporting LÓreal"],
+        icons = ["📊", "📈", "📉"],
+        default_index = 0,
+    )
 
-#---NAVIGATION SET-UP---
-#st.sidebar.title("Navigation")
-#selection = st.sidebar.radio("Go to", list(pages.keys()))
-
-#---RUN NAVIGATION---
-#selected_page = pages[selection]["file"]
-#exec(open(selected_page).read())
