@@ -4,12 +4,7 @@ import pyodbc as db
 st.title("GOAT L'Oreal PPT Report Automation")
 st.write("Please select the report type")
 with st.sidebar:
-    with st.echo():
-        st.write("This code will be printed to the sidebar.")
-
-    with st.spinner("Loading..."):
-        time.sleep(5)
-    st.success("Done!")
+    st.write("GOAT L'Oreal Monthly Report")
     
 # Initialize connection.
 # Uses st.cache_resource to only run once.
