@@ -10,6 +10,6 @@ month = st.selectbox(
   ('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')
 )
 st.write(
-  'Year selected:', Year,
+  'Year selected:', year,
   'Month selected:', month
         )
