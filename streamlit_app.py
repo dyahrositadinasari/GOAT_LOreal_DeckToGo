@@ -8,9 +8,10 @@ with st.sidebar:
     
 # Initialize connection.
 # Uses st.cache_resource to only run once.
-@st.cache_resource
-def init_connection():
-    return pyodbc.connect(
+#@st.cache_resource
+#def init_connection():
+    #return 
+conn = pyodbc.connect(
         "DRIVER={ODBC Driver 17 for SQL Server};SERVER="
         + st.secrets["server"]
         + ";DATABASE="
@@ -21,7 +22,7 @@ def init_connection():
         + st.secrets["password"]
     )
 
-conn = init_connection()
+#conn = init_connection()
 
 # Perform query.
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
