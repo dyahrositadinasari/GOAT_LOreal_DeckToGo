@@ -25,10 +25,19 @@ def run_query(query):
     rows = [dict(row) for row in rows_raw]
     return rows
 
-rows = run_query("SELECT word FROM `bigquery-public-data.samples.shakespeare` LIMIT 10")
+df = run_query("""
+SELECT 
+[Brand]
+,SUM([Views]) as [Views]
+,SUM([Engagement]) as [Engagement]
+FROM loreal-id-prod.loreal_storage.advocacy_tdk
+WHERE [TDK Category] = 'Female Skin'
+AND MONTH([Date]) = '11'
+AND YEAR([Date]) = '2024'
+GROUP BY
+[Brand]
+""")
 
 # Print results.
-st.write("Some wise words from Shakespeare:")
-for row in rows:
-    st.write("✍️ " + row['word'])
+st.write(df)
 
