@@ -5,17 +5,14 @@ st.write("Please select the report type")
 
 #---PAGE SET-UP---
 pages = {
-    "Monthly Reporting L'Oreal": {
-        "file": "pages/reporting_loreal_monthly.py",
-        "icon": "📊"
+    "📊" + "Monthly Reporting L'Oreal": {
+        "file": "pages/reporting_loreal_monthly.py"
     },
-    "Quarter Reporting L'Oreal": {
-        "file": "pages/reporting_loreal_quarterly.py",
-        "icon": "📈"
+    "📈" + "Quarter Reporting L'Oreal": {
+        "file": "pages/reporting_loreal_quarterly.py"
     },
-    "Annual Reporting L'Oreal": {
-        "file": "pages/reporting_loreal_yearly.py",
-        "icon": "📉"
+    "📉" & "Annual Reporting L'Oreal": {
+        "file": "pages/reporting_loreal_yearly.py"
     }
 }
 
