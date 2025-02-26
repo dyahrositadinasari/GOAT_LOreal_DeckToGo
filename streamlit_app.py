@@ -1,5 +1,6 @@
 import streamlit as st
 
-st.write("
+st.write("""
 #GOAT PPT AUTOMATION REPORT
-L'Oreal")
+L'Oreal
+""")
