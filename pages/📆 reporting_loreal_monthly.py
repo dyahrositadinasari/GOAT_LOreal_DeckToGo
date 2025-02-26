@@ -256,18 +256,20 @@ def adjust_dataframe(df, columns, index=False):
     df = df.reindex(columns=all_columns, index=all_index, fill_value=np.nan)
 
   return df
-    # Setting up GCP connection
-    SERVICE_ACCOUNT_FILE  = "advocacy_tdk.json"
-    PROJECT_ID = 'advocacy_tdk'  
+
+# Setting up GCP connection
+SERVICE_ACCOUNT_FILE  = "advocacy_tdk.json"
+PROJECT_ID = 'advocacy_tdk'  
  
-    # Set up credentials and client
-    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE)
-    client = bigquery.Client(credentials=credentials, project=PROJECT_ID)
+# Set up credentials and client
+credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE)
+client = bigquery.Client(credentials=credentials, project=PROJECT_ID)
    
-    # client = bigquery.Client()
+# client = bigquery.Client()
    
-    # SQL query
-    query = """SELECT 
+# SQL query
+query = ""
+SELECT 
 [Brand]
 ,SUM([Views]) as [Views]
 ,SUM([Engagement]) as [Engagement]
