@@ -21,4 +21,4 @@ brands = st.multiselect(
     "Please Select 3 LÓreal Brands to compare in the report",
     ["BLP Skin", "Garnier", "L'Oreal Paris", "GMN Shampoo Color", "Armani", "Kiehls", "Lancome", "Shu Uemura", "Urban Decay", "YSL", "Cerave", "La Roche Posay", "L'Oreal Professionel", "Matrix", "Biolage", "Kerastase", "Maybelline"]
 )
-st.write("You selected:", brand)
+st.write("You selected:", brands)
