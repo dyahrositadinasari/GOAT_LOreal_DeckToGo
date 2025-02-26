@@ -25,7 +25,7 @@ def run_query(query):
     rows = [dict(row) for row in rows_raw]
     return rows
 
-df = run_query("""
+rows = run_query("""
 SELECT 
 [Brand]
 ,SUM([Views]) as [Views]
@@ -39,5 +39,5 @@ GROUP BY
 """)
 
 # Print results.
-st.write(df)
+st.write(rows)
 
