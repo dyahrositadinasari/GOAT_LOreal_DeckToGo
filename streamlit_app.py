@@ -11,7 +11,7 @@ with st.sidebar:
 #@st.cache_resource
 #def init_connection():
     #return 
-conn = pyodbc.connect(
+conn = db.connect(
         "DRIVER={ODBC Driver 17 for SQL Server};SERVER="
         + st.secrets["server"]
         + ";DATABASE="
