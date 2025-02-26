@@ -12,7 +12,7 @@ with st.sidebar:
 #def init_connection():
     #return 
 conn = db.connect(
-        "DRIVER={ODBC Driver 18 for SQL Server};SERVER="
+        "DRIVER={ODBC Driver 17 for SQL Server};SERVER="
         + st.secrets["server"]
         + ";DATABASE="
         + st.secrets["database"]
