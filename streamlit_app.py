@@ -30,10 +30,7 @@ def run_query(query):
         cur.execute(query)
         return cur.fetchall()
 
-rows = run_query("
-SELECT TOP 10 * 
-FROM new_all_account_all_channel;
-")
+rows = run_query("SELECT TOP 10 * FROM new_all_account_all_channel;")
 
 # Print results.
 for row in rows:
