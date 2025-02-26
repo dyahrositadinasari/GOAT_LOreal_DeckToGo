@@ -1,2 +1,2 @@
 pyodbc==5.2.0
-google-cloud-bigquery==x.x.x
+google-cloud-bigquery==1.28.0
