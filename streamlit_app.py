@@ -11,7 +11,7 @@ pages = {
     "📈" + "Quarter Reporting L'Oreal": {
         "file": "pages/reporting_loreal_quarterly.py"
     },
-    "📉" & "Annual Reporting L'Oreal": {
+    "📉" + "Annual Reporting L'Oreal": {
         "file": "pages/reporting_loreal_yearly.py"
     }
 }
