@@ -17,9 +17,9 @@ pages = {
 }
 
 #---NAVIGATION SET-UP---
-st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Go to", list(pages.keys()))
+#st.sidebar.title("Navigation")
+#selection = st.sidebar.radio("Go to", list(pages.keys()))
 
 #---RUN NAVIGATION---
-selected_page = pages[selection]["file"]
-exec(open(selected_page).read())
+#selected_page = pages[selection]["file"]
+#exec(open(selected_page).read())
