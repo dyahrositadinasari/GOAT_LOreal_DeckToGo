@@ -11,5 +11,5 @@ month = st.selectbox(
 )
 st.write(
   'Year selected:', year,
-  \n'Month selected:', month
+  '\nMonth selected:', month
         )
