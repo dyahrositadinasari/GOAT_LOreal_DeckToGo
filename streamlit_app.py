@@ -19,7 +19,7 @@ a_page = st.Page(
 )
 
 #---NAVIGATION SET-UP---
-pg = st.navigation(pages=[m_page, q_page, y_page])
+pg = st.navigation(pages=[m_page, q_page, a_page])
 
 #---RUN NAVIGATION---
 pg.run()
