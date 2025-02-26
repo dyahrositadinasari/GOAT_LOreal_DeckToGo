@@ -41,7 +41,7 @@ import time
 import json
 from google.cloud import bigquery
 from google.oauth2 import service_account
-import Presentation
+from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.enum.text import PP_ALIGN
 from pptx.dml.color import RGBColor
