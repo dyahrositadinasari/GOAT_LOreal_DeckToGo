@@ -1,6 +1,4 @@
 import streamlit as st
 
-st.write("""
-#GOAT PPT AUTOMATION REPORT
-L'Oreal
-""")
+st.title("GOAT L'Oreal PPT Report Automation")
+st.write("Please select the report type")
