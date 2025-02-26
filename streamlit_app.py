@@ -4,15 +4,15 @@ import streamlit as st
 pages = {
     "Monthly Reporting L'Oreal": {
         "file": "pages/reporting_loreal_monthly.py",
-        "icon": 📊
+        "icon": "📊"
     },
     "Quarter Reporting L'Oreal": {
         "file": "pages/reporting_loreal_quarterly.py",
-        "icon": 📈
+        "icon": "📈"
     },
     "Annual Reporting L'Oreal": {
         "file": "pages/reporting_loreal_yearly.py",
-        "icon": 📉
+        "icon": "📉"
     }
 }
 
