@@ -1,4 +1,21 @@
 import streamlit as st
+import os
+import pandas as pd
+import numpy as np
+
+import time
+import json
+from google.cloud import bigquery
+from google.oauth2 import service_account
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.enum.text import PP_ALIGN
+from pptx.dml.color import RGBColor
+from pptx.chart.data import CategoryChartData
+from pptx.enum.chart import XL_CHART_TYPE, XL_MARKER_STYLE
+from pptx.enum.chart import XL_LEGEND_POSITION
+from pptx.enum.chart import XL_LABEL_POSITION
+from pptx.enum.text import MSO_ANCHOR
 
 st.title("GOAT-L'Oreal Quarterly Report")
 year = st.selectbox(
