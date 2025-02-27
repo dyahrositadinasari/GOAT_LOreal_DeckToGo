@@ -51,8 +51,7 @@ from google.oauth2 import service_account
 import json
 
 # Load credentials from Streamlit Secrets
-credentials_dict = st.secrets["gcp_service_account"]
-credentials = service_account.Credentials.from_service_account_info(credentials_dict)
+credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
 
 # Initialize BigQuery Client
 client = bigquery.Client(credentials=credentials, project=credentials.project_id)
