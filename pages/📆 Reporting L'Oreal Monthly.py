@@ -279,7 +279,8 @@ Brand
 """.format(category, month_num, year)
 print("Starting the query...")
 
-df = client.query(query).to_dataframe()
+query_job = client.query(query) 
+df = query_job.result().to_dataframe()
 
 # Display results
 st.write(df)
