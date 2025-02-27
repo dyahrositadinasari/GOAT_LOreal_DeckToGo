@@ -257,17 +257,14 @@ def adjust_dataframe(df, columns, index=False):
 
   return df
 
-# Setting up GCP connection
-SERVICE_ACCOUNT_FILE  = "advocacy_tdk.json"
-PROJECT_ID = 'advocacy_tdk'  
- 
-# Set up credentials and client
-credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE)
-client = bigquery.Client(credentials=credentials, project=PROJECT_ID)
+# Load credentials from Streamlit Secrets
+credentials_dict = st.secrets["gcp_service_account"]
+credentials = service_account.Credentials.from_service_account_info(credentials_dict)
+
+# Initialize BigQuery Client
+client = bigquery.Client(credentials=credentials, project=credentials.project_id)
    
-# client = bigquery.Client()
-   
-# SQL query
+# Example Query
 query = """
 SELECT 
 [Brand]
@@ -280,13 +277,9 @@ AND YEAR([Date]) = '{}'
 GROUP BY
 [Brand]
 """.format(category, month_num, year)
-
-# Run the query
 print("Starting the query...")
-query_job = client.query(query)
 
-column_names = [field.name for field in query_job.result().schema]
-df = pd.DataFrame(rows, columns=column_names)
-print("Query finished. DataFrame info:")
-df.info()
+df = client.query(query).to_dataframe()
 
+# Display results
+st.write(df)
