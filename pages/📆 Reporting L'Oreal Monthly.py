@@ -272,7 +272,7 @@ Brand
 ,SUM(Engagement) as Engagement
 FROM loreal-id-prod.loreal_storage.advocacy_tdk
 WHERE TDK_Category = '{}'
-AND datename(month, Date) = '{}'
+AND MONTH(Date) = '{}'
 AND YEAR(Date) = '{}'
 GROUP BY
 Brand
