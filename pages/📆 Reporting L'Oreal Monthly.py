@@ -282,6 +282,10 @@ Brand
 df = client.query(query).to_dataframe()
 
 # Display results
-st.write(df)
+st.write("Selected Year : ", year)
+st.write("Selected Month : ", month)
+st.write("Division : ", division)
+st.write("Category : ", category)
+st.write("Brands : ", brands)
 
 
