@@ -1,4 +1,5 @@
 pyodbc
 google-cloud-bigquery
 python-pptx
+pandas
 
