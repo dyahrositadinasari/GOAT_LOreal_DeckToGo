@@ -33,6 +33,7 @@ brands = st.multiselect(
 
 st.write("Selected Year : ", year)
 st.write("Selected Month : ", month)
+st.write("Month Number : ", month_num)
 st.write("Division : ", division)
 st.write("Category : ", category)
 st.write("Brands : ", brands)
@@ -277,21 +278,11 @@ Brand
 ,SUM(Views) as Views
 ,SUM(Engagement) as Engagement
 FROM loreal-id-prod.loreal_storage.advocacy_tdk
-WHERE TDK_Category = '{}'
-AND MONTH(Date) = {}
-AND YEAR(Date) = {}
-GROUP BY
-Brand
+WHERE TDK_Category = '{}' AND MONTH(Date) = '{}' AND YEAR(Date) = '{}'
+GROUP BY Brand
 """.format(category, month_num, year)
 
 # Fetch data
 df = client.query(query).to_dataframe()
-
-# Display results
-st.write("Selected Year : ", year)
-st.write("Selected Month : ", month)
-st.write("Division : ", division)
-st.write("Category : ", category)
-st.write("Brands : ", brands)
 
 
