@@ -58,4 +58,4 @@ credentials = service_account.Credentials.from_service_account_info(credentials_
 client = bigquery.Client(credentials=credentials, project=credentials.project_id)
 
 # Test connection
-st.write(print(client.project))
+st.write(print(credentials))
