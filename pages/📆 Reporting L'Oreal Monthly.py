@@ -267,15 +267,15 @@ client = bigquery.Client(credentials=credentials, project=credentials.project_id
 # Example Query
 query = """
 SELECT 
-[Brand]
-,SUM([Views]) as [Views]
-,SUM([Engagement]) as [Engagement]
+Brand
+,SUM(Views) as Views
+,SUM(Engagement) as Engagement
 FROM loreal-id-prod.loreal_storage.advocacy_tdk
-WHERE [TDK Category] = '{}'
-AND datename(month, [Date]) = '{}'
-AND YEAR([Date]) = '{}'
+WHERE TDK Category = '{}'
+AND datename(month, Date) = '{}'
+AND YEAR([ate) = '{}'
 GROUP BY
-[Brand]
+Brand
 """.format(category, month_num, year)
 print("Starting the query...")
 
