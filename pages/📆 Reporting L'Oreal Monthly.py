@@ -279,8 +279,12 @@ Brand
 """.format(category, month_num, year)
 print("Starting the query...")
 
-query_job = client.query(query) 
-df = query_job.result().to_dataframe()
+@st.cache_data
+def fetch_data():
+    query_job = client.query(query)
+    return query_job.result().to_dataframe()
+
+df = fetch_data()
 
 # Display results
-st.write(df)
+st.write(print(client.project))
