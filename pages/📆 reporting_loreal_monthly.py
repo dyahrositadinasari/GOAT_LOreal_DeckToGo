@@ -33,8 +33,6 @@ brands = st.multiselect(
 
 #--- DATA PROCESSING ---
 
-pip install python-pptx
-
 import os
 import pandas as pd
 import numpy as np
