@@ -278,13 +278,8 @@ GROUP BY
 Brand
 """.format(category, month_num, year)
 
-# Fetch data with caching
-@st.cache_data
-def fetch_data():
-    query_job = client.query(query)
-    return query_job.result().to_dataframe()
-
-df = fetch_data()
+# Fetch data
+df = client.query(query).to_dataframe()
 
 # Display results
 st.write(df)
