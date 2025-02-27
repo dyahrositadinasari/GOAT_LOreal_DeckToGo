@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("GOAT-LÓreal Monthly Report")
+st.title("GOAT-L'Oreal Monthly Report")
 year = st.selectbox(
   'Please select the reporting year',
   ('2024', '2025')
