@@ -23,7 +23,7 @@ year = st.selectbox(
   ('2024', '2025')
 )
 quarter = st.selectbox(
-  'Please select the reporting month',
+  'Please select the reporting quarter',
   ('Q1', 'Q2', 'Q3', 'Q4')
 )
 quarter_map = {
@@ -57,4 +57,4 @@ credentials = service_account.Credentials.from_service_account_info(st.secrets["
 client = bigquery.Client(credentials=credentials, project=credentials.project_id)
 
 # Test connection
-st.write(print(credentials))
+st.write(print(client))
