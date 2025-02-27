@@ -31,6 +31,12 @@ brands = st.multiselect(
 ,max_selections=3
 )
 
+st.write("Selected Year : ", year)
+st.write("Selected Month : ", month)
+st.write("Division : ", division)
+st.write("Category : ", category)
+st.write("Brands : ", brands)
+
 #--- DATA PROCESSING ---
 
 import os
