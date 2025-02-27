@@ -1,8 +1,2 @@
 msodbcsql17
-requests-dev
-bs4-dev
-BeautifulSoup-dev
-pandas-dev
-geopy-dev
-numpy-dev
-pptx-dev
+
