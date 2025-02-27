@@ -263,9 +263,6 @@ credentials = service_account.Credentials.from_service_account_info(credentials_
 
 # Initialize BigQuery Client
 client = bigquery.Client(credentials=credentials, project=credentials.project_id)
-
-# Display results
-st.write(print(client.project))
    
 # Example Query
 query = """
@@ -281,5 +278,15 @@ GROUP BY
 Brand
 """.format(category, month_num, year)
 
+# Fetch data with caching
+@st.cache_data
+def fetch_data():
+    query_job = client.query(query)
+    return query_job.result().to_dataframe()
+
+df = fetch_data()
+
+# Display results
+st.write(df)
 
 
