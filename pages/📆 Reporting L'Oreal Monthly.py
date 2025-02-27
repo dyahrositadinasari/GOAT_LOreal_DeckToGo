@@ -278,7 +278,7 @@ Brand
 ,SUM(Views) as Views
 ,SUM(Engagement) as Engagement
 FROM loreal-id-prod.loreal_storage.advocacy_tdk
-WHERE TDK_Category = '{}' #AND month(Date) = '{}' AND year(Date) = '{}'
+WHERE TDK_Category = '{}'
 GROUP BY Brand
 """.format(category)
 
