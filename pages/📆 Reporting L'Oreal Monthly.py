@@ -764,7 +764,7 @@ from email.utils import COMMASPACE, formatdate
 
 send_from = 'dyah.dinasari@groupm.com'
 send_to = 'dyah.dinasari@groupm.com'
-subject = f'm-Slide: {category.upper()} MONTHLY REPORT - {month} {year}
+subject = (f'm-Slide: {category.upper()} MONTHLY REPORT - {month} {year}')
 text = '''Hi team, 
 we have create the PPT report
 Please find the ppt file in the attachment
