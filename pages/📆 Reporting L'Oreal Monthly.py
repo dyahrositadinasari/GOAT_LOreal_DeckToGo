@@ -58,7 +58,8 @@ from pptx.enum.chart import XL_LEGEND_POSITION
 from pptx.enum.chart import XL_LABEL_POSITION
 from pptx.enum.text import MSO_ANCHOR
 
-def format_title(slide, text, alignment, font_name, font_size, font_bold = False, font_color = RGBColor(0, 0, 0),left=Pt(75), top=Pt(25), width=Pt(850), height=Pt(70)):
+#CHART FORMATING
+def format_title(slide, text, alignment, font_name, font_size, font_bold = False, font_italic = None, font_color = RGBColor(0, 0, 0),left=Pt(75), top=Pt(25), width=Pt(850), height=Pt(70)):
     title_shape = slide.shapes.add_textbox(left=left, top=top, width=width, height=height)
     title_text_frame = title_shape.text_frame
     title_text_frame.text = text
@@ -66,13 +67,14 @@ def format_title(slide, text, alignment, font_name, font_size, font_bold = False
     for paragraph in title_text_frame.paragraphs:
         paragraph.alignment = alignment
         for run in paragraph.runs:
-            run.font.name = font_name   
+            run.font.name = font_name
             run.font.bold = font_bold
+            run.font.italic = font_italic
             run.font.color.rgb = font_color
             run.font.size = Pt(font_size)
     return title_shape
 
-def pie_chart(slide,df,x,y,cx,cy,fontsize=15,legend_right = True, chart_title = False, title='',fontsize_title = Pt(14)):    
+def pie_chart(slide,df,x,y,cx,cy,fontsize=9,legend_right = True, chart_title = False, title='',fontsize_title = Pt(20)):
     df.fillna(0, inplace = True) #fill nan
     # Convert the transposed DataFrame into chart data
     chart_data = CategoryChartData()
@@ -88,7 +90,7 @@ def pie_chart(slide,df,x,y,cx,cy,fontsize=15,legend_right = True, chart_title = 
 
     if chart_title:
         chart.has_title = True
-        chart.chart_title.text_frame.text = title 
+        chart.chart_title.text_frame.text = title
         title_font = chart.chart_title.text_frame.paragraphs[0].font
         title_font.bold = True
         title_font.size = fontsize_title
@@ -96,12 +98,12 @@ def pie_chart(slide,df,x,y,cx,cy,fontsize=15,legend_right = True, chart_title = 
         # chart.chart_title.text_frame.paragraphs[0].font.color.rgb = RGBColor(0,0,0)  # Set font color to black
     else:
         chart.has_title = False
-        
-    chart.has_legend = True
-    chart.legend.include_in_layout = False
-    chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM 
-    # Set legend font size to 10 points
-    chart.legend.font.size = Pt(fontsize) 
+
+    if chart.has_legend:
+      chart.legend.include_in_layout = False
+      chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM
+      # Set legend font size to 10 points
+      chart.legend.font.size = Pt(fontsize)
 
 
     for series in chart.plots[0].series:
@@ -112,15 +114,18 @@ def pie_chart(slide,df,x,y,cx,cy,fontsize=15,legend_right = True, chart_title = 
             series.data_labels.font.size = Pt(fontsize)
             series.data_labels.number_format = '0%'
             series.data_labels.position = XL_LABEL_POSITION.BEST_FIT
-            
+            series.data_labels.show_category_name = True
+
     # chart.chart_title.text_frame.text = chart.chart_title.text_frame.text + 'budget distribution'
     # chart.chart_title.text_frame.paragraphs[0].font.size = Pt(fontsize)
     # chart.chart_title.text_frame.color.rgb = RGBColor(0,0,0)
-          
+
     return chart
 
 
-def line_marker_chart(slide,df,x,y,cx,cy, legend = True, legend_position = XL_LEGEND_POSITION.RIGHT, data_show = False, chart_title = False, title ="", fontsize = Pt(9), fontsize_title = Pt(14), percentage = False, line_width = Pt(1), smooth=False):
+def line_marker_chart(slide,df,x,y,cx,cy, legend = True, legend_position = XL_LEGEND_POSITION.RIGHT,
+                      data_show = False, chart_title = False, title ="", fontsize = Pt(12),
+                      fontsize_title = Pt(14), percentage = False, line_width = Pt(1), smooth=False):
     df.fillna(0, inplace = True) #fill nan
     # Define chart data
     chart_data = CategoryChartData()
@@ -132,15 +137,15 @@ def line_marker_chart(slide,df,x,y,cx,cy, legend = True, legend_position = XL_LE
         chart_data.add_category(i)
     for j, row in df.iterrows():
         chart_data.add_series(j,np.where(row.values == 0, None, row.values))
-    
+
     chart = slide.shapes.add_chart(XL_CHART_TYPE.LINE, x, y, cx, cy, chart_data).chart
-    
+
     # smoothing
     if smooth: # Smooth the lines
         for series in chart.series:
             series.smooth = True
 
-    
+
     # Add legend
     if legend:
         chart.has_legend = True
@@ -149,7 +154,7 @@ def line_marker_chart(slide,df,x,y,cx,cy, legend = True, legend_position = XL_LE
         chart.legend.font.size = fontsize  # assuming Pt is imported from pptx.util
     else:
         chart.has_legend = False
-    
+
     if data_show:
         for series in chart.plots[0].series:
             for i, val in enumerate(series.values):
@@ -159,7 +164,7 @@ def line_marker_chart(slide,df,x,y,cx,cy, legend = True, legend_position = XL_LE
                 series.data_labels.font.size = fontsize
                 # series.data_labels.number_format = '0.00%'
                 series.data_labels.position = XL_LABEL_POSITION.ABOVE
-                
+
     # Change line point to all circle
     # Iterate through each series and set marker style to circle
     for series in chart.series:
@@ -171,7 +176,7 @@ def line_marker_chart(slide,df,x,y,cx,cy, legend = True, legend_position = XL_LE
 
     # Set font size for category axis (months)
     chart.category_axis.tick_labels.font.size = fontsize  # Set font size for category axis labels
-    
+
     # Find the maximum value across all series
     max_value = 0
     for series in chart.plots[0].series:
@@ -179,13 +184,13 @@ def line_marker_chart(slide,df,x,y,cx,cy, legend = True, legend_position = XL_LE
             series_max = max(series.values)
         except:
             series_max = 0
-        max_value = max(max_value, series_max)  
+        max_value = max(max_value, series_max)
 
     if max_value >= 1000:
         chart.value_axis.tick_labels.number_format = '#,##0'  # add commas to separate thousands
-    
+
     if chart_title:
-        chart.chart_title.text_frame.text = title # Set the title text   
+        chart.chart_title.text_frame.text = title # Set the title text
         title_font = chart.chart_title.text_frame.paragraphs[0].font
         title_font.bold = True
         title_font.size = fontsize_title
@@ -199,7 +204,7 @@ def line_marker_chart(slide,df,x,y,cx,cy, legend = True, legend_position = XL_LE
     value_axis.has_minor_gridlines = False
     category_axis.has_major_gridlines = False
     category_axis.has_minor_gridlines = False
-    
+
     # if percentage
     if percentage:
         category_axis.tick_labels.NumberFormat = '0"%"'
@@ -225,34 +230,198 @@ def table_default(slide, df, left, top, width, height, width_row, height_row, he
             cell.text = text
             # for i in range(len(cell.text_frame.paragraphs)):
             #     p = cell.text_frame.paragraphs[i]
-            #     p.font.size = Pt(fontsize)  # Set font size 
+            #     p.font.size = Pt(fontsize)  # Set font size
             #     p.alignment = alignment
             for paragraph in cell.text_frame.paragraphs:
                 paragraph.alignment = alignment
                 for run in paragraph.runs:
-                    # run.font.name = font_name   
+                    # run.font.name = font_name
                     # run.font.bold = font_bold
                     # run.font.color.rgb = font_color
                     run.font.size = Pt(fontsize)
-            cell.text_frame.vertical_anchor = MSO_ANCHOR.MIDDLE  
+            cell.text_frame.vertical_anchor = MSO_ANCHOR.MIDDLE
             # Set all margins to 0
             cell.text_frame.margin_left = 0
             cell.text_frame.margin_right = 0
             cell.text_frame.margin_top = 0
             cell.text_frame.margin_bottom = 0
-            
+
         # Set the width of each column
         for i, column in enumerate(table.columns):
             column.width = width_row[i]
 
         # Adjust the height of each row
         for row in table.rows:
-            row.height = height_row # Set the height of each row 
+            row.height = height_row # Set the height of each row
 
     return table
 
+def horizontal_bar_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
+                         data_show=False, chart_title=False, title="", fontsize=Pt(12),
+                         fontsize_title=Pt(14), percentage=False, bar_width=Pt(10)):
+    df.fillna(0, inplace=True)  # Fill NaN values
+
+    # Define chart data
+    chart_data = CategoryChartData()
+    for i in df.index:
+        chart_data.add_category(i)
+    for col in df.columns:
+        chart_data.add_series(col, np.where(df[col].values == 0, None, df[col].values))
+
+    # Create horizontal bar chart
+    chart = slide.shapes.add_chart(XL_CHART_TYPE.BAR_CLUSTERED, x, y, cx, cy, chart_data).chart
+
+    # Add legend
+    if legend:
+        chart.has_legend = True
+        chart.legend.include_in_layout = False
+        chart.legend.position = legend_position
+        chart.legend.font.size = fontsize
+    else:
+        chart.has_legend = False
+
+    # Show data labels
+    if data_show:
+        for series in chart.series:
+            for point in series.points:
+                point.data_label.show_value = True
+                point.data_label.font.size = fontsize
+                point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
+
+    # Customize category axis (y-axis) label font size
+    chart.category_axis.tick_labels.font.size = fontsize
+
+    # Customize value axis (x-axis) label font size and format
+    chart.value_axis.tick_labels.font.size = fontsize
+    if percentage:
+        chart.value_axis.tick_labels.number_format = '0%'
+    elif df.max().max() >= 1000:
+        chart.value_axis.tick_labels.number_format = '#,##0'  # Add commas for thousands
+
+    # Adjust bar width
+    for series in chart.series:
+        series.format.line.width = bar_width
+
+    # Set chart title
+    if chart_title:
+        chart.chart_title.text_frame.text = title
+        title_font = chart.chart_title.text_frame.paragraphs[0].font
+        title_font.bold = True
+        title_font.size = fontsize_title
+    else:
+        chart.has_title = False
+
+    # Remove Gridlines
+    value_axis = chart.value_axis
+    category_axis = chart.category_axis
+    value_axis.has_major_gridlines = False
+    value_axis.has_minor_gridlines = False
+    category_axis.has_major_gridlines = False
+    category_axis.has_minor_gridlines = False
+
+    return chart
+
+def combo_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                data_show=False, chart_title=False, title="", fontsize=Pt(10), fontsize_title=Pt(12),
+                line_width=Pt(1), smooth=False, font_name='Neue Haas Grotesk Text Pro'):
+
+    df.fillna(0, inplace=True)  # Fill NaN values
+
+    # Split Data: Stacked Bar Chart (Categories) & Line Chart (Total)
+    df_categories = df.iloc[:, :-1]  # Exclude 'Total' column for bars
+    df_total = df.iloc[:, -1]        # Only 'Total' column for line chart
+
+    # Stacked Bar Chart Data
+    chart_data = CategoryChartData()
+    chart_data.categories = df.index  # Use index as categories (e.g., Months)
+
+    for category in df_categories.columns:
+        chart_data.add_series(category, df_categories[category].values.tolist())
+
+    # Add Stacked Bar Chart
+    chart_shape = slide.shapes.add_chart(
+        XL_CHART_TYPE.COLUMN_STACKED, x, y, cx, cy, chart_data
+    )
+    chart = chart_shape.chart
+
+    chart.value_axis.tick_labels.font.size = fontsize
+    chart.category_axis.tick_labels.font.size = fontsize
+    chart.value_axis.tick_labels.number_format = "#,##0"  # Thousands separator
+    chart.value_axis.has_major_gridlines = False
+
+    # Add percentage labels inside bars
+    df_percent = df_categories.div(df_total, axis=0) * 100
+    for series, category in zip(chart.series, df_percent.columns):
+        series.data_labels.show_category_name = False
+        series.data_labels.show_value = True
+        series.data_labels.font.size = fontsize
+        for point, percent in zip(series.points, df_percent[category]):
+            point.has_data_label = False
+            point.data_label.font.size = fontsize
+            point.data_label.text_frame.text = f"{percent:.0f}%"  # Format as percentage
+
+
+    # Add legend
+    if legend:
+        chart.has_legend = True
+        chart.legend.include_in_layout = False
+        chart.legend.position = legend_position
+        chart.legend.font.size = fontsize
+
+    # Line Chart Data (Total)
+    line_chart_data = CategoryChartData()
+    line_chart_data.categories = df.index
+    line_chart_data.add_series("Total", df_total.values.tolist())
+
+    # Add Line Chart Overlay
+    line_chart_shape = slide.shapes.add_chart(
+        XL_CHART_TYPE.LINE, x, y, cx, cy, line_chart_data
+    )
+    line_chart = line_chart_shape.chart
+
+    # Remove X-axis and Gridlines from Line Chart
+    line_chart.category_axis.visible = False # Remove X-axis
+    line_chart.value_axis.visible = False # Remove Y-axis
+    line_chart.value_axis.has_major_gridlines = False # Remove gridlines
+    line_chart.category_axis.has_major_gridlines = False # Remove gridlines
+    line_chart.has_legend = False  # Remove legend
+    line_chart.has_title = False  # Remove chart title
+    line_chart.value_axis.tick_labels.number_format = '""'  # Hide Y-axis labels
+
+
+    # Add Data Labels to Line Chart
+    for series in line_chart.series:
+        series.has_data_labels = True
+        for point in series.points:
+            point.has_data_label = True
+            point.data_label.number_format = "#,##0"  # Thousands separator
+
+    # Apply Smooth Line if required
+    if smooth:
+        for series in line_chart.series:
+            series.smooth = True
+
+    # Set Line Chart Color and Style
+    line_series = line_chart.series[0]
+    line_series.marker.style = XL_MARKER_STYLE.CIRCLE
+    line_series.marker.format.fill.solid()
+    line_series.marker.format.fill.fore_color.rgb = RGBColor(78, 167, 46)
+    line_series.format.line.width = line_width
+    line_series.format.line.fill.solid()
+    line_series.format.line.fill.fore_color.rgb = RGBColor(78, 167, 46)  # Green lime
+
+    # Add Chart Title
+    if chart_title:
+        chart.chart_title.text_frame.text = title
+        chart.chart_title.text_frame.paragraphs[0].font.size = fontsize_title
+        chart.chart_title.text_frame.paragraphs[0].font.bold = True
+    else:
+        chart.has_title = False
+
+    return chart
+                  
 def adjust_dataframe(df, columns, index=False):
-    
+
   # Combine existing and desired columns/index
   all_columns = list(df.columns) + [col for col in columns if col not in df.columns]
   if index == False:
@@ -286,4 +455,345 @@ GROUP BY brand
 # Fetch data
 df = client.query(query).to_dataframe()
 
+# Add Date & Quarter column
+df['Date'] = pd.to_datetime(df['Date'], format='%y-%m-%d')
+df['Quarter'] = (df['Date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
 
+#---- SLIDES PRESENTATION ----
+ppt_temp_loc = r"/content/Template Deck to Go - L'Oreal Indonesia.pptx"
+
+ppt = Presentation(ppt_temp_loc)
+
+#------------PAGE1--------------
+page_no = 0 #PAGE1
+
+## Title Slide
+# Add a title to the slide
+format_title(ppt.slides[page_no], "MONTHLY BRAND & DIVISION REPORT", alignment=PP_ALIGN.LEFT, font_name= 'Aptos Display', font_size=50, font_bold=True,left=Pt(35), top=Pt(150), width=Pt(500), height=Pt(70), font_color=RGBColor(255, 255, 255))
+
+#------------PAGE2--------------
+page_no = page_no + 1 #PAGE2
+
+# Add a title to the slide
+format_title(ppt.slides[page_no], "MONTHLY SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
+format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
+
+# Filter the dataframe
+df_m = df[(df['TDK Category'] == category) & (df['Division'] == division) & (df['Years'] == year) &  (df['Month'] == month)]
+
+# Perform groupby and aggregation with handling for datetime64 columns
+grouped_df_m = df_m.groupby('Brand').agg({
+    # Numerical columns: sum them
+    'Views': 'sum',
+    'Engagement': 'sum',
+    'Content': 'sum'
+})
+grouped_df_m = grouped_df_m.reset_index()
+
+# Calculate Total Views
+total_views_m = (grouped_df_m['Views'].sum()).astype(int)
+total_engagement_m = (grouped_df_m['Engagement'].sum()).astype(int)
+
+# Calculate SOV (%)
+grouped_df_m['SOV%'] = (grouped_df_m['Views'] / total_views_m)
+grouped_df_m['SOE%'] = (grouped_df_m['Engagement'] / total_engagement_m)
+
+sov_df_m = grouped_df_m[['Brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
+soe_df_m = grouped_df_m[['Brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
+
+# Add pie chart
+pie_chart(ppt.slides[page_no], sov_df_m.set_index('Brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+pie_chart(ppt.slides[page_no], soe_df_m.set_index('Brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+
+format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+format_title(ppt.slides[page_no], format(total_views_m, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
+
+format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+format_title(ppt.slides[page_no], format(total_engagement_m, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(11.7), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
+
+#------------PAGE3--------------
+page_no = page_no + 1 #PAGE3
+
+# Add a title to the slide
+format_title(ppt.slides[page_no], "QUARTERLY SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+# Filter the dataframe
+df_q = df[(df['TDK Category'] == category) & (df['Division'] == division) & (df['Years'] == year) & (df['Quarter'] == quarter)]
+
+# Perform groupby and aggregation with handling for datetime64 columns
+grouped_df_q = df_q.groupby('Brand').agg({
+    # Numerical columns: sum them
+    'Views': 'sum',
+    'Engagement': 'sum',
+    'Content': 'sum'
+})
+grouped_df_q = grouped_df_q.reset_index()
+
+# Calculate Total Views
+total_views_q = (grouped_df_q['Views'].sum()).astype(int)
+total_engagement_q = (grouped_df_q['Engagement'].sum()).astype(int)
+
+# Calculate SOV (%)
+grouped_df_q['SOV%'] = (grouped_df_q['Views'] / total_views_q)
+grouped_df_q['SOE%'] = (grouped_df_q['Engagement'] / total_engagement_q)
+
+sov_df_q = grouped_df_q[['Brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
+soe_df_q = grouped_df_q[['Brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
+
+# Add pie chart
+pie_chart(ppt.slides[page_no], sov_df_q.set_index('Brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+pie_chart(ppt.slides[page_no], soe_df_q.set_index('Brand'), Inches(7), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+
+format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+format_title(ppt.slides[page_no], format(total_views_q, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
+
+format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+format_title(ppt.slides[page_no], format(total_engagement_q, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(11.7), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
+
+#------------PAGE4--------------
+page_no = page_no + 1 #PAGE4
+
+# Add a title to the slide
+format_title(ppt.slides[page_no], "ANNUAL SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+# Filter the dataframe
+df_y = df[(df['TDK Category'] == category) & (df['Division'] == division) & (df['Years'] == year)]
+
+# Perform groupby and aggregation with handling for datetime64 columns
+grouped_df_y = df_y.groupby('Brand').agg({
+    # Numerical columns: sum them
+    'Views': 'sum',
+    'Engagement': 'sum',
+    'Content': 'sum'
+})
+grouped_df_y = grouped_df_y.reset_index()
+
+# Calculate Total Views
+total_views_y = (grouped_df_y['Views'].sum()).astype(int)
+total_engagement_y = (grouped_df_y['Engagement'].sum()).astype(int)
+
+# Calculate SOV (%)
+grouped_df_y['SOV%'] = (grouped_df_y['Views'] / total_views_y)
+grouped_df_y['SOE%'] = (grouped_df_y['Engagement'] / total_engagement_y)
+
+sov_df_y = grouped_df_y[['Brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
+soe_df_y = grouped_df_y[['Brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
+
+# Add pie chart
+pie_chart(ppt.slides[page_no], sov_df_y.set_index('Brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+pie_chart(ppt.slides[page_no], soe_df_y.set_index('Brand'), Inches(7), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+
+format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+format_title(ppt.slides[page_no], format(total_views_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
+
+format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+format_title(ppt.slides[page_no], format(total_engagement_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(11.7), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
+
+#------------PAGE5--------------
+page_no = page_no + 1 #PAGE5
+
+# Add a title to the slide
+format_title(ppt.slides[page_no], "YTD BEAUTY MARKET VIEWS AND ENGAGEMENT SUMMARY", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+# Aggregate Views by Month and Manufacturer
+stacked_data_views = df_y.pivot_table(index="Month", columns="Manufacturer", values="Views", aggfunc="sum", fill_value=0)
+stacked_data_views['Total'] = stacked_data_views.sum(axis=1)
+
+# Aggregate Views by Month and Manufacturer
+stacked_data_eng = df_y.pivot_table(index="Month", columns="Manufacturer", values="Engagement", aggfunc="sum", fill_value=0)
+stacked_data_eng['Total'] = stacked_data_eng.sum(axis=1)
+
+# Sort months correctly
+month_order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+stacked_data_eng = stacked_data_eng.reindex(month_order)
+
+# Ad combo stacked bar chart
+combo_chart(ppt.slides[page_no], stacked_data_views, Inches(.1), Inches(2), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Views",
+            fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
+combo_chart(ppt.slides[page_no], stacked_data_eng, Inches(.1), Inches(5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Engagement",
+            fontsize=Pt(10), fontsize_title=Pt(12), smooth=True)
+
+# Add stacked bar chart
+#stacked_bar_chart(ppt.slides[page_no], grouped_df.set_index('Manufacturer'), Inches(0.5), Inches(1.5), Inches(6), Inches(5), chart_title=True, title='Market Movement - Views', fontsize_title = Pt(12), fontsize=9)
+
+#------------PAGE6--------------
+page_no = page_no + 1 #PAGE6
+
+format_title(ppt.slides[page_no], "VIEWS PERFORMANCE: YTD and YTG with SOV PROJECTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+# Filter the dataframe
+df_y2 = df[(df['Division'] == division) & (df['Years'] == year)]
+
+# Calculate Total Views per Category
+total_views = df_y2.groupby('Category')['Views'].sum().reset_index()
+total_views.rename(columns={'Views': 'Total_Views'}, inplace=True)
+
+# Aggregate Views and calculate SOV
+df_grouped = df_y2.groupby(['Brand', 'Category', 'Advertiser'])['Views'].sum().reset_index()
+df_grouped = df_grouped.merge(total_views, on='Category', how='left')
+df_grouped['SOV'] = (df_grouped['Views'] / df_grouped['Total_Views']).map('{:.0%}'.format)
+df_grouped['Views'] = df_grouped['Views'].astype(int)
+
+# Rank Brands within each Category
+df_grouped['#Rank'] = df_grouped.groupby('Category')['Views'].rank(method='dense', ascending=False).astype(int)
+
+# Filter for L'Oreal Advertiser
+df_final = df_grouped[df_grouped['Advertiser'] == "L'Oreal"][['Category', 'Brand', 'Views', 'SOV', '#Rank']]
+df_final = df_final.sort_values(['Category', 'Brand'])
+
+table_default(ppt.slides[page_no], df_final, Inches(1), Inches(1.2), Inches(12.2), Inches(5.2),
+ [Inches(1.5)]*2+[Inches(0.75)]*3+[Inches(1),Inches(0.5)], Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
+
+#------------PAGE7--------------
+page_no = page_no + 1 #PAGE7
+format_title(ppt.slides[page_no], "MONTHLY TIMELINE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+# Aggregate total views per brand and rank them
+brand_ranking = df_y.groupby('Brand')['Views'].sum().reset_index()
+brand_ranking['Brand_Rank'] = brand_ranking['Views'].rank(method='dense', ascending=False)
+
+# Keep only the top 7 brands
+top_brands = brand_ranking[brand_ranking['Brand_Rank'] <= 7]['Brand']
+
+# Retrieve daily views for these top 7 brands
+df_top_brands = df_y[df_y['Brand'].isin(top_brands)]
+df_m_views = pd.pivot_table(df_top_brands[['Date','Brand','Views']], columns = 'Date', index = 'Brand', aggfunc = 'sum', fill_value = 0)
+df_m_views.columns = df_m_views.columns.droplevel() # drop column level
+df_m_views.columns = df_m_views.columns.strftime('%b')
+
+# Reshape the DataFrame before grouping to have 'Views' as a column
+df_m_views2 = df_m_views.reset_index().melt(id_vars=['Brand'], var_name='Month', value_name='Views')
+
+df_views = df_m_views2.groupby(['Brand'], as_index=False)['Views'].sum()
+df_views['SOV%'] = (df_views['Views'] / total_views_y).map('{:.0%}'.format)
+df_views['Views'] = df_views['Views'].astype(int)
+df_views['Rank'] = df_views['Views'].rank(method='dense', ascending=False).astype(int)
+df_views = df_views.sort_values('Rank')
+
+# Add line chart
+line_marker_chart(ppt.slides[page_no], df_m_views, Inches(0.5), Inches(1.7), Inches(7), Inches(5), legend=True, legend_position=XL_LEGEND_POSITION.BOTTOM, chart_title = False, fontsize_title = Pt(12), line_width = Pt(2), smooth=True)
+# Add table
+table_default(ppt.slides[page_no], df_views, Inches(8), Inches(1.7), Inches(5), Inches(5),
+ [Inches(1.5)]+[Inches(0.75)]*3+[Inches(1),Inches(0.5)], Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
+
+#------------PAGE8--------------
+page_no = page_no + 1 #PAGE8
+format_title(ppt.slides[page_no], "QUARTERLY TIMELINE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+# Aggregate total views per brand and rank them
+df_q_views = pd.pivot_table(df_top_brands[['Quarter','Brand','Views']], columns = 'Quarter', index = 'Brand', aggfunc = 'sum', fill_value = 0)
+df_q_views.columns = df_q_views.columns.droplevel() # drop column level
+
+# Add line chart
+line_marker_chart(ppt.slides[page_no], df_q_views, Inches(0.5), Inches(1.7), Inches(7), Inches(5), legend=True, legend_position=XL_LEGEND_POSITION.BOTTOM, chart_title = False, fontsize_title = Pt(12), line_width = Pt(2), smooth=True)
+# Add table
+table_default(ppt.slides[page_no], df_views, Inches(8), Inches(1.7), Inches(5), Inches(5),
+ [Inches(1.5)]+[Inches(0.75)]*3+[Inches(1),Inches(0.5)], Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
+
+#------------PAGE9--------------
+page_no = page_no + 1 #PAGE9
+format_title(ppt.slides[page_no], "BAR CHART COMPARISON QTR VERSUS", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+quarter_mapping = {'Q1': ['Q4', 'Q1'], 'Q2': ['Q1', 'Q2'], 'Q3': ['Q2', 'Q3'], 'Q4': ['Q3', 'Q4']}
+quarter_compare = quarter_mapping.get(quarter, [quarter])
+title_q = quarter_compare[0] + " vs " + quarter_compare[1]
+
+df_q_views = pd.pivot_table(df_top_brands[['Quarter','Brand','Views']], columns = 'Quarter', index = 'Brand', aggfunc = 'sum', fill_value = 0)
+df_q_content = pd.pivot_table(df_top_brands[['Quarter','Brand','Content']], columns = 'Quarter', index = 'Brand', aggfunc = 'sum', fill_value = 0)
+
+df_q_views = df_q_views[[('Views', q) for q in quarter_compare]]
+df_q_views.columns = quarter_compare
+
+df_q_content = df_q_content[[('Content', q) for q in quarter_compare]]
+df_q_content.columns = quarter_compare
+
+# Add horizontal bar chart views
+horizontal_bar_chart(ppt.slides[page_no], df_q_views, Inches(0.5), Inches(1.9), Inches(5.5), Inches(5),
+                     chart_title = True, title= f"{title_q} Views Contribution", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+
+# Add horizontal bar chart content
+horizontal_bar_chart(ppt.slides[page_no], df_q_content, Inches(7), Inches(1.9), Inches(5.5), Inches(5),
+                     chart_title = True, title= f"{title_q} Content Contribution", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+
+#------------PAGE10--------------
+page_no = page_no + 1 #PAGE10
+format_title(ppt.slides[page_no], "MONTHLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+
+
+page_no = page_no + 1 #PAGE11
+format_title(ppt.slides[page_no], "QUARTERLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+
+page_no = page_no + 1 #PAGE12
+format_title(ppt.slides[page_no], "BRAND SCORE-CARD", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+
+page_no = page_no + 1 #PAGE13
+
+
+page_no = page_no + 1 #PAGE14
+format_title(ppt.slides[page_no], category.upper()+" CATEGORY KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+
+page_no = page_no + 1
+for i in range(page_no,len(ppt.slides)):
+        try:
+            xml_slides = ppt.slides._sldIdLst
+            slides = list(xml_slides)
+            xml_slides.remove(slides[page_no])
+        except:
+            pass
+
+## save ppt
+filename = f'{category.upper()} MONTHLY REPORT - {month} {year}.pptx'
+files = ppt.save(filename)
+print('Process Completed')
+
+import smtplib
+from os.path import basename
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.utils import COMMASPACE, formatdate
+
+send_from = 'dyah.dinasari@groupm.com'
+send_to = 'dyah.dinasari@groupm.com'
+subject = f'm-Slide: {category.upper()} MONTHLY REPORT - {month} {year}
+text = '''Hi team, 
+we have create the PPT report
+Please find the ppt file in the attachment
+Regards,
+Dyah Dinasari'''
+
+def send_mail(send_from, send_to, subject, text, files=None,
+              server="127.0.0.1"):
+    assert isinstance(send_to, list)
+
+    msg = MIMEMultipart()
+    msg['From'] = send_from
+    msg['To'] = COMMASPACE.join(send_to)
+    msg['Date'] = formatdate(localtime=True)
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(text))
+
+    for f in files or []:
+        with open(f, "rb") as fil:
+            part = MIMEApplication(
+                fil.read(),
+                Name=basename(f)
+            )
+        # After the file is closed
+        part['Content-Disposition'] = 'attachment; filename="%s"' % basename(f)
+        msg.attach(part)
+
+
+    smtp = smtplib.SMTP(server)
+    smtp.sendmail(send_from, send_to, msg.as_string())
+    smtp.close()
