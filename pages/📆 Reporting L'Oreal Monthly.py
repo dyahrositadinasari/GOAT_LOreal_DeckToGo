@@ -443,7 +443,8 @@ client = bigquery.Client(credentials=credentials, project=credentials.project_id
 # Example Query
 query = """
 SELECT 
-brand
+date
+,brand
 ,SUM(views_float) as views
 ,SUM(engagements) as engagements
 ,SUM(content) as content
