@@ -22,7 +22,7 @@ division = st.selectbox(
   ('CPD', 'LDB', 'LLD', 'PPD')
 )
 category = st.selectbox(
-  "Please select the reporting L'Oreal TDK Category",
+  "Please select the reporting L'Oreal tdk_category",
   ('Hair Care', 'Female Skin', 'Make Up', 'Fragrance', 'Men Skin', 'Hair Color')
 )
 brands = st.multiselect(
@@ -445,20 +445,28 @@ query = """
 SELECT 
 date
 ,brand
+,tdk_category
+,division
+,category
 ,SUM(views_float) as views
 ,SUM(engagements) as engagements
 ,SUM(content) as content
 FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
 WHERE years = {}
-GROUP BY date, brand
+GROUP BY 
+date
+,brand
+,tdk_category
+,division
+,category
 """.format(year)
 
 # Fetch data
 df = client.query(query).to_dataframe()
 
 # Add Date & Quarter column
-df['Date'] = pd.to_datetime(df['date'], format='%y-%m-%d')
-df['Quarter'] = (df['Date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
+df['date'] = pd.to_datetime(df['date'], format='%y-%m-%d')
+df['quarter'] = (df['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
 
 #---- SLIDES PRESENTATION ----
 ppt_temp_loc = "Template Deck to Go - L'Oreal Indonesia.pptx"
@@ -481,31 +489,31 @@ format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font
 format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 
 # Filter the dataframe
-df_m = df[(df['TDK Category'] == category) & (df['Division'] == division) & (df['Years'] == year) &  (df['Month'] == month)]
+df_m = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year) &  (df['Month'] == month)]
 
 # Perform groupby and aggregation with handling for datetime64 columns
-grouped_df_m = df_m.groupby('Brand').agg({
+grouped_df_m = df_m.groupby('brand').agg({
     # Numerical columns: sum them
-    'Views': 'sum',
-    'Engagement': 'sum',
-    'Content': 'sum'
+    'views': 'sum',
+    'engagement': 'sum',
+    'content': 'sum'
 })
 grouped_df_m = grouped_df_m.reset_index()
 
 # Calculate Total Views
-total_views_m = (grouped_df_m['Views'].sum()).astype(int)
-total_engagement_m = (grouped_df_m['Engagement'].sum()).astype(int)
+total_views_m = (grouped_df_m['views'].sum()).astype(int)
+total_engagement_m = (grouped_df_m['engagement'].sum()).astype(int)
 
 # Calculate SOV (%)
-grouped_df_m['SOV%'] = (grouped_df_m['Views'] / total_views_m)
-grouped_df_m['SOE%'] = (grouped_df_m['Engagement'] / total_engagement_m)
+grouped_df_m['SOV%'] = (grouped_df_m['views'] / total_views_m)
+grouped_df_m['SOE%'] = (grouped_df_m['engagement'] / total_engagement_m)
 
-sov_df_m = grouped_df_m[['Brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
-soe_df_m = grouped_df_m[['Brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
+sov_df_m = grouped_df_m[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
+soe_df_m = grouped_df_m[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 
 # Add pie chart
-pie_chart(ppt.slides[page_no], sov_df_m.set_index('Brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
-pie_chart(ppt.slides[page_no], soe_df_m.set_index('Brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+pie_chart(ppt.slides[page_no], sov_df_m.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+pie_chart(ppt.slides[page_no], soe_df_m.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
 format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 format_title(ppt.slides[page_no], format(total_views_m, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
@@ -520,31 +528,31 @@ page_no = page_no + 1 #PAGE3
 format_title(ppt.slides[page_no], "QUARTERLY SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-df_q = df[(df['TDK Category'] == category) & (df['Division'] == division) & (df['Years'] == year) & (df['Quarter'] == quarter)]
+df_q = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year) & (df['quarter'] == quarter)]
 
 # Perform groupby and aggregation with handling for datetime64 columns
-grouped_df_q = df_q.groupby('Brand').agg({
+grouped_df_q = df_q.groupby('brand').agg({
     # Numerical columns: sum them
-    'Views': 'sum',
-    'Engagement': 'sum',
-    'Content': 'sum'
+    'views': 'sum',
+    'engagement': 'sum',
+    'content': 'sum'
 })
 grouped_df_q = grouped_df_q.reset_index()
 
 # Calculate Total Views
-total_views_q = (grouped_df_q['Views'].sum()).astype(int)
-total_engagement_q = (grouped_df_q['Engagement'].sum()).astype(int)
+total_views_q = (grouped_df_q['views'].sum()).astype(int)
+total_engagement_q = (grouped_df_q['engagement'].sum()).astype(int)
 
 # Calculate SOV (%)
-grouped_df_q['SOV%'] = (grouped_df_q['Views'] / total_views_q)
-grouped_df_q['SOE%'] = (grouped_df_q['Engagement'] / total_engagement_q)
+grouped_df_q['SOV%'] = (grouped_df_q['views'] / total_views_q)
+grouped_df_q['SOE%'] = (grouped_df_q['engagement'] / total_engagement_q)
 
-sov_df_q = grouped_df_q[['Brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
-soe_df_q = grouped_df_q[['Brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
+sov_df_q = grouped_df_q[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
+soe_df_q = grouped_df_q[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 
 # Add pie chart
-pie_chart(ppt.slides[page_no], sov_df_q.set_index('Brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
-pie_chart(ppt.slides[page_no], soe_df_q.set_index('Brand'), Inches(7), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+pie_chart(ppt.slides[page_no], sov_df_q.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+pie_chart(ppt.slides[page_no], soe_df_q.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
 format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 format_title(ppt.slides[page_no], format(total_views_q, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
@@ -559,31 +567,31 @@ page_no = page_no + 1 #PAGE4
 format_title(ppt.slides[page_no], "ANNUAL SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-df_y = df[(df['TDK Category'] == category) & (df['Division'] == division) & (df['Years'] == year)]
+df_y = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year)]
 
 # Perform groupby and aggregation with handling for datetime64 columns
-grouped_df_y = df_y.groupby('Brand').agg({
+grouped_df_y = df_y.groupby('brand').agg({
     # Numerical columns: sum them
-    'Views': 'sum',
-    'Engagement': 'sum',
-    'Content': 'sum'
+    'views': 'sum',
+    'engagement': 'sum',
+    'content': 'sum'
 })
 grouped_df_y = grouped_df_y.reset_index()
 
 # Calculate Total Views
-total_views_y = (grouped_df_y['Views'].sum()).astype(int)
-total_engagement_y = (grouped_df_y['Engagement'].sum()).astype(int)
+total_views_y = (grouped_df_y['views'].sum()).astype(int)
+total_engagement_y = (grouped_df_y['engagement'].sum()).astype(int)
 
 # Calculate SOV (%)
-grouped_df_y['SOV%'] = (grouped_df_y['Views'] / total_views_y)
-grouped_df_y['SOE%'] = (grouped_df_y['Engagement'] / total_engagement_y)
+grouped_df_y['SOV%'] = (grouped_df_y['views'] / total_views_y)
+grouped_df_y['SOE%'] = (grouped_df_y['engagement'] / total_engagement_y)
 
-sov_df_y = grouped_df_y[['Brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
-soe_df_y = grouped_df_y[['Brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
+sov_df_y = grouped_df_y[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
+soe_df_y = grouped_df_y[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 
 # Add pie chart
-pie_chart(ppt.slides[page_no], sov_df_y.set_index('Brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
-pie_chart(ppt.slides[page_no], soe_df_y.set_index('Brand'), Inches(7), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+pie_chart(ppt.slides[page_no], sov_df_y.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+pie_chart(ppt.slides[page_no], soe_df_y.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
 format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 format_title(ppt.slides[page_no], format(total_views_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
@@ -602,7 +610,7 @@ stacked_data_views = df_y.pivot_table(index="Month", columns="Manufacturer", val
 stacked_data_views['Total'] = stacked_data_views.sum(axis=1)
 
 # Aggregate Views by Month and Manufacturer
-stacked_data_eng = df_y.pivot_table(index="Month", columns="Manufacturer", values="Engagement", aggfunc="sum", fill_value=0)
+stacked_data_eng = df_y.pivot_table(index="Month", columns="Manufacturer", values="engagement", aggfunc="sum", fill_value=0)
 stacked_data_eng['Total'] = stacked_data_eng.sum(axis=1)
 
 # Sort months correctly
@@ -612,7 +620,7 @@ stacked_data_eng = stacked_data_eng.reindex(month_order)
 # Ad combo stacked bar chart
 combo_chart(ppt.slides[page_no], stacked_data_views, Inches(.1), Inches(2), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Views",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
-combo_chart(ppt.slides[page_no], stacked_data_eng, Inches(.1), Inches(5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Engagement",
+combo_chart(ppt.slides[page_no], stacked_data_eng, Inches(.1), Inches(5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - engagement",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True)
 
 # Add stacked bar chart
@@ -624,24 +632,24 @@ page_no = page_no + 1 #PAGE6
 format_title(ppt.slides[page_no], "VIEWS PERFORMANCE: YTD and YTG with SOV PROJECTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-df_y2 = df[(df['Division'] == division) & (df['Years'] == year)]
+df_y2 = df[(df['division'] == division) & (df['years'] == year)]
 
 # Calculate Total Views per Category
-total_views = df_y2.groupby('Category')['Views'].sum().reset_index()
-total_views.rename(columns={'Views': 'Total_Views'}, inplace=True)
+total_views = df_y2.groupby('Category')['views'].sum().reset_index()
+total_views.rename(columns={'views': 'Total_Views'}, inplace=True)
 
 # Aggregate Views and calculate SOV
-df_grouped = df_y2.groupby(['Brand', 'Category', 'Advertiser'])['Views'].sum().reset_index()
+df_grouped = df_y2.groupby(['brand', 'Category', 'Advertiser'])['views'].sum().reset_index()
 df_grouped = df_grouped.merge(total_views, on='Category', how='left')
-df_grouped['SOV'] = (df_grouped['Views'] / df_grouped['Total_Views']).map('{:.0%}'.format)
-df_grouped['Views'] = df_grouped['Views'].astype(int)
+df_grouped['SOV'] = (df_grouped['views'] / df_grouped['Total_Views']).map('{:.0%}'.format)
+df_grouped['views'] = df_grouped['views'].astype(int)
 
 # Rank Brands within each Category
-df_grouped['#Rank'] = df_grouped.groupby('Category')['Views'].rank(method='dense', ascending=False).astype(int)
+df_grouped['#Rank'] = df_grouped.groupby('Category')['views'].rank(method='dense', ascending=False).astype(int)
 
 # Filter for L'Oreal Advertiser
-df_final = df_grouped[df_grouped['Advertiser'] == "L'Oreal"][['Category', 'Brand', 'Views', 'SOV', '#Rank']]
-df_final = df_final.sort_values(['Category', 'Brand'])
+df_final = df_grouped[df_grouped['Advertiser'] == "L'Oreal"][['Category', 'brand', 'views', 'SOV', '#Rank']]
+df_final = df_final.sort_values(['Category', 'brand'])
 
 table_default(ppt.slides[page_no], df_final, Inches(1), Inches(1.2), Inches(12.2), Inches(5.2),
  [Inches(1.5)]*2+[Inches(0.75)]*3+[Inches(1),Inches(0.5)], Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
@@ -651,25 +659,25 @@ page_no = page_no + 1 #PAGE7
 format_title(ppt.slides[page_no], "MONTHLY TIMELINE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Aggregate total views per brand and rank them
-brand_ranking = df_y.groupby('Brand')['Views'].sum().reset_index()
-brand_ranking['Brand_Rank'] = brand_ranking['Views'].rank(method='dense', ascending=False)
+brand_ranking = df_y.groupby('brand')['views'].sum().reset_index()
+brand_ranking['Brand_Rank'] = brand_ranking['views'].rank(method='dense', ascending=False)
 
 # Keep only the top 7 brands
-top_brands = brand_ranking[brand_ranking['Brand_Rank'] <= 7]['Brand']
+top_brands = brand_ranking[brand_ranking['Brand_Rank'] <= 7]['brand']
 
 # Retrieve daily views for these top 7 brands
-df_top_brands = df_y[df_y['Brand'].isin(top_brands)]
-df_m_views = pd.pivot_table(df_top_brands[['Date','Brand','Views']], columns = 'Date', index = 'Brand', aggfunc = 'sum', fill_value = 0)
+df_top_brands = df_y[df_y['brand'].isin(top_brands)]
+df_m_views = pd.pivot_table(df_top_brands[['date','brand','views']], columns = 'date', index = 'brand', aggfunc = 'sum', fill_value = 0)
 df_m_views.columns = df_m_views.columns.droplevel() # drop column level
 df_m_views.columns = df_m_views.columns.strftime('%b')
 
-# Reshape the DataFrame before grouping to have 'Views' as a column
-df_m_views2 = df_m_views.reset_index().melt(id_vars=['Brand'], var_name='Month', value_name='Views')
+# Reshape the DataFrame before grouping to have 'views' as a column
+df_m_views2 = df_m_views.reset_index().melt(id_vars=['brand'], var_name='Month', value_name='views')
 
-df_views = df_m_views2.groupby(['Brand'], as_index=False)['Views'].sum()
-df_views['SOV%'] = (df_views['Views'] / total_views_y).map('{:.0%}'.format)
-df_views['Views'] = df_views['Views'].astype(int)
-df_views['Rank'] = df_views['Views'].rank(method='dense', ascending=False).astype(int)
+df_views = df_m_views2.groupby(['brand'], as_index=False)['views'].sum()
+df_views['SOV%'] = (df_views['views'] / total_views_y).map('{:.0%}'.format)
+df_views['views'] = df_views['views'].astype(int)
+df_views['Rank'] = df_views['views'].rank(method='dense', ascending=False).astype(int)
 df_views = df_views.sort_values('Rank')
 
 # Add line chart
@@ -683,7 +691,7 @@ page_no = page_no + 1 #PAGE8
 format_title(ppt.slides[page_no], "QUARTERLY TIMELINE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Aggregate total views per brand and rank them
-df_q_views = pd.pivot_table(df_top_brands[['Quarter','Brand','Views']], columns = 'Quarter', index = 'Brand', aggfunc = 'sum', fill_value = 0)
+df_q_views = pd.pivot_table(df_top_brands[['quarter','brand','views']], columns = 'quarter', index = 'brand', aggfunc = 'sum', fill_value = 0)
 df_q_views.columns = df_q_views.columns.droplevel() # drop column level
 
 # Add line chart
@@ -700,13 +708,13 @@ quarter_mapping = {'Q1': ['Q4', 'Q1'], 'Q2': ['Q1', 'Q2'], 'Q3': ['Q2', 'Q3'], '
 quarter_compare = quarter_mapping.get(quarter, [quarter])
 title_q = quarter_compare[0] + " vs " + quarter_compare[1]
 
-df_q_views = pd.pivot_table(df_top_brands[['Quarter','Brand','Views']], columns = 'Quarter', index = 'Brand', aggfunc = 'sum', fill_value = 0)
-df_q_content = pd.pivot_table(df_top_brands[['Quarter','Brand','Content']], columns = 'Quarter', index = 'Brand', aggfunc = 'sum', fill_value = 0)
+df_q_views = pd.pivot_table(df_top_brands[['quarter','brand','views']], columns = 'quarter', index = 'brand', aggfunc = 'sum', fill_value = 0)
+df_q_content = pd.pivot_table(df_top_brands[['quarter','brand','content']], columns = 'quarter', index = 'brand', aggfunc = 'sum', fill_value = 0)
 
-df_q_views = df_q_views[[('Views', q) for q in quarter_compare]]
+df_q_views = df_q_views[[('views', q) for q in quarter_compare]]
 df_q_views.columns = quarter_compare
 
-df_q_content = df_q_content[[('Content', q) for q in quarter_compare]]
+df_q_content = df_q_content[[('content', q) for q in quarter_compare]]
 df_q_content.columns = quarter_compare
 
 # Add horizontal bar chart views
@@ -779,7 +787,7 @@ def send_mail(send_from, send_to, subject, text, files=None,
     msg = MIMEMultipart()
     msg['From'] = send_from
     msg['To'] = COMMASPACE.join(send_to)
-    msg['Date'] = formatdate(localtime=True)
+    msg['date'] = formatdate(localtime=True)
     msg['Subject'] = subject
 
     msg.attach(MIMEText(text))
