@@ -274,12 +274,13 @@ client = bigquery.Client(credentials=credentials, project=credentials.project_id
 # Example Query
 query = """
 SELECT 
-Brand
-,SUM(Views) as Views
-,SUM(Engagement) as Engagement
+brand
+,SUM(views_float) as views
+,SUM(engagements) as engagements
+,SUM(content) as content
 FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
-WHERE Years = {}
-GROUP BY Brand
+WHERE years = {}
+GROUP BY brand
 """.format(year)
 
 # Fetch data
