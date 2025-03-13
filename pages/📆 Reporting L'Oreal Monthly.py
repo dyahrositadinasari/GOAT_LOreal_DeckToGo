@@ -450,7 +450,7 @@ date
 ,SUM(content) as content
 FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
 WHERE years = {}
-GROUP BY brand
+GROUP BY date, brand
 """.format(year)
 
 # Fetch data
