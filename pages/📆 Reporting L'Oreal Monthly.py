@@ -277,10 +277,10 @@ SELECT
 Brand
 ,SUM(Views) as Views
 ,SUM(Engagement) as Engagement
-FROM loreal-id-prod.loreal_storage.advocacy_tdk
-WHERE TDK_Category = '{}'
+FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
+WHERE Years = {}
 GROUP BY Brand
-""".format(category)
+""".format(year)
 
 # Fetch data
 df = client.query(query).to_dataframe()
