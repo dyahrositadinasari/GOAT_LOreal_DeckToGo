@@ -751,7 +751,7 @@ for i in range(page_no,len(ppt.slides)):
             pass
 
 ## save ppt
-filename = f'{category.upper()} MONTHLY REPORT - {month} {year}.pptx'
+filename = (f'{category.upper()} MONTHLY REPORT - {month} {year}.pptx')
 files = ppt.save(filename)
 print('Process Completed')
 
