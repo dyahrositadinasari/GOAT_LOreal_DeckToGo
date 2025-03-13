@@ -458,7 +458,7 @@ df = client.query(query).to_dataframe()
 
 # Add Date & Quarter column
 df['Date'] = pd.to_datetime(df['date'], format='%y-%m-%d')
-df['Quarter'] = (df['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
+df['Quarter'] = (df['Date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
 
 #---- SLIDES PRESENTATION ----
 ppt_temp_loc = r"/content/Template Deck to Go - L'Oreal Indonesia.pptx"
