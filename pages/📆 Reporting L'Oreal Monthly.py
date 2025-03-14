@@ -450,6 +450,7 @@ date
 ,tdk_category
 ,division
 ,category
+,manufacturer
 ,SUM(views_float) as views
 ,SUM(engagements) as engagements
 ,SUM(content) as content
@@ -463,6 +464,7 @@ date
 ,tdk_category
 ,division
 ,category
+,manufacturer
 """.format(year)
 
 # Fetch data
@@ -493,7 +495,7 @@ format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font
 format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 
 # Filter the dataframe
-df_m = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year) &  (df['Month'] == month)]
+df_m = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year) &  (df['month'] == month)]
 
 # Perform groupby and aggregation with handling for datetime64 columns
 grouped_df_m = df_m.groupby('brand').agg({
@@ -610,11 +612,11 @@ page_no = page_no + 1 #PAGE5
 format_title(ppt.slides[page_no], "YTD BEAUTY MARKET VIEWS AND ENGAGEMENT SUMMARY", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Aggregate Views by Month and Manufacturer
-stacked_data_views = df_y.pivot_table(index="Month", columns="Manufacturer", values="Views", aggfunc="sum", fill_value=0)
+stacked_data_views = df_y.pivot_table(index="month", columns="manufacturer", values="views", aggfunc="sum", fill_value=0)
 stacked_data_views['Total'] = stacked_data_views.sum(axis=1)
 
 # Aggregate Views by Month and Manufacturer
-stacked_data_eng = df_y.pivot_table(index="Month", columns="Manufacturer", values="engagement", aggfunc="sum", fill_value=0)
+stacked_data_eng = df_y.pivot_table(index="month", columns="manufacturer", values="engagement", aggfunc="sum", fill_value=0)
 stacked_data_eng['Total'] = stacked_data_eng.sum(axis=1)
 
 # Sort months correctly
@@ -676,13 +678,13 @@ df_m_views.columns = df_m_views.columns.droplevel() # drop column level
 df_m_views.columns = df_m_views.columns.strftime('%b')
 
 # Reshape the DataFrame before grouping to have 'views' as a column
-df_m_views2 = df_m_views.reset_index().melt(id_vars=['brand'], var_name='Month', value_name='views')
+df_m_views2 = df_m_views.reset_index().melt(id_vars=['brand'], var_name='month', value_name='views')
 
 df_views = df_m_views2.groupby(['brand'], as_index=False)['views'].sum()
 df_views['SOV%'] = (df_views['views'] / total_views_y).map('{:.0%}'.format)
 df_views['views'] = df_views['views'].astype(int)
-df_views['Rank'] = df_views['views'].rank(method='dense', ascending=False).astype(int)
-df_views = df_views.sort_values('Rank')
+df_views['rank'] = df_views['views'].rank(method='dense', ascending=False).astype(int)
+df_views = df_views.sort_values('rank')
 
 # Add line chart
 line_marker_chart(ppt.slides[page_no], df_m_views, Inches(0.5), Inches(1.7), Inches(7), Inches(5), legend=True, legend_position=XL_LEGEND_POSITION.BOTTOM, chart_title = False, fontsize_title = Pt(12), line_width = Pt(2), smooth=True)
