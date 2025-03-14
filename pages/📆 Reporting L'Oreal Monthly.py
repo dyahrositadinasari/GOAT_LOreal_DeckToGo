@@ -475,7 +475,7 @@ df['date'] = pd.to_datetime(df['date'], format='%y-%m-%d')
 df['quarter'] = (df['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
 
 #---- SLIDES PRESENTATION ----
-ppt_temp_loc = "GOAT_LOreal_DeckToGo/Template Deck to Go - L'Oreal Indonesia.pptx"
+ppt_temp_loc = "GOAT_LOreal_DeckToGo/Template Deck to Go - Loreal Indonesia.pptx"
 
 ppt = Presentation(ppt_temp_loc)
 
