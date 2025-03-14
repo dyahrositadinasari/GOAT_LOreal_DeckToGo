@@ -471,7 +471,10 @@ date
 df = client.query(query).to_dataframe()
 
 # Add Date & Quarter column
-df['date'] = pd.to_datetime(df['date'], format='%y-%m-%d')
+df['date'] = pd.to_datetime(df['date'])  # Convert to datetime
+df.set_index('date', inplace=True)  # Set index to Date
+#df['date'] = pd.to_datetime(df['date'], format='%y-%m-%d')
+
 df['quarter'] = (df['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
 
 #---- SLIDES PRESENTATION ----
