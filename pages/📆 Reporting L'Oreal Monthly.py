@@ -803,10 +803,10 @@ from email.mime.application import MIMEApplication
 from email.utils import COMMASPACE, formatdate
 
 # Email credentials
-SMTP_SERVER = "smtp.gmail.com"  # Change to your SMTP provider if different
+SMTP_SERVER = "smtp.office365.com"
 SMTP_PORT = 587
-EMAIL_USER = "dyah.dinasari@groupm.com"  # Replace with your email
-EMAIL_PASS = "@Groupm0325"  # Replace with your generated App Password
+EMAIL_USER = "dyah.dinasari@groupm.com"
+EMAIL_PASS = "@Groupm0325"
 
 # Email details
 send_from = EMAIL_USER
