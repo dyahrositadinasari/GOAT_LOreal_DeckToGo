@@ -53,6 +53,7 @@ st.write("Division : ", division)
 st.write("Category : ", category)
 st.write("Brands : ", brands)
 
+if st.button("Submit"):
 #--- DATA PROCESSING ---
 
 import os
@@ -793,8 +794,20 @@ for i in range(page_no,len(ppt.slides)):
 file = (f'{category.upper()} MONTHLY REPORT - {month} {year}')
 filename = (f'{category.upper()} MONTHLY REPORT - {month} {year}.pptx')
 files = ppt.save(filename)
+
+
+    # ✅ This code runs **only after clicking the submit button**
+    st.success(f"✅ Submitted: {category} Monthly Report - {month} {year}")
+    # Add your processing logic here (e.g., query execution, report generation)
+else:
+    st.warning("⚠ Please fill in the details and click 'Submit'.")
+  
 st.write('✅ PPT Process Completed!')
 
+# ✅ Send Email Button (Only appears after submitting)
+if "report_filename" in st.session_state:
+    if st.button("Send Email"):
+      
 import smtplib
 import pytz
 from email.mime.multipart import MIMEMultipart
