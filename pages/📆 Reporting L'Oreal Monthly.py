@@ -10,6 +10,15 @@ year_ = {
 }
 year_map = year_.get(year, "")  # Returns '' if year is not found
 
+quarter_ = st.selectbox(
+  'Please select the reporting quarter',
+  ('Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4')
+
+  q_map = {
+  'Quarter 1': '1', 'Quarter 2': '2', 'Quarter 3': '3', 'Quarter 4': '4'
+}
+quarter = q_map.get(quarter_, "")  # Returns '' if quarter is not found
+
 month = st.selectbox(
   'Please select the reporting month',
   ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
@@ -475,13 +484,13 @@ date
 
 # Fetch data
 df = client.query(query).to_dataframe()
-st.write(df.head())
+
 # Add Date & Quarter column
 df['date'] = pd.to_datetime(df['date'], format='%y-%m-%d')
 
 df['quarter'] = (df['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
 
-
+st.write(df.head())
 #---- SLIDES PRESENTATION ----
 ppt_temp_loc = "GOAT_LOreal_DeckToGo/pages/Template Deck to Go - Loreal Indonesia.pptx"
 
