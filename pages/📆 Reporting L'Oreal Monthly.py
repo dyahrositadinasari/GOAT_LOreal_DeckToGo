@@ -5,9 +5,11 @@ year = st.selectbox(
   'Please select the reporting year',
   ('2024', '2025')
 )
-year_map = {
+year_ = {
   '2024':24, '2025':25
 }
+year_map = year_.get(year, "")  # Returns '' if year is not found
+
 month = st.selectbox(
   'Please select the reporting month',
   ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
