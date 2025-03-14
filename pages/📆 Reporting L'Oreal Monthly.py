@@ -839,6 +839,6 @@ try:
     smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
     smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
     smtp.quit()
-    st.write("✅ Email sent successfully!")
+    st.write("✅ Email sent successfully! on: " & now())
 except Exception as e:
     st.write(f"❌ Error: {e}")
