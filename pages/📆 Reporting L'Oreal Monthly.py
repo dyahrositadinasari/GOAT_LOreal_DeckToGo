@@ -795,45 +795,43 @@ filename = (f'{category.upper()} MONTHLY REPORT - {month} {year}.pptx')
 files = ppt.save(filename)
 print('Process Completed')
 
-import smtplib
-from os.path import basename
-from email.mime.application import MIMEApplication
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.utils import COMMASPACE, formatdate
+# Email credentials
+SMTP_SERVER = "smtp.gmail.com"  # Change to your SMTP provider if different
+SMTP_PORT = 587
+EMAIL_USER = "dyah.dinasari@groupm.com"  # Replace with your email
+EMAIL_PASS = "@Groupm0325"  # Replace with your generated App Password
 
-send_from = 'dyah.dinasari@groupm.com'
-send_to = 'dyah.dinasari@groupm.com'
-subject = file
+# Email details
+send_from = EMAIL_USER
+send_to = ['dyah.dinasari@groupm.com']  # Must be a list
+subject = "PPT Report Attached"
 text = '''Hi team, 
-we have create the PPT report
-Please find the ppt file in the attachment
+We have created the PPT report.
+Please find the PPT file in the attachment.
 Regards,
 Dyah Dinasari'''
 
-def send_mail(send_from, send_to, subject, text, files=None,
-              server="127.0.0.1"):
-    assert isinstance(send_to, list)
-
+def send_mail(send_from, send_to, subject, text, files=None):
     msg = MIMEMultipart()
     msg['From'] = send_from
     msg['To'] = COMMASPACE.join(send_to)
-    msg['date'] = formatdate(localtime=True)
+    msg['Date'] = formatdate(localtime=True)
     msg['Subject'] = subject
-
     msg.attach(MIMEText(text))
 
+    # Attach files if any
     for f in files or []:
         with open(f, "rb") as fil:
-            part = MIMEApplication(
-                fil.read(),
-                Name=basename(f)
-            )
-        # After the file is closed
-        part['Content-Disposition'] = 'attachment; filename="%s"' % basename(f)
+            part = MIMEApplication(fil.read(), Name=basename(f))
+        part['Content-Disposition'] = f'attachment; filename="{basename(f)}"'
         msg.attach(part)
 
+    # Connect to SMTP server
+    smtp = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+    smtp.starttls()  # Enable encryption
+    smtp.login(EMAIL_USER, EMAIL_PASS)  # Authenticate
+    smtp.sendmail(send_from, send_to, msg.as_string())  # Send email
+    smtp.quit()  # Close connection
 
-    smtp = smtplib.SMTP(server)
-    smtp.sendmail(send_from, send_to, msg.as_string())
-    smtp.close()
+# send the PPT via email
+send_mail(send_from, send_to, subject, text, files=files)
