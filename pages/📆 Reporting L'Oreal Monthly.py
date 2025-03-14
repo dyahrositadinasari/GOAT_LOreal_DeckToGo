@@ -663,21 +663,21 @@ format_title(ppt.slides[page_no], "VIEWS PERFORMANCE: YTD and YTG with SOV PROJE
 df_y2 = df[(df['division'] == division) & (df['years'] == year_map)]
 
 # Calculate Total Views per Category
-total_views = df_y2.groupby('Category')['views'].sum().reset_index()
+total_views = df_y2.groupby('category')['views'].sum().reset_index()
 total_views.rename(columns={'views': 'Total_Views'}, inplace=True)
 
 # Aggregate Views and calculate SOV
-df_grouped = df_y2.groupby(['brand', 'Category', 'Advertiser'])['views'].sum().reset_index()
-df_grouped = df_grouped.merge(total_views, on='Category', how='left')
+df_grouped = df_y2.groupby(['brand', 'category', 'advertiser'])['views'].sum().reset_index()
+df_grouped = df_grouped.merge(total_views, on='category', how='left')
 df_grouped['SOV'] = (df_grouped['views'] / df_grouped['Total_Views']).map('{:.0%}'.format)
 df_grouped['views'] = df_grouped['views'].astype(int)
 
 # Rank Brands within each Category
-df_grouped['#Rank'] = df_grouped.groupby('Category')['views'].rank(method='dense', ascending=False).astype(int)
+df_grouped['#Rank'] = df_grouped.groupby('category')['views'].rank(method='dense', ascending=False).astype(int)
 
 # Filter for L'Oreal Advertiser
-df_final = df_grouped[df_grouped['Advertiser'] == "L'Oreal"][['Category', 'brand', 'views', 'SOV', '#Rank']]
-df_final = df_final.sort_values(['Category', 'brand'])
+df_final = df_grouped[df_grouped['advertiser'] == "L'Oreal"][['category', 'brand', 'views', 'SOV', '#Rank']]
+df_final = df_final.sort_values(['category', 'brand'])
 
 table_default(ppt.slides[page_no], df_final, Inches(1), Inches(1.2), Inches(12.2), Inches(5.2),
  [Inches(1.5)]*2+[Inches(0.75)]*3+[Inches(1),Inches(0.5)], Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
