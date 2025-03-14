@@ -793,7 +793,7 @@ for i in range(page_no,len(ppt.slides)):
 file = (f'{category.upper()} MONTHLY REPORT - {month} {year}')
 filename = (f'{category.upper()} MONTHLY REPORT - {month} {year}.pptx')
 files = ppt.save(filename)
-print('Process Completed')
+st.write('Process Completed')
 
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -814,7 +814,7 @@ body = """Hi team,
 This is a test email sent via Python SMTP.
 
 Regards,
-Your Name"""
+Dyah Dinasari"""
 
 # ✅ Create Email Message
 msg = MIMEMultipart()
@@ -830,7 +830,7 @@ if os.path.exists(filename):  # Check if the file exists
         part["Content-Disposition"] = f'attachment; filename="{os.path.basename(filename)}"'
         msg.attach(part)
 else:
-    print(f"⚠ Warning: File '{filename}' not found. Email will be sent without attachment.")
+    st.write(f"⚠ Warning: File '{filename}' not found. Email will be sent without attachment.")
 
 # ✅ Send Email via Gmail SMTP
 try:
@@ -839,6 +839,6 @@ try:
     smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
     smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
     smtp.quit()
-    print("✅ Email sent successfully!")
+    st.write("✅ Email sent successfully!")
 except Exception as e:
-    print(f"❌ Error: {e}")
+    st.write(f"❌ Error: {e}")
