@@ -508,7 +508,7 @@ grouped_df_m = grouped_df_m.reset_index()
 
 # Calculate Total Views
 total_views_m = grouped_df_m['views'].sum()
-total_engagement_m = (grouped_df_m['engagements'].sum()).astype(int)
+total_engagement_m = grouped_df_m['engagements'].sum()
 
 # Calculate SOV (%)
 grouped_df_m['SOV%'] = (grouped_df_m['views'] / total_views_m)
