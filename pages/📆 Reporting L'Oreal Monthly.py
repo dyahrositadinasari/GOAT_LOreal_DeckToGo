@@ -455,7 +455,7 @@ date
 ,SUM(engagements) as engagements
 ,SUM(content) as content
 FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
-WHERE years = RIGHT(year, 2)
+WHERE years = RIGHT(year, 2).astype(int)
 GROUP BY 
 date
 ,month
