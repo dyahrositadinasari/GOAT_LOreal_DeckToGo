@@ -466,6 +466,7 @@ date
 ,division
 ,category
 ,manufacturer
+,advertiser_name
 ,SUM(views_float) as views
 ,SUM(engagements) as engagements
 ,SUM(content) as content
@@ -480,6 +481,7 @@ date
 ,division
 ,category
 ,manufacturer
+,advertiser_name
 """.format(year_map)
 
 # Fetch data
