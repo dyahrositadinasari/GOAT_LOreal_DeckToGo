@@ -823,15 +823,14 @@ msg["To"] = ", ".join(send_to)
 msg["Subject"] = subject
 msg.attach(MIMEText(body, "plain"))
 
-# ✅ Attach a File (Optional)
-attachment_path = "your_file.pdf"  # Replace with actual file path
-try:
-    with open(attachment_path, "rb") as file:
-        part = MIMEApplication(file.read(), Name="your_file.pdf")
-        part["Content-Disposition"] = f'attachment; filename="{attachment_path}"'
+# ✅ Attach the PowerPoint File
+if os.path.exists(filename):  # Check if the file exists
+    with open(filename, "rb") as file:
+        part = MIMEApplication(file.read(), Name=os.path.basename(filename))
+        part["Content-Disposition"] = f'attachment; filename="{os.path.basename(filename)}"'
         msg.attach(part)
-except FileNotFoundError:
-    print("⚠ No attachment found. Sending email without attachment.")
+else:
+    print(f"⚠ Warning: File '{filename}' not found. Email will be sent without attachment.")
 
 # ✅ Send Email via Gmail SMTP
 try:
