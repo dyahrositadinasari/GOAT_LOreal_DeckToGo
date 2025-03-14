@@ -804,7 +804,7 @@ from email.utils import COMMASPACE, formatdate
 
 send_from = 'dyah.dinasari@groupm.com'
 send_to = 'dyah.dinasari@groupm.com'
-subject = filename
+subject = file
 text = '''Hi team, 
 we have create the PPT report
 Please find the ppt file in the attachment
