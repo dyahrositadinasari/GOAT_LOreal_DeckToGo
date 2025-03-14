@@ -466,10 +466,10 @@ date
 ,category
 ,manufacturer
 """ #.format(year)
-st.write(df.head())
+
 # Fetch data
 df = client.query(query).to_dataframe()
-
+st.write(df.head())
 # Add Date & Quarter column
 df['date'] = pd.to_datetime(df['date'], format='%y-%m-%d')
 
