@@ -471,7 +471,7 @@ date
 ,division
 ,category
 ,manufacturer
-"""#.format(year_map)
+""".format(year_map)
 
 # Fetch data
 df = client.query(query).to_dataframe()
