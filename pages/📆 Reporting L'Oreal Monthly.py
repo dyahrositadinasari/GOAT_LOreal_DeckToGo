@@ -5,6 +5,9 @@ year = st.selectbox(
   'Please select the reporting year',
   ('2024', '2025')
 )
+year_map = {
+  '2024':24, '2025':25
+}
 month = st.selectbox(
   'Please select the reporting month',
   ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
@@ -32,6 +35,7 @@ brands = st.multiselect(
 )
 
 st.write("Selected Year : ", year)
+st.write("Selected Year_ : ", year_map)
 st.write("Selected Month : ", month)
 st.write("Month Number : ", month_num)
 st.write("Division : ", division)
@@ -455,8 +459,8 @@ date
 ,SUM(engagements) as engagements
 ,SUM(content) as content
 FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
-WHERE years = RIGHT({}, 2).astype(int)
 GROUP BY 
+WHERE years = {}
 date
 ,month
 ,years
@@ -465,7 +469,7 @@ date
 ,division
 ,category
 ,manufacturer
-""".format(year)
+"""#.format(year_map)
 
 # Fetch data
 df = client.query(query).to_dataframe()
@@ -501,7 +505,7 @@ format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font
 format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 
 # Filter the dataframe
-df_m = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year) &  (df['month'] == month)]
+df_m = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year_map) &  (df['month'] == month)]
 
 # Perform groupby and aggregation with handling for datetime64 columns
 grouped_df_m = df_m.groupby('brand').agg({
@@ -541,7 +545,7 @@ page_no = page_no + 1 #PAGE3
 format_title(ppt.slides[page_no], "QUARTERLY SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-df_q = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year) & (df['quarter'] == quarter)]
+df_q = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year_map) & (df['quarter'] == quarter)]
 
 # Perform groupby and aggregation with handling for datetime64 columns
 grouped_df_q = df_q.groupby('brand').agg({
@@ -580,7 +584,7 @@ page_no = page_no + 1 #PAGE4
 format_title(ppt.slides[page_no], "ANNUAL SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-df_y = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year)]
+df_y = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year_map)]
 
 # Perform groupby and aggregation with handling for datetime64 columns
 grouped_df_y = df_y.groupby('brand').agg({
@@ -645,7 +649,7 @@ page_no = page_no + 1 #PAGE6
 format_title(ppt.slides[page_no], "VIEWS PERFORMANCE: YTD and YTG with SOV PROJECTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-df_y2 = df[(df['division'] == division) & (df['years'] == year)]
+df_y2 = df[(df['division'] == division) & (df['years'] == year_map)]
 
 # Calculate Total Views per Category
 total_views = df_y2.groupby('Category')['views'].sum().reset_index()
