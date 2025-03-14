@@ -796,12 +796,14 @@ files = ppt.save(filename)
 st.write('✅ PPT Process Completed!')
 
 import smtplib
+import pytz
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from datetime import datetime
 
-now = datetime.now()
+wib = pytz.timezone("Asia/Jakarta")
+now = datetime.now(wib)
 formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")  # Format: YYYY-MM-DD HH:MM:SS
 
 
