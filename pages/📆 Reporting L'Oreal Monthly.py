@@ -804,8 +804,7 @@ from datetime import datetime
 
 wib = pytz.timezone("Asia/Jakarta")
 now = datetime.now(wib)
-formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")  # Format: YYYY-MM-DD HH:MM:SS
-
+formatted_date = now.strftime("%Y-%m-%d %H:%M")
 
 # ✅ Gmail SMTP Configuration
 SMTP_SERVER = "smtp.gmail.com"
