@@ -455,7 +455,7 @@ date
 ,SUM(engagements) as engagements
 ,SUM(content) as content
 FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
-WHERE years = {}
+WHERE years = 2024
 GROUP BY 
 date
 ,month
@@ -465,8 +465,8 @@ date
 ,division
 ,category
 ,manufacturer
-""".format(year)
-
+""" #.format(year)
+st.write(df.head())
 # Fetch data
 df = client.query(query).to_dataframe()
 
@@ -474,7 +474,7 @@ df = client.query(query).to_dataframe()
 df['date'] = pd.to_datetime(df['date'], format='%y-%m-%d')
 
 df['quarter'] = (df['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
-st.write(df.head())
+
 
 #---- SLIDES PRESENTATION ----
 ppt_temp_loc = "GOAT_LOreal_DeckToGo/pages/Template Deck to Go - Loreal Indonesia.pptx"
