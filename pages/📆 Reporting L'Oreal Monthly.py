@@ -455,7 +455,6 @@ date
 ,SUM(engagements) as engagements
 ,SUM(content) as content
 FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
-WHERE years = 2024
 GROUP BY 
 date
 ,month
