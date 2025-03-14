@@ -13,8 +13,8 @@ year_map = year_.get(year, "")  # Returns '' if year is not found
 quarter_ = st.selectbox(
   'Please select the reporting quarter',
   ('Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4')
-
-  q_map = {
+)
+q_map = {
   'Quarter 1': '1', 'Quarter 2': '2', 'Quarter 3': '3', 'Quarter 4': '4'
 }
 quarter = q_map.get(quarter_, "")  # Returns '' if quarter is not found
