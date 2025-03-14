@@ -507,7 +507,7 @@ grouped_df_m = df_m.groupby('brand').agg({
 grouped_df_m = grouped_df_m.reset_index()
 
 # Calculate Total Views
-total_views_m = (grouped_df_m['views'].sum()).astype(int)
+total_views_m = grouped_df_m['views'].sum()
 total_engagement_m = (grouped_df_m['engagements'].sum()).astype(int)
 
 # Calculate SOV (%)
