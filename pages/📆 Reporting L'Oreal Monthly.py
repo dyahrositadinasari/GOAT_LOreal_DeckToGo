@@ -477,7 +477,11 @@ df['quarter'] = (df['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'}
 #---- SLIDES PRESENTATION ----
 ppt_temp_loc = "GOAT_LOreal_DeckToGo/pages/Template Deck to Go - Loreal Indonesia.pptx"
 
-ppt = Presentation(ppt_temp_loc)
+uploaded_file = st.file_uploader("Upload a PowerPoint file", type=["pptx"])
+if uploaded_file is not None:
+    st.success("File uploaded successfully!")
+  
+ppt = Presentation(uploaded_file)
 
 #------------PAGE1--------------
 page_no = 0 #PAGE1
