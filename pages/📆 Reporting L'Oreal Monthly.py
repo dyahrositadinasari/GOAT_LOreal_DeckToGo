@@ -462,7 +462,7 @@ date
 ,SUM(content) as content
 FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
 GROUP BY 
-WHERE years = {}
+WHERE years = @_year
 date
 ,month
 ,years
@@ -471,10 +471,17 @@ date
 ,division
 ,category
 ,manufacturer
-""".format(year_map)
+"""
 
+job_config = bigquery.QueryJobConfig(
+    query_parameters=[
+        bigquery.ScalarQueryParameter("_year", "INT64", year_map)
+    ]
+)
+
+df = client.query(query, job_config=job_config).to_dataframe()
 # Fetch data
-df = client.query(query).to_dataframe()
+#df = client.query(query).to_dataframe()
 st.write(df.head())
 # Add Date & Quarter column
 df['date'] = pd.to_datetime(df['date'], format='%y-%m-%d')
