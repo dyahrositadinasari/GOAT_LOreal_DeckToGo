@@ -790,6 +790,7 @@ for i in range(page_no,len(ppt.slides)):
             pass
 
 ## save ppt
+file = (f'{category.upper()} MONTHLY REPORT - {month} {year}')
 filename = (f'{category.upper()} MONTHLY REPORT - {month} {year}.pptx')
 files = ppt.save(filename)
 print('Process Completed')
@@ -803,7 +804,7 @@ from email.utils import COMMASPACE, formatdate
 
 send_from = 'dyah.dinasari@groupm.com'
 send_to = 'dyah.dinasari@groupm.com'
-subject = (f'm-Slide: {category.upper()} MONTHLY REPORT - {month} {year}')
+subject = filename
 text = '''Hi team, 
 we have create the PPT report
 Please find the ppt file in the attachment
