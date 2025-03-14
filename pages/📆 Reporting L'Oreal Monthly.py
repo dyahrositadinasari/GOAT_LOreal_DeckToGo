@@ -796,49 +796,50 @@ files = ppt.save(filename)
 print('Process Completed')
 
 import smtplib
-from os.path import basename
-from email.mime.multipart import MIMEMultipart 
+from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
-from email.utils import COMMASPACE, formatdate
 
-# Email credentials
+# ✅ Gmail SMTP Configuration
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-EMAIL_USER = "dyah.dinasari.groupm@gmail.com"
-EMAIL_PASS = "@Groupm1234"
+EMAIL_USER = "dyah.dinasari.groupm@gmail.com" 
+EMAIL_PASS = "koxp pzgm ixws ihek"  
 
-# Email details
-send_from = EMAIL_USER
-send_to = ['dyah.dinasari@groupm.com']  # Must be a list
-subject = "PPT Report Attached"
-text = '''Hi team, 
-We have created the PPT report.
-Please find the PPT file in the attachment.
+# ✅ Email Details
+send_to = ["dyah.dinasari@groupm.com"]  # Replace with recipient email(s)
+subject = "Test Email with Attachment"
+body = """Hi team,
+
+This is a test email sent via Python SMTP.
+
 Regards,
-Dyah Dinasari'''
+Your Name"""
 
-def send_mail(send_from, send_to, subject, text, files=None):
-    msg = MIMEMultipart()
-    msg['From'] = send_from
-    msg['To'] = COMMASPACE.join(send_to)
-    msg['Date'] = formatdate(localtime=True)
-    msg['Subject'] = subject
-    msg.attach(MIMEText(text))
+# ✅ Create Email Message
+msg = MIMEMultipart()
+msg["From"] = EMAIL_USER
+msg["To"] = ", ".join(send_to)
+msg["Subject"] = subject
+msg.attach(MIMEText(body, "plain"))
 
-    # Attach files if any
-    for f in files or []:
-        with open(f, "rb") as fil:
-            part = MIMEApplication(fil.read(), Name=basename(f))
-        part['Content-Disposition'] = f'attachment; filename="{basename(f)}"'
+# ✅ Attach a File (Optional)
+attachment_path = "your_file.pdf"  # Replace with actual file path
+try:
+    with open(attachment_path, "rb") as file:
+        part = MIMEApplication(file.read(), Name="your_file.pdf")
+        part["Content-Disposition"] = f'attachment; filename="{attachment_path}"'
         msg.attach(part)
+except FileNotFoundError:
+    print("⚠ No attachment found. Sending email without attachment.")
 
-    # Connect to SMTP server
+# ✅ Send Email via Gmail SMTP
+try:
     smtp = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-    smtp.starttls()  # Enable encryption
-    smtp.login(EMAIL_USER, EMAIL_PASS)  # Authenticate
-    smtp.sendmail(send_from, send_to, msg.as_string())  # Send email
-    smtp.quit()  # Close connection
-
-# send the PPT via email
-send_mail(send_from, send_to, subject, text, files=files)
+    smtp.starttls()  # Secure the connection
+    smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
+    smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
+    smtp.quit()
+    print("✅ Email sent successfully!")
+except Exception as e:
+    print(f"❌ Error: {e}")
