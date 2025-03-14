@@ -795,6 +795,13 @@ filename = (f'{category.upper()} MONTHLY REPORT - {month} {year}.pptx')
 files = ppt.save(filename)
 print('Process Completed')
 
+import smtplib
+from os.path import basename
+from email.mime.multipart import MIMEMultipart 
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+from email.utils import COMMASPACE, formatdate
+
 # Email credentials
 SMTP_SERVER = "smtp.gmail.com"  # Change to your SMTP provider if different
 SMTP_PORT = 587
