@@ -3,7 +3,7 @@ import streamlit as st
 st.title("GOAT-L'Oreal Monthly Report")
 year = st.selectbox(
   'Please select the reporting year',
-  ('2024', '2025')
+  (2024, 2025)
 )
 month = st.selectbox(
   'Please select the reporting month',
