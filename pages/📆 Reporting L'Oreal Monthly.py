@@ -501,18 +501,18 @@ df_m = df[(df['tdk_category'] == category) & (df['division'] == division) & (df[
 grouped_df_m = df_m.groupby('brand').agg({
     # Numerical columns: sum them
     'views': 'sum',
-    'engagement': 'sum',
+    'engagements': 'sum',
     'content': 'sum'
 })
 grouped_df_m = grouped_df_m.reset_index()
 
 # Calculate Total Views
 total_views_m = (grouped_df_m['views'].sum()).astype(int)
-total_engagement_m = (grouped_df_m['engagement'].sum()).astype(int)
+total_engagement_m = (grouped_df_m['engagements'].sum()).astype(int)
 
 # Calculate SOV (%)
 grouped_df_m['SOV%'] = (grouped_df_m['views'] / total_views_m)
-grouped_df_m['SOE%'] = (grouped_df_m['engagement'] / total_engagement_m)
+grouped_df_m['SOE%'] = (grouped_df_m['engagements'] / total_engagement_m)
 
 sov_df_m = grouped_df_m[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
 soe_df_m = grouped_df_m[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
@@ -540,18 +540,18 @@ df_q = df[(df['tdk_category'] == category) & (df['division'] == division) & (df[
 grouped_df_q = df_q.groupby('brand').agg({
     # Numerical columns: sum them
     'views': 'sum',
-    'engagement': 'sum',
+    'engagements': 'sum',
     'content': 'sum'
 })
 grouped_df_q = grouped_df_q.reset_index()
 
 # Calculate Total Views
 total_views_q = (grouped_df_q['views'].sum()).astype(int)
-total_engagement_q = (grouped_df_q['engagement'].sum()).astype(int)
+total_engagement_q = (grouped_df_q['engagements'].sum()).astype(int)
 
 # Calculate SOV (%)
 grouped_df_q['SOV%'] = (grouped_df_q['views'] / total_views_q)
-grouped_df_q['SOE%'] = (grouped_df_q['engagement'] / total_engagement_q)
+grouped_df_q['SOE%'] = (grouped_df_q['engagements'] / total_engagement_q)
 
 sov_df_q = grouped_df_q[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
 soe_df_q = grouped_df_q[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
@@ -579,18 +579,18 @@ df_y = df[(df['tdk_category'] == category) & (df['division'] == division) & (df[
 grouped_df_y = df_y.groupby('brand').agg({
     # Numerical columns: sum them
     'views': 'sum',
-    'engagement': 'sum',
+    'engagements': 'sum',
     'content': 'sum'
 })
 grouped_df_y = grouped_df_y.reset_index()
 
 # Calculate Total Views
 total_views_y = (grouped_df_y['views'].sum()).astype(int)
-total_engagement_y = (grouped_df_y['engagement'].sum()).astype(int)
+total_engagement_y = (grouped_df_y['engagements'].sum()).astype(int)
 
 # Calculate SOV (%)
 grouped_df_y['SOV%'] = (grouped_df_y['views'] / total_views_y)
-grouped_df_y['SOE%'] = (grouped_df_y['engagement'] / total_engagement_y)
+grouped_df_y['SOE%'] = (grouped_df_y['engagements'] / total_engagement_y)
 
 sov_df_y = grouped_df_y[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
 soe_df_y = grouped_df_y[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
@@ -616,7 +616,7 @@ stacked_data_views = df_y.pivot_table(index="month", columns="manufacturer", val
 stacked_data_views['Total'] = stacked_data_views.sum(axis=1)
 
 # Aggregate Views by Month and Manufacturer
-stacked_data_eng = df_y.pivot_table(index="month", columns="manufacturer", values="engagement", aggfunc="sum", fill_value=0)
+stacked_data_eng = df_y.pivot_table(index="month", columns="manufacturer", values="engagements", aggfunc="sum", fill_value=0)
 stacked_data_eng['Total'] = stacked_data_eng.sum(axis=1)
 
 # Sort months correctly
@@ -626,7 +626,7 @@ stacked_data_eng = stacked_data_eng.reindex(month_order)
 # Ad combo stacked bar chart
 combo_chart(ppt.slides[page_no], stacked_data_views, Inches(.1), Inches(2), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Views",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
-combo_chart(ppt.slides[page_no], stacked_data_eng, Inches(.1), Inches(5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - engagement",
+combo_chart(ppt.slides[page_no], stacked_data_eng, Inches(.1), Inches(5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Engagements",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True)
 
 # Add stacked bar chart
