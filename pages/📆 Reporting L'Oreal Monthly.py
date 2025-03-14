@@ -793,12 +793,14 @@ for i in range(page_no,len(ppt.slides)):
 file = (f'{category.upper()} MONTHLY REPORT - {month} {year}')
 filename = (f'{category.upper()} MONTHLY REPORT - {month} {year}.pptx')
 files = ppt.save(filename)
-st.write('Process Completed')
+st.write('✅ PPT Process Completed!')
 
 import smtplib
+import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
+today = datetime.datetime.now()
 
 # ✅ Gmail SMTP Configuration
 SMTP_SERVER = "smtp.gmail.com"
@@ -839,6 +841,6 @@ try:
     smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
     smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
     smtp.quit()
-    st.write("✅ Email sent successfully! on: " & now())
+    st.write("✅ Email sent successfully! on: " & today)
 except Exception as e:
     st.write(f"❌ Error: {e}")
