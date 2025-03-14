@@ -444,6 +444,8 @@ client = bigquery.Client(credentials=credentials, project=credentials.project_id
 query = """
 SELECT 
 date
+,month
+,years
 ,brand
 ,tdk_category
 ,division
@@ -455,6 +457,8 @@ FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
 WHERE years = {}
 GROUP BY 
 date
+,month
+,years
 ,brand
 ,tdk_category
 ,division
