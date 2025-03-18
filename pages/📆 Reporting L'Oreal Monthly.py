@@ -91,11 +91,11 @@ if st.button("Submit"):
 		for paragraph in title_text_frame.paragraphs:
 			paragraph.alignment = alignment
 			for run in paragraph.runs:
-	    			run.font.name = font_name
-	    			run.font.bold = font_bold
-	    			run.font.italic = font_italic
-	    			run.font.color.rgb = font_color
-	    			run.font.size = Pt(font_size)
+				run.font.name = font_name
+	    		run.font.bold = font_bold
+	    		run.font.italic = font_italic
+	    		run.font.color.rgb = font_color
+	    		run.font.size = Pt(font_size)
 		return title_shape
 
 	def pie_chart(slide,df,x,y,cx,cy,fontsize=9,legend_right = True, chart_title = False, title='',fontsize_title = Pt(20)):
@@ -523,7 +523,7 @@ if st.button("Submit"):
 	soe_df_m = grouped_df_m[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 
 # Add pie chart
-	st.write(sov_df_m.set_index('brand'))
+	#st.write(sov_df_m.set_index('brand'))
 	pie_chart(ppt.slides[page_no], sov_df_m.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], soe_df_m.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
@@ -563,6 +563,7 @@ if st.button("Submit"):
 	soe_df_q = grouped_df_q[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 
 # Add pie chart
+	st.write(sov_df_q.set_index('brand'))
 	pie_chart(ppt.slides[page_no], sov_df_q.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], soe_df_q.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
@@ -602,6 +603,7 @@ if st.button("Submit"):
 	soe_df_y = grouped_df_y[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 
 # Add pie chart
+	st.write(sov_df_y.set_index('brand'))
 	pie_chart(ppt.slides[page_no], sov_df_y.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], soe_df_y.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(5.7), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
@@ -630,9 +632,9 @@ if st.button("Submit"):
 	stacked_data_eng = stacked_data_eng.reindex(month_order)
 
 # Add combo stacked bar chart
-	combo_chart(ppt.slides[page_no], stacked_data_views, Inches(.1), Inches(2), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Views",
+	combo_chart(ppt.slides[page_no], stacked_data_views, Inches(.1), Inches(1.5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Views",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
-	combo_chart(ppt.slides[page_no], stacked_data_eng, Inches(.1), Inches(5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Engagements",
+	combo_chart(ppt.slides[page_no], stacked_data_eng, Inches(.1), Inches(4.5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Engagements",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True)
 	
 #------------PAGE6--------------
