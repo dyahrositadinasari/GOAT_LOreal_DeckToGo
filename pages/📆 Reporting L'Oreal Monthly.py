@@ -212,49 +212,43 @@ if st.button("Submit"):
 		return chart
 
 	def table_default(slide, df, left, top, width, height, width_row, height_row, header=True, upper=False, fontsize=10, alignment=PP_ALIGN.LEFT): # Function to add and format a table on a slide
-	    table_data = df.values.tolist()
-	    if header:
-	        header = df.columns.values.tolist()
-	        table_data.insert(0,header)
+		table_data = df.values.tolist()
+		if header:
+	    	header = df.columns.values.tolist()
+	    	table_data.insert(0,header)
 	
-	    table = slide.shapes.add_table(rows=len(table_data), cols=len(table_data[0]), left=left, top=top, width=width, height=height).table
+		table = slide.shapes.add_table(rows=len(table_data), cols=len(table_data[0]), left=left, top=top, width=width, height=height).table
 	
 	    # Fill table data
-	    for i, row in enumerate(table_data):
-	        for j, val in enumerate(row):
-	            cell = table.cell(i, j)
+		for i, row in enumerate(table_data):
+	    	for j, val in enumerate(row):
+	        	cell = table.cell(i, j)
 	            if isinstance(val, (int, float)):  # Check if it's a number
 	                text = f"{val:,}"  # Format with comma separators
 	            else:
 	                text = str(val).upper() if upper else str(val)
 	            cell.text = text
-	            # for i in range(len(cell.text_frame.paragraphs)):
-	            #     p = cell.text_frame.paragraphs[i]
-	            #     p.font.size = Pt(fontsize)  # Set font size
-	            #     p.alignment = alignment
-	            for paragraph in cell.text_frame.paragraphs:
-	                paragraph.alignment = alignment
-	                for run in paragraph.runs:
-	                    # run.font.name = font_name
-	                    # run.font.bold = font_bold
-	                    # run.font.color.rgb = font_color
-	                    run.font.size = Pt(fontsize)
-	            cell.text_frame.vertical_anchor = MSO_ANCHOR.MIDDLE
-	            # Set all margins to 0
-	            cell.text_frame.margin_left = 0
-	            cell.text_frame.margin_right = 0
-	            cell.text_frame.margin_top = 0
-	            cell.text_frame.margin_bottom = 0
+	            
+	    for paragraph in cell.text_frame.paragraphs:
+	        paragraph.alignment = alignment
+	        for run in paragraph.runs:
+				run.font.size = Pt(fontsize)
+	        cell.text_frame.vertical_anchor = MSO_ANCHOR.MIDDLE
+	        # Set all margins to 0
+	        cell.text_frame.margin_left = 0
+	        cell.text_frame.margin_right = 0
+	        cell.text_frame.margin_top = 0
+	        cell.text_frame.margin_bottom = 0
 	
 	        # Set the width of each column
-	        for i, column in enumerate(table.columns):
-	            column.width = width_row[i]
+		for i, column in enumerate(table.columns):
+	        column.width = width_row[i]
 	
 	        # Adjust the height of each row
-	        for row in table.rows:
-	            row.height = height_row # Set the height of each row
-	
-			return table
+	    for row in table.rows:
+	        row.height = height_row # Set the height of each row
+		
+		return table
 
 	def horizontal_bar_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
                          data_show=False, chart_title=False, title="", fontsize=Pt(12),
