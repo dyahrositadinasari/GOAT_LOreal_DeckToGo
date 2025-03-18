@@ -830,7 +830,7 @@ if st.button("Send Email"):
 		smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
 		smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
 		smtp.quit()
-		st.success(f"✅ Email sent successfully! on: {formatted_date}")
+		st.success(f"✅ Email sent successfully! on: {formatted_date} please expect email delay around 10 minutes")
 	except Exception as e:
 		st.error(f"❌ Error: {e}")
 			
