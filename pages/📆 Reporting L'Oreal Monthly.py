@@ -319,98 +319,97 @@ if st.button("Submit"):
                 data_show=False, chart_title=False, title="", fontsize=Pt(10), fontsize_title=Pt(12),
                 line_width=Pt(1), smooth=False, font_name='Neue Haas Grotesk Text Pro'):
 
-	    df.fillna(0, inplace=True)  # Fill NaN values
+		df.fillna(0, inplace=True)  # Fill NaN values
 	
 	    # Split Data: Stacked Bar Chart (Categories) & Line Chart (Total)
-	    df_categories = df.iloc[:, :-1]  # Exclude 'Total' column for bars
-	    df_total = df.iloc[:, -1]        # Only 'Total' column for line chart
+		df_categories = df.iloc[:, :-1]  # Exclude 'Total' column for bars
+		df_total = df.iloc[:, -1]        # Only 'Total' column for line chart
 	
 	    # Stacked Bar Chart Data
-	    chart_data = CategoryChartData()
-	    chart_data.categories = df.index  # Use index as categories (e.g., Months)
+		chart_data = CategoryChartData()
+		chart_data.categories = df.index  # Use index as categories (e.g., Months)
 	
-	    for category in df_categories.columns:
-	        chart_data.add_series(category, df_categories[category].values.tolist())
+		for category in df_categories.columns:
+	    	chart_data.add_series(category, df_categories[category].values.tolist())
 	
 	    # Add Stacked Bar Chart
-	    chart_shape = slide.shapes.add_chart(
-	        XL_CHART_TYPE.COLUMN_STACKED, x, y, cx, cy, chart_data
+		chart_shape = slide.shapes.add_chart(
+			XL_CHART_TYPE.COLUMN_STACKED, x, y, cx, cy, chart_data
 	    )
-	    chart = chart_shape.chart
+		chart = chart_shape.chart
 	
-	    chart.value_axis.tick_labels.font.size = fontsize
-	    chart.category_axis.tick_labels.font.size = fontsize
-	    chart.value_axis.tick_labels.number_format = "#,##0"  # Thousands separator
-	    chart.value_axis.has_major_gridlines = False
+		chart.value_axis.tick_labels.font.size = fontsize
+		chart.category_axis.tick_labels.font.size = fontsize
+		chart.value_axis.tick_labels.number_format = "#,##0"  # Thousands separator
+		chart.value_axis.has_major_gridlines = False
 	
 	    # Add percentage labels inside bars
-	    df_percent = df_categories.div(df_total, axis=0) * 100
-	    for series, category in zip(chart.series, df_percent.columns):
-	        series.data_labels.show_category_name = False
-	        series.data_labels.show_value = True
-	        series.data_labels.font.size = fontsize
-	        for point, percent in zip(series.points, df_percent[category]):
-	            point.has_data_label = False
-	            point.data_label.font.size = fontsize
-	            point.data_label.text_frame.text = f"{percent:.0f}%"  # Format as percentage
-	
+		df_percent = df_categories.div(df_total, axis=0) * 100
+		for series, category in zip(chart.series, df_percent.columns):
+			series.data_labels.show_category_name = False
+			series.data_labels.show_value = True
+			series.data_labels.font.size = fontsize
+			for point, percent in zip(series.points, df_percent[category]):
+				point.has_data_label = False
+				point.data_label.font.size = fontsize
+				point.data_label.text_frame.text = f"{percent:.0f}%"  # Format as percentage
 	
 	    # Add legend
-	    if legend:
-	        chart.has_legend = True
-	        chart.legend.include_in_layout = False
-	        chart.legend.position = legend_position
-	        chart.legend.font.size = fontsize
+		if legend:
+			chart.has_legend = True
+			chart.legend.include_in_layout = False
+			chart.legend.position = legend_position
+			chart.legend.font.size = fontsize
 	
 	    # Line Chart Data (Total)
-	    line_chart_data = CategoryChartData()
-	    line_chart_data.categories = df.index
-	    line_chart_data.add_series("Total", df_total.values.tolist())
+		line_chart_data = CategoryChartData()
+		line_chart_data.categories = df.index
+		line_chart_data.add_series("Total", df_total.values.tolist())
 	
 	    # Add Line Chart Overlay
-	    line_chart_shape = slide.shapes.add_chart(
-	        XL_CHART_TYPE.LINE, x, y, cx, cy, line_chart_data
+		line_chart_shape = slide.shapes.add_chart(
+			XL_CHART_TYPE.LINE, x, y, cx, cy, line_chart_data
 	    )
-	    line_chart = line_chart_shape.chart
+		line_chart = line_chart_shape.chart
 	
 	    # Remove X-axis and Gridlines from Line Chart
-	    line_chart.category_axis.visible = False # Remove X-axis
-	    line_chart.value_axis.visible = False # Remove Y-axis
-	    line_chart.value_axis.has_major_gridlines = False # Remove gridlines
-	    line_chart.category_axis.has_major_gridlines = False # Remove gridlines
-	    line_chart.has_legend = False  # Remove legend
-	    line_chart.has_title = False  # Remove chart title
-	    line_chart.value_axis.tick_labels.number_format = '""'  # Hide Y-axis labels
+		line_chart.category_axis.visible = False # Remove X-axis
+		line_chart.value_axis.visible = False # Remove Y-axis
+		line_chart.value_axis.has_major_gridlines = False # Remove gridlines
+		line_chart.category_axis.has_major_gridlines = False # Remove gridlines
+		line_chart.has_legend = False  # Remove legend
+		line_chart.has_title = False  # Remove chart title
+		line_chart.value_axis.tick_labels.number_format = '""'  # Hide Y-axis labels
 	
 	
 	    # Add Data Labels to Line Chart
-	    for series in line_chart.series:
-	        series.has_data_labels = True
-	        for point in series.points:
-	            point.has_data_label = True
-	            point.data_label.number_format = "#,##0"  # Thousands separator
+		for series in line_chart.series:
+			series.has_data_labels = True
+			for point in series.points:
+				point.has_data_label = True
+				point.data_label.number_format = "#,##0"  # Thousands separator
 	
 	    # Apply Smooth Line if required
-	    if smooth:
-	        for series in line_chart.series:
-	            series.smooth = True
+		if smooth:
+			for series in line_chart.series:
+				series.smooth = True
 	
 	    # Set Line Chart Color and Style
-	    line_series = line_chart.series[0]
-	    line_series.marker.style = XL_MARKER_STYLE.CIRCLE
-	    line_series.marker.format.fill.solid()
-	    line_series.marker.format.fill.fore_color.rgb = RGBColor(78, 167, 46)
-	    line_series.format.line.width = line_width
-	    line_series.format.line.fill.solid()
-	    line_series.format.line.fill.fore_color.rgb = RGBColor(78, 167, 46)  # Green lime
+		line_series = line_chart.series[0]
+		line_series.marker.style = XL_MARKER_STYLE.CIRCLE
+		line_series.marker.format.fill.solid()
+		line_series.marker.format.fill.fore_color.rgb = RGBColor(78, 167, 46)
+		line_series.format.line.width = line_width
+		line_series.format.line.fill.solid()
+		line_series.format.line.fill.fore_color.rgb = RGBColor(78, 167, 46)  # Green lime
 	
 	    # Add Chart Title
-	    if chart_title:
-	        chart.chart_title.text_frame.text = title
-	        chart.chart_title.text_frame.paragraphs[0].font.size = fontsize_title
-	        chart.chart_title.text_frame.paragraphs[0].font.bold = True
-	    else:
-	        chart.has_title = False
+		if chart_title:
+			chart.chart_title.text_frame.text = title
+			chart.chart_title.text_frame.paragraphs[0].font.size = fontsize_title
+			chart.chart_title.text_frame.paragraphs[0].font.bold = True
+		else:
+			chart.has_title = False
 		
 		return chart
 
