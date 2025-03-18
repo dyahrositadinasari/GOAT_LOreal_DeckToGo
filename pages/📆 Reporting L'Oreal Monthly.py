@@ -794,8 +794,8 @@ if "report_filename" in st.session_state:
         EMAIL_PASS = "koxp pzgm ixws ihek"
 
         # ✅ Email Details
-		send_to = ["dyah.dinasari@groupm.com"]  # Replace with recipient email(s)
-        subject = "Test Email with Attachment"
+        send_to = ["dyah.dinasari@groupm.com"]		
+        subject = "[Test] m-Slide Goat-L'Oreal"
         body = """Hi team,
 
         This is a test email sent via Python SMTP.
