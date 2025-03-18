@@ -411,8 +411,8 @@ if st.button("Submit"):
 	        chart.chart_title.text_frame.paragraphs[0].font.bold = True
 	    else:
 	        chart.has_title = False
-	
-		return chart
+		
+	return chart
 
 	def adjust_dataframe(df, columns, index=False):
 		# Combine existing and desired columns/index
