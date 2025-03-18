@@ -91,10 +91,10 @@ if st.button("Submit"):
 	def pie_chart(slide,df,x,y,cx,cy,fontsize=9,legend_right = True, chart_title = False, title='',fontsize_title = Pt(20)):
 		df.fillna(0, inplace = True) #fill nan
 	  	# Convert the transposed DataFrame into chart data
-	  	chart_data = CategoryChartData()
+		chart_data = CategoryChartData()
 	  	# Add the brand names as categories to the chart data
 	  	for i in df.transpose().columns:
-	    	chart_data.add_category(i)
+	    		chart_data.add_category(i)
 	  	# Add the SOV values as series to the chart data
 	  	for index, row in df.transpose().iterrows():
 	    	chart_data.add_series(index, row.values)
