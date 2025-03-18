@@ -263,34 +263,34 @@ if st.button("Submit"):
 			chart_data.add_series(col, np.where(df[col].values == 0, None, df[col].values))
 	
 	    # Create horizontal bar chart
-	    chart = slide.shapes.add_chart(XL_CHART_TYPE.BAR_CLUSTERED, x, y, cx, cy, chart_data).chart
+		chart = slide.shapes.add_chart(XL_CHART_TYPE.BAR_CLUSTERED, x, y, cx, cy, chart_data).chart
 	
 	    # Add legend
-	    if legend:
-	        chart.has_legend = True
-	        chart.legend.include_in_layout = False
-	        chart.legend.position = legend_position
-	        chart.legend.font.size = fontsize
-	    else:
-	        chart.has_legend = False
+		if legend:
+			chart.has_legend = True
+			chart.legend.include_in_layout = False
+			chart.legend.position = legend_position
+			chart.legend.font.size = fontsize
+		else:
+			chart.has_legend = False
 	
 	    # Show data labels
 		if data_show:
-	        for series in chart.series:
-	            for point in series.points:
-	                point.data_label.show_value = True
-	                point.data_label.font.size = fontsize
-	                point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
+			for series in chart.series:
+	        	for point in series.points:
+	            	point.data_label.show_value = True
+	            	point.data_label.font.size = fontsize
+	            	point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
 	
 	    # Customize category axis (y-axis) label font size
-	    chart.category_axis.tick_labels.font.size = fontsize
+		chart.category_axis.tick_labels.font.size = fontsize
 	
 	    # Customize value axis (x-axis) label font size and format
-	    chart.value_axis.tick_labels.font.size = fontsize
+		chart.value_axis.tick_labels.font.size = fontsize
 		if percentage:
-	        chart.value_axis.tick_labels.number_format = '0%'
-	    elif df.max().max() >= 1000:
-	    	chart.value_axis.tick_labels.number_format = '#,##0'  # Add commas for thousands
+			chart.value_axis.tick_labels.number_format = '0%'
+		elif df.max().max() >= 1000:
+			chart.value_axis.tick_labels.number_format = '#,##0'  # Add commas for thousands
 	
 	    # Adjust bar width
 		for series in chart.series:
