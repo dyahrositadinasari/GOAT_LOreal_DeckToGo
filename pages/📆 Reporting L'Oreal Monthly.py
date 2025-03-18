@@ -782,6 +782,9 @@ if st.button("Submit"):
 # Send Email Button (Only appears after submitting)
 if "report_filename" in st.session_state:
 	filename = st.session_state["report_filename"]
+else:
+	st.error("❌ Error: No file generated yet. Please generate the report first.")
+	st.stop()  # Stop execution if filename is missing
 		
 if st.button("Send Email"):
 	wib = pytz.timezone("Asia/Jakarta")
@@ -800,8 +803,8 @@ if st.button("Send Email"):
         
 		This is a test email sent via Python SMTP.
         
-		Regards,
-		Dyah Dinasari"""
+	Regards,
+	Dyah Dinasari"""
 
 	# ✅ Create Email Message
 	msg = MIMEMultipart()
