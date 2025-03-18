@@ -128,7 +128,7 @@ if st.button("Submit"):
 					series.data_labels.position = XL_LABEL_POSITION.BEST_FIT
 					series.data_labels.show_category_name = True
 	
-	return chart
+		return chart
 
 	def line_marker_chart(slide,df,x,y,cx,cy, legend = True, legend_position = XL_LEGEND_POSITION.RIGHT,
                       data_show = False, chart_title = False, title ="", fontsize = Pt(12),
@@ -209,7 +209,7 @@ if st.button("Submit"):
 		if percentage:
 			category_axis.tick_labels.NumberFormat = '0"%"'
 	
-	return chart
+		return chart
 
 	def table_default(slide, df, left, top, width, height, width_row, height_row, header=True, upper=False, fontsize=10, alignment=PP_ALIGN.LEFT): # Function to add and format a table on a slide
 	    table_data = df.values.tolist()
@@ -254,7 +254,7 @@ if st.button("Submit"):
 	        for row in table.rows:
 	            row.height = height_row # Set the height of each row
 	
-	    return table
+		return table
 
 	def horizontal_bar_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
                          data_show=False, chart_title=False, title="", fontsize=Pt(12),
@@ -304,11 +304,11 @@ if st.button("Submit"):
 	
 	    # Set chart title
 	    if chart_title:
-	        chart.chart_title.text_frame.text = title
-	        title_font = chart.chart_title.text_frame.paragraphs[0].font
-	        title_font.bold = True
-	        title_font.size = fontsize_title
-	    else:
+			chart.chart_title.text_frame.text = title
+			title_font = chart.chart_title.text_frame.paragraphs[0].font
+			title_font.bold = True
+			title_font.size = fontsize_title
+		else:
 	        chart.has_title = False
 	
 	    # Remove Gridlines
@@ -319,7 +319,7 @@ if st.button("Submit"):
 	    category_axis.has_major_gridlines = False
 	    category_axis.has_minor_gridlines = False
 	
-	    return chart
+		return chart
 
 	def combo_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.TOP,
                 data_show=False, chart_title=False, title="", fontsize=Pt(10), fontsize_title=Pt(12),
