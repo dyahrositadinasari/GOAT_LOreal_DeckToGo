@@ -776,7 +776,7 @@ else:
   
 #st.write('✅ PPT Process Completed!')
   # Store filename in session state for later use
-	st.session_state["report_filename"] = filename
+	st.session_state["report_filename"] = 'filename'
 	# ✅ Send Email Button (Only appears after submitting)
 	if "report_filename" in st.session_state:
 		if st.button("Send Email"):
