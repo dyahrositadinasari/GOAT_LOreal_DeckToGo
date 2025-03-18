@@ -780,21 +780,21 @@ if st.button("Submit"):
 
 	# ✅ Send Email Button (Only appears after submitting)
 	if "report_filename" in st.session_state:
-    	if st.button("Send Email"):
-        	wib = pytz.timezone("Asia/Jakarta")
-        	now = datetime.now(wib)
-        	formatted_date = now.strftime("%Y-%m-%d %H:%M")
+		if st.button("Send Email"):
+			wib = pytz.timezone("Asia/Jakarta")
+			now = datetime.now(wib)
+			formatted_date = now.strftime("%Y-%m-%d %H:%M")
 
         	# ✅ Gmail SMTP Configuration
-        	SMTP_SERVER = "smtp.gmail.com"
-        	SMTP_PORT = 587
-        	EMAIL_USER = "dyah.dinasari.groupm@gmail.com"
-        	EMAIL_PASS = "koxp pzgm ixws ihek"
+			SMTP_SERVER = "smtp.gmail.com"
+			SMTP_PORT = 587
+			EMAIL_USER = "dyah.dinasari.groupm@gmail.com"
+			EMAIL_PASS = "koxp pzgm ixws ihek"
 
         	# ✅ Email Details
-        	send_to = ["dyah.dinasari@groupm.com"]		
-        	subject = "[Test] m-Slide Goat-L'Oreal"
-        	body = """Hi team,
+			send_to = ["dyah.dinasari@groupm.com"]		
+			subject = "[Test] m-Slide Goat-L'Oreal"
+			body = """Hi team,
 
         	This is a test email sent via Python SMTP.
 
@@ -802,31 +802,31 @@ if st.button("Submit"):
         	Dyah Dinasari"""
 
         	# ✅ Create Email Message
-        	msg = MIMEMultipart()
-        	msg["From"] = EMAIL_USER
-        	msg["To"] = ", ".join(send_to)
-        	msg["Subject"] = subject
-        	msg.attach(MIMEText(body, "plain"))
+			msg = MIMEMultipart()
+			msg["From"] = EMAIL_USER
+			msg["To"] = ", ".join(send_to)
+			msg["Subject"] = subject
+			msg.attach(MIMEText(body, "plain"))
 
         	# ✅ Attach the PowerPoint File
-        	if os.path.exists(filename):  # Check if the file exists
-            	with open(filename, "rb") as file:
-                	part = MIMEApplication(file.read(), Name=os.path.basename(filename))
-                	part["Content-Disposition"] = f'attachment; filename="{os.path.basename(filename)}"'
-                	msg.attach(part)
-        	else:
-            	st.write(f"⚠ Warning: File '{filename}' not found. Email will be sent without attachment.")
+			if os.path.exists(filename):  # Check if the file exists
+				with open(filename, "rb") as file:
+					part = MIMEApplication(file.read(), Name=os.path.basename(filename))
+					part["Content-Disposition"] = f'attachment; filename="{os.path.basename(filename)}"'
+					msg.attach(part)
+			else:
+				st.write(f"⚠ Warning: File '{filename}' not found. Email will be sent without attachment.")
 
         	# ✅ Send Email via Gmail SMTP
-        	try:
-            	smtp = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-            	smtp.starttls()  # Secure the connection
-            	smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
-            	smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
-            	smtp.quit()
-            	st.write(f"✅ Email sent successfully! on: {formatted_date}")
-        	except Exception as e:
-            	st.write(f"❌ Error: {e}")
+			try:
+				smtp = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+				smtp.starttls()  # Secure the connection
+				smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
+				smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
+				smtp.quit()
+				st.write(f"✅ Email sent successfully! on: {formatted_date}")
+			except Exception as e:
+				st.write(f"❌ Error: {e}")
 
 else:
 	st.warning("⚠ Please fill in the details and click 'Submit'.")
