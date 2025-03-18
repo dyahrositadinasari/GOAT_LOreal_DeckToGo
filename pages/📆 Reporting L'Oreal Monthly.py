@@ -327,10 +327,9 @@ if st.button("Submit"):
 	
 	    # Stacked Bar Chart Data
 		chart_data = CategoryChartData()
-		chart_data.categories = df.index  # Use index as categories (e.g., Months)
-	
+		chart_data.categories = df.index  # Use index as categories (e.g., Months)	
 		for category in df_categories.columns:
-	    	chart_data.add_series(category, df_categories[category].values.tolist())
+			chart_data.add_series(category, df_categories[category].values.tolist())
 	
 	    # Add Stacked Bar Chart
 		chart_shape = slide.shapes.add_chart(
