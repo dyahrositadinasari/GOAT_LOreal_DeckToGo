@@ -264,7 +264,7 @@ if st.button("Submit"):
 		for row in table.rows:
 			row.height = height_row # Set the height of each row
 		
-	return table
+		return table
 
 	def horizontal_bar_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
 							 data_show=False, chart_title=False, title="", fontsize=Pt(12),
