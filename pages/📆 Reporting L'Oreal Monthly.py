@@ -482,7 +482,7 @@ if st.button("Submit"):
 
 	uploaded_file = st.file_uploader("Upload a PowerPoint file", type=["pptx"])
 	if uploaded_file is not None:
-    	st.success("File uploaded successfully!")
+		st.success("File uploaded successfully!")
   
 	ppt = Presentation(uploaded_file)
 
