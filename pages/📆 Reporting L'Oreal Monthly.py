@@ -239,30 +239,24 @@ if st.button("Submit"):
 				else:
 					text = str(val).upper() if upper else str(val)
 				cell.text = text
-        
-		# ✅ Ensure there is at least one run in the paragraph
-		if len(cell.text_frame.paragraphs[0].runs) == 0:
-			cell.text_frame.paragraphs[0].add_run()
-				
-		for paragraph in cell.text_frame.paragraphs:
-			paragraph.alignment = alignment
-			for run in paragraph.runs:
-				run.font.size = Pt(fontsize)
+				for paragraph in cell.text_frame.paragraphs:
+					paragraph.alignment = alignment
+					for run in paragraph.runs:
+						run.font.size = Pt(fontsize)
 
-		cell.text_frame.vertical_anchor = MSO_ANCHOR.MIDDLE
-	    # Set all margins to 0
-		cell.text_frame.margin_left = 0
-		cell.text_frame.margin_right = 0
-		cell.text_frame.margin_top = 0
-		cell.text_frame.margin_bottom = 0
+				cell.text_frame.vertical_anchor = MSO_ANCHOR.MIDDLE
+			    # Set all margins to 0
+				cell.text_frame.margin_left = 0
+				cell.text_frame.margin_right = 0
+				cell.text_frame.margin_top = 0
+				cell.text_frame.margin_bottom = 0
 	
-	    # Set the width of each column
-		for i, column in enumerate(table.columns):
+	    	# Set the width of each column
+			for i, column in enumerate(table.columns):
 			column.width = width_row[i]
-	
-	    # Adjust the height of each row
-		for row in table.rows:
-			row.height = height_row # Set the height of each row
+			# Adjust the height of each row
+			for row in table.rows:
+				row.height = height_row # Set the height of each row
 		
 		return table
 
