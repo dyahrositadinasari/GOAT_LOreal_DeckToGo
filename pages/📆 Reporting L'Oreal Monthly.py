@@ -304,7 +304,7 @@ if st.button("Submit"):
 			title_font.bold = True
 			title_font.size = fontsize_title
 		else:
-	        chart.has_title = False
+			chart.has_title = False
 	
 	    # Remove Gridlines
 	    value_axis = chart.value_axis
