@@ -104,29 +104,29 @@ if st.button("Submit"):
 	  	
 		if chart_title:
 			chart.has_title = True
-	    		chart.chart_title.text_frame.text = title
-	    		title_font = chart.chart_title.text_frame.paragraphs[0].font
-	    		title_font.bold = True
-	    		title_font.size = fontsize_title
+			chart.chart_title.text_frame.text = title
+			title_font = chart.chart_title.text_frame.paragraphs[0].font
+			title_font.bold = True
+			title_font.size = fontsize_title
 	    		# chart.chart_title.text_frame.paragraphs[0].font.size = Pt(10)  # Set font size to 24pt
 	    		# chart.chart_title.text_frame.paragraphs[0].font.color.rgb = RGBColor(0,0,0)  # Set font color to black
-	  	else:
-	    		chart.has_title = False
+		else:
+			chart.has_title = False
 	
-	  	if chart.has_legend:
-	    	chart.legend.include_in_layout = False
-	    	chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM
-	    	chart.legend.font.size = Pt(fontsize)
+		if chart.has_legend:
+			chart.legend.include_in_layout = False
+			chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM
+			chart.legend.font.size = Pt(fontsize)
 	
 		for series in chart.plots[0].series:
-	  		for i, val in enumerate(series.values):
-	    		if val == 0:
-	      			series.points[i].data_label.has_text_frame = True
-	      	series.data_labels.show_value = True
-	      	series.data_labels.font.size = Pt(fontsize)
-	      	series.data_labels.number_format = '0%'
-	      	series.data_labels.position = XL_LABEL_POSITION.BEST_FIT
-	      	series.data_labels.show_category_name = True
+			for i, val in enumerate(series.values):
+				if val == 0:
+					series.points[i].data_label.has_text_frame = True
+					series.data_labels.show_value = True
+					series.data_labels.font.size = Pt(fontsize)
+					series.data_labels.number_format = '0%'
+					series.data_labels.position = XL_LABEL_POSITION.BEST_FIT\
+					series.data_labels.show_category_name = True
 	
 	return chart
 
@@ -135,82 +135,79 @@ if st.button("Submit"):
                       fontsize_title = Pt(14), percentage = False, line_width = Pt(1), smooth=False):
 		df.fillna(0, inplace = True) #fill nan
 	  # Define chart data
-	  chart_data = CategoryChartData()
-	  # for i in df.columns:
-	  #     chart_data.add_category(i)
-	  # for j, row in df.iterrows():
-	  #     chart_data.add_series(j, row.values)
-	  for i in df.columns:
-	  	chart_data.add_category(i)
-	  for j, row in df.iterrows():
-	    chart_data.add_series(j,np.where(row.values == 0, None, row.values))
+		chart_data = CategoryChartData()
+
+		for i in df.columns:
+			chart_data.add_category(i)
+		for j, row in df.iterrows():
+			chart_data.add_series(j,np.where(row.values == 0, None, row.values))
 	
-	  chart = slide.shapes.add_chart(XL_CHART_TYPE.LINE, x, y, cx, cy, chart_data).chart
+		chart = slide.shapes.add_chart(XL_CHART_TYPE.LINE, x, y, cx, cy, chart_data).chart
 	
 	  # smoothing
-	  if smooth: # Smooth the lines
-	  	for series in chart.series:
-	        series.smooth = True
+		if smooth: # Smooth the lines
+			for series in chart.series:
+				series.smooth = True
 
 	  # Add legend
-	  if legend:
-	    chart.has_legend = True
-	    chart.legend.include_in_layout = False
-	    chart.legend.position = legend_position
-	    chart.legend.font.size = fontsize  # assuming Pt is imported from pptx.util
-	  else:
-	    chart.has_legend = False
+		if legend:
+			chart.has_legend = True
+			chart.legend.include_in_layout = False
+			chart.legend.position = legend_position
+			chart.legend.font.size = fontsize  # assuming Pt is imported from pptx.util
+		else:
+			chart.has_legend = False
 	
-	  if data_show:
-	  	for series in chart.plots[0].series:
-	    	for i, val in enumerate(series.values):
-	      	if val == 0:
-	        	series.points[i].data_label.has_text_frame = True
-	        series.data_labels.show_value = True
-	        series.data_labels.font.size = fontsize
-	        # series.data_labels.number_format = '0.00%'
-	        series.data_labels.position = XL_LABEL_POSITION.ABOVE
+		if data_show:
+			for series in chart.plots[0].series:
+				for i, val in enumerate(series.values):
+					if val == 0:
+						series.points[i].data_label.has_text_frame = True
+				series.data_labels.show_value = True
+				series.data_labels.font.size = fontsize
+	      # series.data_labels.number_format = '0.00%'
+				series.data_labels.position = XL_LABEL_POSITION.ABOVE
 	
-	  for series in chart.series:
+		for series in chart.series:
 			series.marker.style = XL_MARKER_STYLE.CIRCLE
-	    series.format.line.width = line_width # custom line width
+			series.format.line.width = line_width # custom line width
 	
 	  # Customize y-axis format
-	  chart.value_axis.tick_labels.font.size = fontsize  # Set font size for tick labels
+		chart.value_axis.tick_labels.font.size = fontsize  # Set font size for tick labels
 	
 	  # Set font size for category axis (months)
-	  chart.category_axis.tick_labels.font.size = fontsize  # Set font size for category axis labels
+		chart.category_axis.tick_labels.font.size = fontsize  # Set font size for category axis labels
 	
 	  # Find the maximum value across all series
-	  max_value = 0
-	  for series in chart.plots[0].series:
-	  	try:
-	    	series_max = max(series.values)
-	    except:
-	      series_max = 0
-	  	max_value = max(max_value, series_max)
+		max_value = 0
+		for series in chart.plots[0].series:
+			try:
+				series_max = max(series.values)
+			except:
+				series_max = 0
+			max_value = max(max_value, series_max)
 	
-	  if max_value >= 1000:
-	        chart.value_axis.tick_labels.number_format = '#,##0'  # add commas to separate thousands
+		if max_value >= 1000:
+			chart.value_axis.tick_labels.number_format = '#,##0'  # add commas to separate thousands
 	
-	  if chart_title:
-	  	chart.chart_title.text_frame.text = title # Set the title text
-	    title_font = chart.chart_title.text_frame.paragraphs[0].font
-	    title_font.bold = True
-	    title_font.size = fontsize_title
-	  else:
+		if chart_title:
+			chart.chart_title.text_frame.text = title # Set the title text
+			title_font = chart.chart_title.text_frame.paragraphs[0].font
+			title_font.bold = True
+			title_font.size = fontsize_title
+		else:
 	    chart.has_title = False
 	
 	  # Remove Gridlines (Line Chart Specific)
-	  value_axis = chart.value_axis
-	  category_axis = chart.category_axis
-	  value_axis.has_major_gridlines = False
-	  value_axis.has_minor_gridlines = False
-	  category_axis.has_major_gridlines = False
-	  category_axis.has_minor_gridlines = False
+		value_axis = chart.value_axis
+		category_axis = chart.category_axis
+		value_axis.has_major_gridlines = False
+		value_axis.has_minor_gridlines = False
+		category_axis.has_major_gridlines = False
+		category_axis.has_minor_gridlines = False
 	
-	  if percentage:
-	    category_axis.tick_labels.NumberFormat = '0"%"'
+		if percentage:
+			category_axis.tick_labels.NumberFormat = '0"%"'
 	
 	return chart
 
