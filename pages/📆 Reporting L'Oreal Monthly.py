@@ -253,7 +253,7 @@ if st.button("Submit"):
 	
 	    	# Set the width of each column
 			for i, column in enumerate(table.columns):
-			column.width = width_row[i]
+				column.width = width_row[i]
 			# Adjust the height of each row
 			for row in table.rows:
 				row.height = height_row # Set the height of each row
