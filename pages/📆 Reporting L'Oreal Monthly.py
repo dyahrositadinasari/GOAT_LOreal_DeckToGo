@@ -92,10 +92,10 @@ if st.button("Submit"):
 			paragraph.alignment = alignment
 			for run in paragraph.runs:
 				run.font.name = font_name
-	    		run.font.bold = font_bold
-	    		run.font.italic = font_italic
-	    		run.font.color.rgb = font_color
-	    		run.font.size = Pt(font_size)
+				run.font.bold = font_bold
+				run.font.italic = font_italic
+				run.font.color.rgb = font_color
+				run.font.size = Pt(font_size)
 		return title_shape
 
 	def pie_chart(slide,df,x,y,cx,cy,fontsize=9,legend_right = True, chart_title = False, title='',fontsize_title = Pt(20)):
