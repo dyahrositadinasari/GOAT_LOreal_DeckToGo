@@ -125,7 +125,7 @@ if st.button("Submit"):
 					series.data_labels.show_value = True
 					series.data_labels.font.size = Pt(fontsize)
 					series.data_labels.number_format = '0%'
-					series.data_labels.position = XL_LABEL_POSITION.BEST_FIT\
+					series.data_labels.position = XL_LABEL_POSITION.BEST_FIT
 					series.data_labels.show_category_name = True
 	
 	return chart
