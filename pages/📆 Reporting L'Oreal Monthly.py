@@ -276,7 +276,7 @@ if st.button("Submit"):
 	        chart.has_legend = False
 	
 	    # Show data labels
-	    if data_show:
+		if data_show:
 	        for series in chart.series:
 	            for point in series.points:
 	                point.data_label.show_value = True
@@ -288,17 +288,17 @@ if st.button("Submit"):
 	
 	    # Customize value axis (x-axis) label font size and format
 	    chart.value_axis.tick_labels.font.size = fontsize
-	    if percentage:
+		if percentage:
 	        chart.value_axis.tick_labels.number_format = '0%'
 	    elif df.max().max() >= 1000:
-	        chart.value_axis.tick_labels.number_format = '#,##0'  # Add commas for thousands
+	    	chart.value_axis.tick_labels.number_format = '#,##0'  # Add commas for thousands
 	
 	    # Adjust bar width
-        for series in chart.series:
-            series.format.line.width = bar_width
+		for series in chart.series:
+			series.format.line.width = bar_width
 	
-	    # Set chart title
-        if chart_title:
+		# Set chart title
+		if chart_title:
 			chart.chart_title.text_frame.text = title
 			title_font = chart.chart_title.text_frame.paragraphs[0].font
 			title_font.bold = True
