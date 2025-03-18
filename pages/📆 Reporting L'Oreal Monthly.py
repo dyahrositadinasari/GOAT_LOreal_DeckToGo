@@ -277,10 +277,10 @@ if st.button("Submit"):
 	    # Show data labels
 		if data_show:
 			for series in chart.series:
-	        	for point in series.points:
-	            	point.data_label.show_value = True
-	            	point.data_label.font.size = fontsize
-	            	point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
+				for point in series.points:
+					point.data_label.show_value = True
+					point.data_label.font.size = fontsize
+					point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
 	
 	    # Customize category axis (y-axis) label font size
 		chart.category_axis.tick_labels.font.size = fontsize
@@ -306,12 +306,12 @@ if st.button("Submit"):
 			chart.has_title = False
 	
 	    # Remove Gridlines
-	    value_axis = chart.value_axis
-	    category_axis = chart.category_axis
-	    value_axis.has_major_gridlines = False
-	    value_axis.has_minor_gridlines = False
-	    category_axis.has_major_gridlines = False
-	    category_axis.has_minor_gridlines = False
+		value_axis = chart.value_axis
+		category_axis = chart.category_axis
+		value_axis.has_major_gridlines = False
+		value_axis.has_minor_gridlines = False
+		category_axis.has_major_gridlines = False
+		category_axis.has_minor_gridlines = False
 	
 		return chart
 
