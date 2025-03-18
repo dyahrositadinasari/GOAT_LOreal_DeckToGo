@@ -214,8 +214,8 @@ if st.button("Submit"):
 	def table_default(slide, df, left, top, width, height, width_row, height_row, header=True, upper=False, fontsize=10, alignment=PP_ALIGN.LEFT): # Function to add and format a table on a slide
 		table_data = df.values.tolist()
 		if header:
-	    	header = df.columns.values.tolist()
-	    	table_data.insert(0,header)
+			header = df.columns.values.tolist()
+			table_data.insert(0,header)
 	
 		table = slide.shapes.add_table(rows=len(table_data), cols=len(table_data[0]), left=left, top=top, width=width, height=height).table
 	
