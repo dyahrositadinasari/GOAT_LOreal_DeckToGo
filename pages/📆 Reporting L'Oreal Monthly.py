@@ -112,15 +112,15 @@ if st.button("Submit"):
 	  	else:
 	    		chart.has_title = False
 	
-	  if chart.has_legend:
-	    chart.legend.include_in_layout = False
-	    chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM
-	    chart.legend.font.size = Pt(fontsize)
+	  	if chart.has_legend:
+	    	chart.legend.include_in_layout = False
+	    	chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM
+	    	chart.legend.font.size = Pt(fontsize)
 	
 		for series in chart.plots[0].series:
-	  	for i, val in enumerate(series.values):
-	    	if val == 0:
-	      	series.points[i].data_label.has_text_frame = True
+	  		for i, val in enumerate(series.values):
+	    		if val == 0:
+	      			series.points[i].data_label.has_text_frame = True
 	      	series.data_labels.show_value = True
 	      	series.data_labels.font.size = Pt(fontsize)
 	      	series.data_labels.number_format = '0%'
