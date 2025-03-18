@@ -777,6 +777,7 @@ if st.button("Submit"):
 
 	# Store filename in session state for later use
 	st.session_state["report_filename"] = filename
+	formatted_date = now.strftime("%Y-%m-%d %H:%M")
 
 	# Send Email Button (Only appears after submitting)
 	if "report_filename" in st.session_state:
@@ -788,7 +789,6 @@ if st.button("Submit"):
 	if st.button("Send Email"):
 		wib = pytz.timezone("Asia/Jakarta")
 		now = datetime.now(wib)
-		formatted_date = now.strftime("%Y-%m-%d %H:%M")
 
         # Gmail SMTP Configuration
 		SMTP_SERVER = "smtp.gmail.com"
