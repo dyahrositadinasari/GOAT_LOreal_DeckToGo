@@ -65,6 +65,10 @@ brands = st.multiselect(
 ,max_selections=3
 )
 
+uploaded_file = st.file_uploader("Upload a PowerPoint file", type=["pptx"])
+if uploaded_file is not None:
+	st.success("File uploaded successfully!")
+
 st.write("Selected Year : ", year)
 st.write("Selected Year_ : ", year_map)
 st.write("Selected Month : ", month)
@@ -474,11 +478,7 @@ if st.button("Submit"):
 
 	st.write(df.head())
 #---- SLIDES PRESENTATION ----
-	ppt_temp_loc = "GOAT_LOreal_DeckToGo/pages/Template Deck to Go - Loreal Indonesia.pptx"
-
-	uploaded_file = st.file_uploader("Upload a PowerPoint file", type=["pptx"])
-	if uploaded_file is not None:
-		st.success("File uploaded successfully!")
+#	ppt_temp_loc = "GOAT_LOreal_DeckToGo/pages/Template Deck to Go - Loreal Indonesia.pptx"
   
 	ppt = Presentation(uploaded_file)
 
