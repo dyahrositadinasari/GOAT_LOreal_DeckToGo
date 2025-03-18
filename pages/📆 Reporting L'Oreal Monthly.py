@@ -770,7 +770,7 @@ if st.button("Submit"):
 		except:
 			pass
 
-## save ppt
+####### ------------- SAVE PPT -----------------
 	file = (f'{category.upper()} MONTHLY REPORT - {month} {year}')
 	filename = (f'{category.upper()} MONTHLY REPORT - {month} {year}.pptx')
 	files = ppt.save(filename)
@@ -780,11 +780,11 @@ if st.button("Submit"):
 	st.success(f"✅ Submitted: {category} Monthly Report - {month} {year}")
 # Add your processing logic here (e.g., query execution, report generation)
 else:
-    st.warning("⚠ Please fill in the details and click 'Submit'.")
+	st.warning("⚠ Please fill in the details and click 'Submit'.")
   
 #st.write('✅ PPT Process Completed!')
   # Store filename in session state for later use
-    st.session_state["report_filename"] = filename
+	st.session_state["report_filename"] = filename
 	# ✅ Send Email Button (Only appears after submitting)
 	if "report_filename" in st.session_state:
 		if st.button("Send Email"):
@@ -819,8 +819,8 @@ else:
 					part = MIMEApplication(file.read(), Name=os.path.basename(filename))
 					part["Content-Disposition"] = f'attachment; filename="{os.path.basename(filename)}"'
 					msg.attach(part)
-			else:
-    				st.write(f"⚠ Warning: File '{filename}' not found. Email will be sent without attachment.")
+	else:
+    		st.write(f"⚠ Warning: File '{filename}' not found. Email will be sent without attachment.")
 
 	# ✅ Send Email via Gmail SMTP
 			try:
