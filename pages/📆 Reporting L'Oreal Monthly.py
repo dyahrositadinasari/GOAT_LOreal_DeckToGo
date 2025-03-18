@@ -222,6 +222,8 @@ if st.button("Submit"):
 		return chart
 
 	def table_default(slide, df, left, top, width, height, width_row, height_row, header=True, upper=False, fontsize=10, alignment=PP_ALIGN.LEFT):
+		table_data = df.values.tolist()
+		
 		if header:
 			header = df.columns.values.tolist()
 			table_data.insert(0,header)
