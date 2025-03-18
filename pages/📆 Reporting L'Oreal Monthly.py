@@ -823,12 +823,12 @@ else:
     		st.write(f"⚠ Warning: File '{filename}' not found. Email will be sent without attachment.")
 
 	# ✅ Send Email via Gmail SMTP
-			try:
-				smtp = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-				smtp.starttls()  # Secure the connection
-				smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
-				smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
-				smtp.quit()
-				st.write(f"✅ Email sent successfully! on: {formatted_date}")
-			except Exception as e:
-    				st.write(f"❌ Error: {e}")
+		try:
+			smtp = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+			smtp.starttls()  # Secure the connection
+			smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
+			smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
+			smtp.quit()
+			st.write(f"✅ Email sent successfully! on: {formatted_date}")
+		except Exception as e:
+    			st.write(f"❌ Error: {e}")
