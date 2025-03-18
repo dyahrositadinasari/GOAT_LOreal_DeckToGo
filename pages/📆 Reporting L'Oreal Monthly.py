@@ -494,15 +494,15 @@ if st.button("Submit"):
 #------------PAGE2--------------
 	page_no = page_no + 1 #PAGE2
 
-# Add a title to the slide
+	# Add a title to the slide
 	format_title(ppt.slides[page_no], "MONTHLY SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 
-# Filter the dataframe
+	# Filter the dataframe
 	df_m = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year_map) &  (df['month'] == month)]
 
-# Perform groupby and aggregation with handling for datetime64 columns
+	# Perform groupby and aggregation with handling for datetime64 columns
 	grouped_df_m = df_m.groupby('brand').agg({
     	# Numerical columns: sum them
     	'views': 'sum',
@@ -511,21 +511,32 @@ if st.button("Submit"):
 	})
 	grouped_df_m = grouped_df_m.reset_index()
 
-# Calculate Total Views
+	# Calculate Total Views
 	total_views_m = grouped_df_m['views'].sum()
 	total_engagement_m = grouped_df_m['engagements'].sum()
 
-# Calculate SOV (%)
+	# Calculate SOV (%)
 	grouped_df_m['SOV%'] = (grouped_df_m['views'] / total_views_m)
 	grouped_df_m['SOE%'] = (grouped_df_m['engagements'] / total_engagement_m)
 
 	sov_df_m = grouped_df_m[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
 	soe_df_m = grouped_df_m[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 
-# Add pie chart
+	# Sort by 'SOV%' and keep the top 10 brands
+	top_brands = sov_df_q.head(top_n)
+
+	# Group all other brands into "Others"
+	others_sov = 1 - top_brands["SOV%"].sum()  # Remaining percentage
+
+	# Append "Others" row if applicable
+	if others_sov > 0:
+		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
+		top_brands = pd.concat([top_brands, others_row], ignore_index=True)
+
+	# Add pie chart
 	#st.write(sov_df_m.set_index('brand'))
-	pie_chart(ppt.slides[page_no], sov_df_m.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
-	pie_chart(ppt.slides[page_no], soe_df_m.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
 	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_views_m, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
