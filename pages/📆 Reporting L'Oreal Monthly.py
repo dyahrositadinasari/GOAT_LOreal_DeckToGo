@@ -763,12 +763,12 @@ if st.button("Submit"):
 
 	page_no = page_no + 1
 	for i in range(page_no,len(ppt.slides)):
-        try:
-            xml_slides = ppt.slides._sldIdLst
-            slides = list(xml_slides)
-            xml_slides.remove(slides[page_no])
-        except:
-            pass
+		try:
+			xml_slides = ppt.slides._sldIdLst
+			slides = list(xml_slides)
+			xml_slides.remove(slides[page_no])
+		except:
+			pass
 
 ## save ppt
 	file = (f'{category.upper()} MONTHLY REPORT - {month} {year}')
