@@ -252,16 +252,15 @@ if st.button("Submit"):
 		return table
 
 	def horizontal_bar_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
-                         data_show=False, chart_title=False, title="", fontsize=Pt(12),
-                         fontsize_title=Pt(14), percentage=False, bar_width=Pt(10)):
-	    df.fillna(0, inplace=True)  # Fill NaN values
-	
-	    # Define chart data
-	    chart_data = CategoryChartData()
-	    for i in df.index:
-	        chart_data.add_category(i)
-	    for col in df.columns:
-	        chart_data.add_series(col, np.where(df[col].values == 0, None, df[col].values))
+							 data_show=False, chart_title=False, title="", fontsize=Pt(12),
+							 fontsize_title=Pt(14), percentage=False, bar_width=Pt(10)):
+		df.fillna(0, inplace=True)  # Fill NaN values
+		# Define chart data
+		chart_data = CategoryChartData()
+		for i in df.index:
+			chart_data.add_category(i)
+		for col in df.columns:
+			chart_data.add_series(col, np.where(df[col].values == 0, None, df[col].values))
 	
 	    # Create horizontal bar chart
 	    chart = slide.shapes.add_chart(XL_CHART_TYPE.BAR_CLUSTERED, x, y, cx, cy, chart_data).chart
