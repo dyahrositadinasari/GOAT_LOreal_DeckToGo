@@ -775,68 +775,60 @@ if st.button("Submit"):
 
 # ✅ This code runs **only after clicking the submit button**
 	st.success(f"✅ Submitted: {category} Monthly Report - {month} {year}")
-	
 
 	# Store filename in session state for later use
 	st.session_state["report_filename"] = filename
+
+# Send Email Button (Only appears after submitting)
+if "report_filename" in st.session_state:
+	filename = st.session_state["report_filename"]
+		
+if st.button("Send Email"):
 	wib = pytz.timezone("Asia/Jakarta")
 	now = datetime.now(wib)
 	formatted_date = now.strftime("%Y-%m-%d %H:%M")
+	
+    # Gmail SMTP Configuration
+	SMTP_SERVER = "smtp.gmail.com"
+	SMTP_PORT = 587
+	EMAIL_USER = "dyah.dinasari.groupm@gmail.com"
+	EMAIL_PASS = "koxp pzgm ixws ihek"
+    # Email Details
+	send_to = ["dyah.dinasari@groupm.com"]		
+	subject = "[Test] m-Slide Goat-L'Oreal"
+	body = """Hi team,
+        
+		This is a test email sent via Python SMTP.
+        
+		Regards,
+		Dyah Dinasari"""
 
-	# Send Email Button (Only appears after submitting)
-	if "report_filename" in st.session_state:
-		filename = st.session_state["report_filename"]
+	# ✅ Create Email Message
+	msg = MIMEMultipart()
+	msg["From"] = EMAIL_USER
+	msg["To"] = ", ".join(send_to)
+	msg["Subject"] = subject
+	msg.attach(MIMEText(body, "plain"))
+    # ✅ Attach the PowerPoint File
+	if os.path.exists(filename):  # Check if the file exists
+		with open(filename, "rb") as file:
+			part = MIMEApplication(file.read(), Name=os.path.basename(filename))
+			part["Content-Disposition"] = f'attachment; filename="{os.path.basename(filename)}"'
+			msg.attach(part)
 	else:
-		st.error("❌ Error: No file generated yet. Please generate the report first.")
-		st.stop()  # Stop execution if filename is missing
+		st.write(f"⚠ Warning: File '{filename}' not found. Email will be sent without attachment.")
 
-	if st.button("Send Email"):
-        # Gmail SMTP Configuration
-		SMTP_SERVER = "smtp.gmail.com"
-		SMTP_PORT = 587
-		EMAIL_USER = "dyah.dinasari.groupm@gmail.com"
-		EMAIL_PASS = "koxp pzgm ixws ihek"
-
-        # Email Details
-		send_to = ["dyah.dinasari@groupm.com"]		
-		subject = "[Test] m-Slide Goat-L'Oreal"
-		body = """Hi team,
-
-        This is a test email sent via Python SMTP.
-
-        Regards,
-        Dyah Dinasari"""
-
-        # ✅ Create Email Message
-		msg = MIMEMultipart()
-		msg["From"] = EMAIL_USER
-		msg["To"] = ", ".join(send_to)
-		msg["Subject"] = subject
-		msg.attach(MIMEText(body, "plain"))
-
-        # ✅ Attach the PowerPoint File
-		if os.path.exists(filename):  # Check if the file exists
-			with open(filename, "rb") as file:
-				part = MIMEApplication(file.read(), Name=os.path.basename(filename))
-				part["Content-Disposition"] = f'attachment; filename="{os.path.basename(filename)}"'
-				msg.attach(part)
-		else:
-			st.write(f"⚠ Warning: File '{filename}' not found. Email will be sent without attachment.")
-
-        # ✅ Send Email via Gmail SMTP
-		try:
-			smtp = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-			smtp.starttls()  # Secure the connection
-			smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
-			smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
-			smtp.quit()
-			st.success(f"✅ Email sent successfully! on: {formatted_date}")
-		except Exception as e:
-			st.error(f"❌ Error: {e}")
+    # ✅ Send Email via Gmail SMTP
+	try:
+		smtp = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+		smtp.starttls()  # Secure the connection
+		smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
+		smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
+		smtp.quit()
+		st.success(f"✅ Email sent successfully! on: {formatted_date}")
+	except Exception as e:
+		st.error(f"❌ Error: {e}")
 			
-	st.success(f"✅ Email sent successfully! on: {formatted_date}")
-	st.error(f"❌ Error ")
-
 else:
 	st.warning("⚠ Please fill in the details and click 'Submit'.")
   
