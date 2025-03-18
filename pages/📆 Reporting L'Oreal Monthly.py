@@ -93,33 +93,33 @@ if st.button("Submit"):
 	  	# Convert the transposed DataFrame into chart data
 		chart_data = CategoryChartData()
 	  	# Add the brand names as categories to the chart data
-	  	for i in df.transpose().columns:
-	    		chart_data.add_category(i)
+	  for i in df.transpose().columns:
+	  	chart_data.add_category(i)
 	  	# Add the SOV values as series to the chart data
-	  		for index, row in df.transpose().iterrows():
-	    			chart_data.add_series(index, row.values)
-	  			chart = slide.shapes.add_chart(XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data).chart
+	  for index, row in df.transpose().iterrows():
+	    chart_data.add_series(index, row.values)
+	  	chart = slide.shapes.add_chart(XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data).chart
 	  	
 		if chart_title:
 			chart.has_title = True
-	    	chart.chart_title.text_frame.text = title
-	    	title_font = chart.chart_title.text_frame.paragraphs[0].font
-	    	title_font.bold = True
-	    	title_font.size = fontsize_title
-	    	# chart.chart_title.text_frame.paragraphs[0].font.size = Pt(10)  # Set font size to 24pt
-	    	# chart.chart_title.text_frame.paragraphs[0].font.color.rgb = RGBColor(0,0,0)  # Set font color to black
-	  	else:
-	    	chart.has_title = False
+	    chart.chart_title.text_frame.text = title
+	    title_font = chart.chart_title.text_frame.paragraphs[0].font
+	    title_font.bold = True
+	    title_font.size = fontsize_title
+	    # chart.chart_title.text_frame.paragraphs[0].font.size = Pt(10)  # Set font size to 24pt
+	    # chart.chart_title.text_frame.paragraphs[0].font.color.rgb = RGBColor(0,0,0)  # Set font color to black
+	  else:
+	    chart.has_title = False
 	
-	  	if chart.has_legend:
-	    	chart.legend.include_in_layout = False
-	    	chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM
-	    	chart.legend.font.size = Pt(fontsize)
+	  if chart.has_legend:
+	    chart.legend.include_in_layout = False
+	    chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM
+	    chart.legend.font.size = Pt(fontsize)
 	
 		for series in chart.plots[0].series:
-	  		for i, val in enumerate(series.values):
-	    		if val == 0:
-	      		series.points[i].data_label.has_text_frame = True
+	  	for i, val in enumerate(series.values):
+	    	if val == 0:
+	      	series.points[i].data_label.has_text_frame = True
 	      	series.data_labels.show_value = True
 	      	series.data_labels.font.size = Pt(fontsize)
 	      	series.data_labels.number_format = '0%'
