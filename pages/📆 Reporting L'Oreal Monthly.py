@@ -97,7 +97,7 @@ if st.button("Submit"):
 	  		chart_data.add_category(i)
 	  		# Add the SOV values as series to the chart data
 	  	for index, row in df.transpose().iterrows():
-	    		chart_data.add_series(index, row.values)
+	    	chart_data.add_series(index, row.values)
   		# create chart  
   		chart = slide.shapes.add_chart(XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data).chart
 	  	
