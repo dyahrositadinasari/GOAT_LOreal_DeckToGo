@@ -86,7 +86,7 @@ if st.button("Submit"):
 	    			run.font.italic = font_italic
 	    			run.font.color.rgb = font_color
 	    			run.font.size = Pt(font_size)
-	return title_shape
+		return title_shape
 
 	def pie_chart(slide,df,x,y,cx,cy,fontsize=9,legend_right = True, chart_title = False, title='',fontsize_title = Pt(20)):
 		df.fillna(0, inplace = True) #fill nan
