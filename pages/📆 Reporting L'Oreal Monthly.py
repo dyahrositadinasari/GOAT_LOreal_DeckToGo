@@ -298,7 +298,7 @@ if st.button("Submit"):
 	        series.format.line.width = bar_width
 	
 	    # Set chart title
-	    if chart_title:
+		if chart_title:
 			chart.chart_title.text_frame.text = title
 			title_font = chart.chart_title.text_frame.paragraphs[0].font
 			title_font.bold = True
