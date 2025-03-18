@@ -238,14 +238,17 @@ if st.button("Submit"):
 					text = f"{val:,}"  # Format with comma separators
 				else:
 					text = str(val).upper() if upper else str(val)
-				
 				cell.text = text
-	            
+        
+		# ✅ Ensure there is at least one run in the paragraph
+		if len(cell.text_frame.paragraphs[0].runs) == 0:
+			cell.text_frame.paragraphs[0].add_run()
+				
 		for paragraph in cell.text_frame.paragraphs:
 			paragraph.alignment = alignment
 			for run in paragraph.runs:
 				run.font.size = Pt(fontsize)
-				
+
 		cell.text_frame.vertical_anchor = MSO_ANCHOR.MIDDLE
 	    # Set all margins to 0
 		cell.text_frame.margin_left = 0
@@ -261,7 +264,7 @@ if st.button("Submit"):
 		for row in table.rows:
 			row.height = height_row # Set the height of each row
 		
-		return table
+	return table
 
 	def horizontal_bar_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
 							 data_show=False, chart_title=False, title="", fontsize=Pt(12),
