@@ -783,7 +783,7 @@ if st.button("Submit"):
 if "report_filename" in st.session_state:
 	filename = st.session_state["report_filename"]
 else:
-	st.error("❌ Error: No file generated yet. Please generate the report first.")
+	st.error("📧 : No file generated yet. Please generate the report first.")
 	st.stop()  # Stop execution if filename is missing
 		
 if st.button("Send Email"):
