@@ -412,7 +412,7 @@ if st.button("Submit"):
 	    else:
 	        chart.has_title = False
 		
-	return chart
+		return chart
 
 	def adjust_dataframe(df, columns, index=False):
 		# Combine existing and desired columns/index
