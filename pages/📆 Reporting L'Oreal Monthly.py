@@ -230,11 +230,11 @@ if st.button("Submit"):
 				
 				cell.text = text
 	            
-	    for paragraph in cell.text_frame.paragraphs:
-	        paragraph.alignment = alignment
-	        for run in paragraph.runs:
+		for paragraph in cell.text_frame.paragraphs:
+			paragraph.alignment = alignment
+			for run in paragraph.runs:
 				run.font.size = Pt(fontsize)
-	        cell.text_frame.vertical_anchor = MSO_ANCHOR.MIDDLE
+			cell.text_frame.vertical_anchor = MSO_ANCHOR.MIDDLE
 	        # Set all margins to 0
 	        cell.text_frame.margin_left = 0
 	        cell.text_frame.margin_right = 0
