@@ -254,7 +254,7 @@ if st.button("Submit"):
 	        for row in table.rows:
 	            row.height = height_row # Set the height of each row
 	
-		return table
+			return table
 
 	def horizontal_bar_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
                          data_show=False, chart_title=False, title="", fontsize=Pt(12),
@@ -418,7 +418,7 @@ if st.button("Submit"):
 	    else:
 	        chart.has_title = False
 	
-	return chart
+		return chart
 
 	def adjust_dataframe(df, columns, index=False):
 		# Combine existing and desired columns/index
@@ -430,7 +430,7 @@ if st.button("Submit"):
 			# Reindex to include all columns and index values
 			df = df.reindex(columns=all_columns, index=all_index, fill_value=np.nan)
 	
-	return df
+		return df
 
 	# Load credentials from Streamlit Secrets
 	credentials_dict = st.secrets["gcp_service_account"]
