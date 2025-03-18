@@ -74,156 +74,142 @@ if st.button("Submit"):
 
 #CHART FORMATING
 	def format_title(slide, text, alignment, font_name, font_size, font_bold = False, font_italic = None, font_color = RGBColor(0, 0, 0),left=Pt(75), top=Pt(25), width=Pt(850), height=Pt(70)):
-	    title_shape = slide.shapes.add_textbox(left=left, top=top, width=width, height=height)
-	    title_text_frame = title_shape.text_frame
-	    title_text_frame.text = text
-	    title_text_frame.word_wrap = True
-	    	for paragraph in title_text_frame.paragraphs:
-	        paragraph.alignment = alignment
-	        for run in paragraph.runs:
-	            run.font.name = font_name
-	            run.font.bold = font_bold
-	            run.font.italic = font_italic
-	            run.font.color.rgb = font_color
-	            run.font.size = Pt(font_size)
-	    	return title_shape
+		title_shape = slide.shapes.add_textbox(left=left, top=top, width=width, height=height)
+	  title_text_frame = title_shape.text_frame
+	  title_text_frame.text = text
+	  title_text_frame.word_wrap = True
+	  for paragraph in title_text_frame.paragraphs:
+			paragraph.alignment = alignment
+		for run in paragraph.runs:
+	    run.font.name = font_name
+	    run.font.bold = font_bold
+	    run.font.italic = font_italic
+	    run.font.color.rgb = font_color
+	    run.font.size = Pt(font_size)
+	return title_shape
 
 	def pie_chart(slide,df,x,y,cx,cy,fontsize=9,legend_right = True, chart_title = False, title='',fontsize_title = Pt(20)):
-	    df.fillna(0, inplace = True) #fill nan
-	    # Convert the transposed DataFrame into chart data
-	    chart_data = CategoryChartData()
-	    # Add the brand names as categories to the chart data
-	    for i in df.transpose().columns:
-	        chart_data.add_category(i)
+		df.fillna(0, inplace = True) #fill nan
+	  # Convert the transposed DataFrame into chart data
+	  chart_data = CategoryChartData()
+	  # Add the brand names as categories to the chart data
+	  for i in df.transpose().columns:
+	    chart_data.add_category(i)
+	  # Add the SOV values as series to the chart data
+	  for index, row in df.transpose().iterrows():
+	    chart_data.add_series(index, row.values)
+	  chart = slide.shapes.add_chart(XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data).chart
+	  if chart_title:
+		  chart.has_title = True
+	    chart.chart_title.text_frame.text = title
+	    title_font = chart.chart_title.text_frame.paragraphs[0].font
+	    title_font.bold = True
+	    title_font.size = fontsize_title
+	    # chart.chart_title.text_frame.paragraphs[0].font.size = Pt(10)  # Set font size to 24pt
+	    # chart.chart_title.text_frame.paragraphs[0].font.color.rgb = RGBColor(0,0,0)  # Set font color to black
+	  else:
+	    chart.has_title = False
 	
-	    # Add the SOV values as series to the chart data
-	    for index, row in df.transpose().iterrows():
-	        chart_data.add_series(index, row.values)
+	  if chart.has_legend:
+	    chart.legend.include_in_layout = False
+	    chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM
+	    chart.legend.font.size = Pt(fontsize)
 	
-	    chart = slide.shapes.add_chart(XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data).chart
+	  for series in chart.plots[0].series:
+	  	for i, val in enumerate(series.values):
+	    	if val == 0:
+	      	series.points[i].data_label.has_text_frame = True
+	      series.data_labels.show_value = True
+	      series.data_labels.font.size = Pt(fontsize)
+	      series.data_labels.number_format = '0%'
+	      series.data_labels.position = XL_LABEL_POSITION.BEST_FIT
+	      series.data_labels.show_category_name = True
 	
-	    if chart_title:
-	        chart.has_title = True
-	        chart.chart_title.text_frame.text = title
-	        title_font = chart.chart_title.text_frame.paragraphs[0].font
-	        title_font.bold = True
-	        title_font.size = fontsize_title
-	        # chart.chart_title.text_frame.paragraphs[0].font.size = Pt(10)  # Set font size to 24pt
-	        # chart.chart_title.text_frame.paragraphs[0].font.color.rgb = RGBColor(0,0,0)  # Set font color to black
-	    else:
-	        chart.has_title = False
-	
-	    if chart.has_legend:
-	      chart.legend.include_in_layout = False
-	      chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM
-	      # Set legend font size to 10 points
-	      chart.legend.font.size = Pt(fontsize)
-	
-	
-	    for series in chart.plots[0].series:
-	        for i, val in enumerate(series.values):
-	            if val == 0:
-	                series.points[i].data_label.has_text_frame = True
-	            series.data_labels.show_value = True
-	            series.data_labels.font.size = Pt(fontsize)
-	            series.data_labels.number_format = '0%'
-	            series.data_labels.position = XL_LABEL_POSITION.BEST_FIT
-	            series.data_labels.show_category_name = True
-	
-	    # chart.chart_title.text_frame.text = chart.chart_title.text_frame.text + 'budget distribution'
-	    # chart.chart_title.text_frame.paragraphs[0].font.size = Pt(fontsize)
-	    # chart.chart_title.text_frame.color.rgb = RGBColor(0,0,0)
-	
-	    return chart
-
+	return chart
 
 	def line_marker_chart(slide,df,x,y,cx,cy, legend = True, legend_position = XL_LEGEND_POSITION.RIGHT,
                       data_show = False, chart_title = False, title ="", fontsize = Pt(12),
                       fontsize_title = Pt(14), percentage = False, line_width = Pt(1), smooth=False):
-	    df.fillna(0, inplace = True) #fill nan
-	    # Define chart data
-	    chart_data = CategoryChartData()
-	    # for i in df.columns:
-	    #     chart_data.add_category(i)
-	    # for j, row in df.iterrows():
-	    #     chart_data.add_series(j, row.values)
-	    for i in df.columns:
-	        chart_data.add_category(i)
-	    for j, row in df.iterrows():
-	        chart_data.add_series(j,np.where(row.values == 0, None, row.values))
+		df.fillna(0, inplace = True) #fill nan
+	  # Define chart data
+	  chart_data = CategoryChartData()
+	  # for i in df.columns:
+	  #     chart_data.add_category(i)
+	  # for j, row in df.iterrows():
+	  #     chart_data.add_series(j, row.values)
+	  for i in df.columns:
+	  	chart_data.add_category(i)
+	  for j, row in df.iterrows():
+	    chart_data.add_series(j,np.where(row.values == 0, None, row.values))
 	
-	    chart = slide.shapes.add_chart(XL_CHART_TYPE.LINE, x, y, cx, cy, chart_data).chart
+	  chart = slide.shapes.add_chart(XL_CHART_TYPE.LINE, x, y, cx, cy, chart_data).chart
 	
-	    # smoothing
-	    if smooth: # Smooth the lines
-	        for series in chart.series:
-	            series.smooth = True
+	  # smoothing
+	  if smooth: # Smooth the lines
+	  	for series in chart.series:
+	        series.smooth = True
+
+	  # Add legend
+	  if legend:
+	    chart.has_legend = True
+	    chart.legend.include_in_layout = False
+	    chart.legend.position = legend_position
+	    chart.legend.font.size = fontsize  # assuming Pt is imported from pptx.util
+	  else:
+	    chart.has_legend = False
 	
+	  if data_show:
+	  	for series in chart.plots[0].series:
+	    	for i, val in enumerate(series.values):
+	      	if val == 0:
+	        	series.points[i].data_label.has_text_frame = True
+	        series.data_labels.show_value = True
+	        series.data_labels.font.size = fontsize
+	        # series.data_labels.number_format = '0.00%'
+	        series.data_labels.position = XL_LABEL_POSITION.ABOVE
 	
-	    # Add legend
-	    if legend:
-	        chart.has_legend = True
-	        chart.legend.include_in_layout = False
-	        chart.legend.position = legend_position
-	        chart.legend.font.size = fontsize  # assuming Pt is imported from pptx.util
-	    else:
-	        chart.has_legend = False
+	  for series in chart.series:
+			series.marker.style = XL_MARKER_STYLE.CIRCLE
+	    series.format.line.width = line_width # custom line width
 	
-	    if data_show:
-	        for series in chart.plots[0].series:
-	            for i, val in enumerate(series.values):
-	                if val == 0:
-	                    series.points[i].data_label.has_text_frame = True
-	                series.data_labels.show_value = True
-	                series.data_labels.font.size = fontsize
-	                # series.data_labels.number_format = '0.00%'
-	                series.data_labels.position = XL_LABEL_POSITION.ABOVE
+	  # Customize y-axis format
+	  chart.value_axis.tick_labels.font.size = fontsize  # Set font size for tick labels
 	
-	    # Change line point to all circle
-	    # Iterate through each series and set marker style to circle
-	    for series in chart.series:
-	        series.marker.style = XL_MARKER_STYLE.CIRCLE
-	        series.format.line.width = line_width # custom line width
+	  # Set font size for category axis (months)
+	  chart.category_axis.tick_labels.font.size = fontsize  # Set font size for category axis labels
 	
-	    # Customize y-axis format
-	    chart.value_axis.tick_labels.font.size = fontsize  # Set font size for tick labels
+	  # Find the maximum value across all series
+	  max_value = 0
+	  for series in chart.plots[0].series:
+	  	try:
+	    	series_max = max(series.values)
+	    except:
+	      series_max = 0
+	  	max_value = max(max_value, series_max)
 	
-	    # Set font size for category axis (months)
-	    chart.category_axis.tick_labels.font.size = fontsize  # Set font size for category axis labels
-	
-	    # Find the maximum value across all series
-	    max_value = 0
-	    for series in chart.plots[0].series:
-	        try:
-	            series_max = max(series.values)
-	        except:
-	            series_max = 0
-	        max_value = max(max_value, series_max)
-	
-	    if max_value >= 1000:
+	  if max_value >= 1000:
 	        chart.value_axis.tick_labels.number_format = '#,##0'  # add commas to separate thousands
 	
-	    if chart_title:
-	        chart.chart_title.text_frame.text = title # Set the title text
-	        title_font = chart.chart_title.text_frame.paragraphs[0].font
-	        title_font.bold = True
-	        title_font.size = fontsize_title
-	    else:
-	        chart.has_title = False
+	  if chart_title:
+	  	chart.chart_title.text_frame.text = title # Set the title text
+	    title_font = chart.chart_title.text_frame.paragraphs[0].font
+	    title_font.bold = True
+	    title_font.size = fontsize_title
+	  else:
+	    chart.has_title = False
 	
-	    # Remove Gridlines (Line Chart Specific)
-	    value_axis = chart.value_axis
-	    category_axis = chart.category_axis
-	    value_axis.has_major_gridlines = False
-	    value_axis.has_minor_gridlines = False
-	    category_axis.has_major_gridlines = False
-	    category_axis.has_minor_gridlines = False
+	  # Remove Gridlines (Line Chart Specific)
+	  value_axis = chart.value_axis
+	  category_axis = chart.category_axis
+	  value_axis.has_major_gridlines = False
+	  value_axis.has_minor_gridlines = False
+	  category_axis.has_major_gridlines = False
+	  category_axis.has_minor_gridlines = False
 	
-	    # if percentage
-	    if percentage:
-	        category_axis.tick_labels.NumberFormat = '0"%"'
+	  if percentage:
+	    category_axis.tick_labels.NumberFormat = '0"%"'
 	
-	    return chart
+	return chart
 
 	def table_default(slide, df, left, top, width, height, width_row, height_row, header=True, upper=False, fontsize=10, alignment=PP_ALIGN.LEFT): # Function to add and format a table on a slide
 	    table_data = df.values.tolist()
