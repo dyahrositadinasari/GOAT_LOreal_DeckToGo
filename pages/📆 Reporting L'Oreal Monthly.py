@@ -93,12 +93,13 @@ if st.button("Submit"):
 		# Convert the transposed DataFrame into chart data
 		chart_data = CategoryChartData()
 		# Add the brand names as categories to the chart data
-	  	for i in df.transpose().columns:
-	  		chart_data.add_category(i)
-	  		# Add the SOV values as series to the chart data
+		for i in df.transpose().columns:
+			chart_data.add_category(i)
+	  	# Add the SOV values as series to the chart data
 	  	for index, row in df.transpose().iterrows():
-	    	chart_data.add_series(index, row.values)
-  		# create chart  
+	    		chart_data.add_series(index, row.values)
+  		
+		# create chart  
   		chart = slide.shapes.add_chart(XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data).chart
 	  	
 		if chart_title:
