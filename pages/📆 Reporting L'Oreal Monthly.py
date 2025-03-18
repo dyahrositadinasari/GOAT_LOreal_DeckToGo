@@ -829,9 +829,9 @@ if st.button("Submit"):
 			smtp.login(EMAIL_USER, EMAIL_PASS)  # Login with App Password
 			smtp.sendmail(EMAIL_USER, send_to, msg.as_string())  # Send email
 			smtp.quit()
-			st.write(f"✅ Email sent successfully! on: {formatted_date}")
+			st.success(f"✅ Email sent successfully! on: {formatted_date}")
 		except Exception as e:
-			st.write(f"❌ Error: {e}")
+			st.error(f"❌ Error: {e}")
 
 else:
 	st.warning("⚠ Please fill in the details and click 'Submit'.")
