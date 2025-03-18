@@ -835,7 +835,7 @@ if st.button("Submit"):
 			st.error(f"❌ Error: {e}")
 			
 	st.success(f"✅ Email sent successfully! on: {formatted_date}")
-	st.error(f"❌ Error: {e}")
+	st.error(f"❌ Error ")
 
 else:
 	st.warning("⚠ Please fill in the details and click 'Submit'.")
