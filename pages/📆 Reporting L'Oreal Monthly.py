@@ -227,7 +227,8 @@ if st.button("Submit"):
 					text = f"{val:,}"  # Format with comma separators
 				else:
 					text = str(val).upper() if upper else str(val)
-	            cell.text = text
+				
+				cell.text = text
 	            
 	    for paragraph in cell.text_frame.paragraphs:
 	        paragraph.alignment = alignment
