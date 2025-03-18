@@ -790,11 +790,11 @@ if "report_filename" in st.session_state:
         # ✅ Gmail SMTP Configuration
         SMTP_SERVER = "smtp.gmail.com"
         SMTP_PORT = 587
-		EMAIL_USER = "dyah.dinasari.groupm@gmail.com" 
+		EMAIL_USER = "dyah.dinasari.groupm@gmail.com"
 		EMAIL_PASS = "koxp pzgm ixws ihek"   
 
         # ✅ Email Details
-        send_to = ["dyah.dinasari@groupm.com"]  # Replace with recipient email(s)
+		send_to = ["dyah.dinasari@groupm.com"]  # Replace with recipient email(s)
         subject = "Test Email with Attachment"
         body = """Hi team,
 
