@@ -482,7 +482,7 @@ if st.button("Submit"):
 
 	uploaded_file = st.file_uploader("Upload a PowerPoint file", type=["pptx"])
 	if uploaded_file is not None:
-    st.success("File uploaded successfully!")
+    	st.success("File uploaded successfully!")
   
 	ppt = Presentation(uploaded_file)
 
@@ -506,10 +506,10 @@ if st.button("Submit"):
 
 # Perform groupby and aggregation with handling for datetime64 columns
 	grouped_df_m = df_m.groupby('brand').agg({
-    # Numerical columns: sum them
-    'views': 'sum',
-    'engagements': 'sum',
-    'content': 'sum'
+    	# Numerical columns: sum them
+    	'views': 'sum',
+    	'engagements': 'sum',
+    	'content': 'sum'
 	})
 	grouped_df_m = grouped_df_m.reset_index()
 
@@ -546,10 +546,10 @@ if st.button("Submit"):
 
 # Perform groupby and aggregation with handling for datetime64 columns
 	grouped_df_q = df_q.groupby('brand').agg({
-    # Numerical columns: sum them
-    'views': 'sum',
-    'engagements': 'sum',
-    'content': 'sum'
+    	# Numerical columns: sum them
+    	'views': 'sum',
+    	'engagements': 'sum',
+    	'content': 'sum'
 	})
 	grouped_df_q = grouped_df_q.reset_index()
 
@@ -585,10 +585,10 @@ if st.button("Submit"):
 
 # Perform groupby and aggregation with handling for datetime64 columns
 	grouped_df_y = df_y.groupby('brand').agg({
-    # Numerical columns: sum them
-    'views': 'sum',
-    'engagements': 'sum',
-    'content': 'sum'
+		# Numerical columns: sum them
+		'views': 'sum',
+		'engagements': 'sum',
+		'content': 'sum'
 	})
 	grouped_df_y = grouped_df_y.reset_index()
 
