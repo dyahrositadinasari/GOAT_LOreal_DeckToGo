@@ -223,10 +223,10 @@ if st.button("Submit"):
 		for i, row in enumerate(table_data):
 			for j, val in enumerate(row):
 				cell = table.cell(i, j)
-	            if isinstance(val, (int, float)):  # Check if it's a number
-	                text = f"{val:,}"  # Format with comma separators
-	            else:
-	                text = str(val).upper() if upper else str(val)
+				if isinstance(val, (int, float)):  # Check if it's a number
+					text = f"{val:,}"  # Format with comma separators
+				else:
+					text = str(val).upper() if upper else str(val)
 	            cell.text = text
 	            
 	    for paragraph in cell.text_frame.paragraphs:
