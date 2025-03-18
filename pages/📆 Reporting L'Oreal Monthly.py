@@ -75,55 +75,55 @@ if st.button("Submit"):
 #CHART FORMATING
 	def format_title(slide, text, alignment, font_name, font_size, font_bold = False, font_italic = None, font_color = RGBColor(0, 0, 0),left=Pt(75), top=Pt(25), width=Pt(850), height=Pt(70)):
 		title_shape = slide.shapes.add_textbox(left=left, top=top, width=width, height=height)
-	  title_text_frame = title_shape.text_frame
-	  title_text_frame.text = text
-	  title_text_frame.word_wrap = True
-	  for paragraph in title_text_frame.paragraphs:
+		title_text_frame = title_shape.text_frame
+		title_text_frame.text = text
+		title_text_frame.word_wrap = True
+		for paragraph in title_text_frame.paragraphs:
 			paragraph.alignment = alignment
-		for run in paragraph.runs:
-	    run.font.name = font_name
-	    run.font.bold = font_bold
-	    run.font.italic = font_italic
-	    run.font.color.rgb = font_color
-	    run.font.size = Pt(font_size)
+			for run in paragraph.runs:
+	    			run.font.name = font_name
+	    			run.font.bold = font_bold
+	    			run.font.italic = font_italic
+	    			run.font.color.rgb = font_color
+	    			run.font.size = Pt(font_size)
 	return title_shape
 
 	def pie_chart(slide,df,x,y,cx,cy,fontsize=9,legend_right = True, chart_title = False, title='',fontsize_title = Pt(20)):
 		df.fillna(0, inplace = True) #fill nan
-	  # Convert the transposed DataFrame into chart data
-	  chart_data = CategoryChartData()
-	  # Add the brand names as categories to the chart data
-	  for i in df.transpose().columns:
-	    chart_data.add_category(i)
-	  # Add the SOV values as series to the chart data
-	  for index, row in df.transpose().iterrows():
-	    chart_data.add_series(index, row.values)
-	  chart = slide.shapes.add_chart(XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data).chart
-	  if chart_title:
-		  chart.has_title = True
-	    chart.chart_title.text_frame.text = title
-	    title_font = chart.chart_title.text_frame.paragraphs[0].font
-	    title_font.bold = True
-	    title_font.size = fontsize_title
-	    # chart.chart_title.text_frame.paragraphs[0].font.size = Pt(10)  # Set font size to 24pt
-	    # chart.chart_title.text_frame.paragraphs[0].font.color.rgb = RGBColor(0,0,0)  # Set font color to black
-	  else:
-	    chart.has_title = False
+	  	# Convert the transposed DataFrame into chart data
+	  	chart_data = CategoryChartData()
+	  	# Add the brand names as categories to the chart data
+	  	for i in df.transpose().columns:
+	    	chart_data.add_category(i)
+	  	# Add the SOV values as series to the chart data
+	  	for index, row in df.transpose().iterrows():
+	    	chart_data.add_series(index, row.values)
+	  	chart = slide.shapes.add_chart(XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data).chart
+	  	if chart_title:
+			chart.has_title = True
+	    	chart.chart_title.text_frame.text = title
+	    	title_font = chart.chart_title.text_frame.paragraphs[0].font
+	    	title_font.bold = True
+	    	title_font.size = fontsize_title
+	    	# chart.chart_title.text_frame.paragraphs[0].font.size = Pt(10)  # Set font size to 24pt
+	    	# chart.chart_title.text_frame.paragraphs[0].font.color.rgb = RGBColor(0,0,0)  # Set font color to black
+	  	else:
+	    	chart.has_title = False
 	
-	  if chart.has_legend:
-	    chart.legend.include_in_layout = False
-	    chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM
-	    chart.legend.font.size = Pt(fontsize)
+	  	if chart.has_legend:
+	    	chart.legend.include_in_layout = False
+	    	chart.legend.position = XL_LEGEND_POSITION.RIGHT if legend_right else XL_LEGEND_POSITION.BOTTOM
+	    	chart.legend.font.size = Pt(fontsize)
 	
-	  for series in chart.plots[0].series:
-	  	for i, val in enumerate(series.values):
-	    	if val == 0:
-	      	series.points[i].data_label.has_text_frame = True
-	      series.data_labels.show_value = True
-	      series.data_labels.font.size = Pt(fontsize)
-	      series.data_labels.number_format = '0%'
-	      series.data_labels.position = XL_LABEL_POSITION.BEST_FIT
-	      series.data_labels.show_category_name = True
+		for series in chart.plots[0].series:
+	  		for i, val in enumerate(series.values):
+	    		if val == 0:
+	      		series.points[i].data_label.has_text_frame = True
+	      	series.data_labels.show_value = True
+	      	series.data_labels.font.size = Pt(fontsize)
+	      	series.data_labels.number_format = '0%'
+	      	series.data_labels.position = XL_LABEL_POSITION.BEST_FIT
+	      	series.data_labels.show_category_name = True
 	
 	return chart
 
