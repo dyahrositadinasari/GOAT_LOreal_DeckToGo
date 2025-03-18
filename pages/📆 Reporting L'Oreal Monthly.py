@@ -5,6 +5,9 @@ import numpy as np
 import time
 import json
 import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
 from google.cloud import bigquery
 from google.oauth2 import service_account
 from pptx import Presentation
