@@ -534,7 +534,7 @@ if st.button("Submit"):
 		top_brands = pd.concat([top_brands, others_row], ignore_index=True)
 
 	# Add pie chart
-	#st.write(sov_df_m.set_index('brand'))
+	st.write(top_brands.set_index('brand'))
 	pie_chart(ppt.slides[page_no], top_brands.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], top_brands.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
