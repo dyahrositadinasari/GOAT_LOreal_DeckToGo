@@ -523,7 +523,7 @@ if st.button("Submit"):
 	soe_df_m = grouped_df_m[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 
 	# Sort by 'SOV%' and keep the top 10 brands
-	top_brands = sov_df_m.head(top_n)
+	top_brands = sov_df_m.head(10)
 
 	# Group all other brands into "Others"
 	others_sov = 1 - top_brands["SOV%"].sum()  # Remaining percentage
