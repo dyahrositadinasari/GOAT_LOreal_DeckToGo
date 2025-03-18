@@ -418,20 +418,19 @@ if st.button("Submit"):
 	    else:
 	        chart.has_title = False
 	
-		return chart
+	return chart
 
 	def adjust_dataframe(df, columns, index=False):
-
-	  # Combine existing and desired columns/index
-	  all_columns = list(df.columns) + [col for col in columns if col not in df.columns]
-	  	if index == False:
-	    	df = df.reindex(columns=all_columns,fill_value=np.nan)
-			else:
-				all_index = list(df.index) + [idx for idx in index if idx not in df.index]
-	    	# Reindex to include all columns and index values
-	    	df = df.reindex(columns=all_columns, index=all_index, fill_value=np.nan)
+		# Combine existing and desired columns/index
+		all_columns = list(df.columns) + [col for col in columns if col not in df.columns]
+		if index == False:
+			df = df.reindex(columns=all_columns,fill_value=np.nan)
+		else:
+			all_index = list(df.index) + [idx for idx in index if idx not in df.index]
+			# Reindex to include all columns and index values
+			df = df.reindex(columns=all_columns, index=all_index, fill_value=np.nan)
 	
-		return df
+	return df
 
 	# Load credentials from Streamlit Secrets
 	credentials_dict = st.secrets["gcp_service_account"]
