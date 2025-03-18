@@ -777,6 +777,8 @@ if st.button("Submit"):
 
 	# Store filename in session state for later use
 	st.session_state["report_filename"] = filename
+	wib = pytz.timezone("Asia/Jakarta")
+	now = datetime.now(wib)
 	formatted_date = now.strftime("%Y-%m-%d %H:%M")
 
 	# Send Email Button (Only appears after submitting)
@@ -787,9 +789,6 @@ if st.button("Submit"):
 		st.stop()  # Stop execution if filename is missing
 
 	if st.button("Send Email"):
-		wib = pytz.timezone("Asia/Jakarta")
-		now = datetime.now(wib)
-
         # Gmail SMTP Configuration
 		SMTP_SERVER = "smtp.gmail.com"
 		SMTP_PORT = 587
