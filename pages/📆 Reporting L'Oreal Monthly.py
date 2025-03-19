@@ -67,7 +67,7 @@ brands = st.multiselect(
 ,max_selections=3
 )
 
-uploaded_file = st.file_uploader("Upload a PowerPoint file", type=["pptx"])
+uploaded_file = st.file_uploader("Upload the PPT Template for this report, make sure the page is 16 pages or more.", type=["pptx"])
 if uploaded_file is not None:
 	st.success("File uploaded successfully!")
 
