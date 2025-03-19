@@ -763,6 +763,7 @@ if st.button("Submit"):
 	df_q_content = pd.pivot_table(df_top_brands[['quarter','brand','content']], columns = 'quarter', index = 'brand', aggfunc = 'sum', fill_value = 0)
 
 	df_q_views = df_q_views[[('views', q) for q in quarter_compare]]
+	df_q_views = np.ceil(df_q_views * 10) / 10 # Round up with 1 decimal place
 	df_q_views.columns = quarter_compare
 
 	df_q_content = df_q_content[[('content', q) for q in quarter_compare]]
