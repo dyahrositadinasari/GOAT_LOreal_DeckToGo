@@ -30,7 +30,9 @@ year = st.selectbox(
 year_ = {
   '2024':24, '2025':25
 }
+
 year_map = year_.get(year, "")  # Returns '' if year is not found
+year_range = (year_map -1, year_map)
 
 quarter_ = st.selectbox(
   'Please select the reporting quarter',
@@ -463,7 +465,7 @@ if st.button("Submit"):
 	,SUM(engagements) as engagements
 	,SUM(content) as content
 	FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
-	WHERE years = {}
+	WHERE years is in {}
 	GROUP BY 
 	date
 	,month
@@ -474,7 +476,7 @@ if st.button("Submit"):
 	,category
 	,manufacturer
 	,advertiser_name
-	""".format(year_map)
+	""".format(year_range)
 
 	# Fetch data
 	df = client.query(query).to_dataframe()
@@ -518,8 +520,8 @@ if st.button("Submit"):
 	grouped_df_m = grouped_df_m.reset_index()
 
 	# Calculate Total Views
-	total_views_m = grouped_df_m['views'].sum()
-	total_engagement_m = grouped_df_m['engagements'].sum()
+	total_views_m = grouped_df_m['views'].sum().astype(int)
+	total_engagement_m = grouped_df_m['engagements'].sum().astype(int)
 
 	# Calculate SOV (%)
 	grouped_df_m['SOV%'] = (grouped_df_m['views'] / total_views_m)
@@ -669,6 +671,7 @@ if st.button("Submit"):
 # Sort months correctly
 	month_order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 	stacked_data_eng = stacked_data_eng.reindex(month_order)
+	stacked_data_views = stacked_data_views.reidex(month_order)
 
 # Add combo stacked bar chart
 	combo_chart(ppt.slides[page_no], stacked_data_views, Inches(.1), Inches(1.5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Views",
