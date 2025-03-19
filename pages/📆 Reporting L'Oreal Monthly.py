@@ -541,8 +541,8 @@ if st.button("Submit"):
 
 	# Add pie chart
 	st.write(top_brands_m.set_index('brand'))
-	pie_chart(ppt.slides[page_no], top_brands_m.set_index('brand'), Inches(0.5), Inches(1.5), Inches(5), Inches(5), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
-	pie_chart(ppt.slides[page_no], top_brands_m.set_index('brand'), Inches(7), Inches(1.5), Inches(5), Inches(5), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands_m.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands_m.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
 	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_views_m, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
@@ -592,8 +592,8 @@ if st.button("Submit"):
 		
 	# Add pie chart
 	st.write(top_brands_q.set_index('brand'))
-	pie_chart(ppt.slides[page_no], top_brands_q.set_index('brand'), Inches(0.5), Inches(1.5), Inches(5), Inches(5), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
-	pie_chart(ppt.slides[page_no], top_brands_q.set_index('brand'), Inches(7), Inches(1.5), Inches(5), Inches(5), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands_q.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands_q.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
 	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_views_q, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
@@ -643,8 +643,8 @@ if st.button("Submit"):
 
 # Add pie chart
 	st.write(top_brands_y.set_index('brand'))
-	pie_chart(ppt.slides[page_no], top_brands_y.set_index('brand'), Inches(0.5), Inches(1.5), Inches(5), Inches(5), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
-	pie_chart(ppt.slides[page_no], top_brands_y.set_index('brand'), Inches(7), Inches(1.5), Inches(5), Inches(5), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands_y.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands_y.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
 	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_views_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
