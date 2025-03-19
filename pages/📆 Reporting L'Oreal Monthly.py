@@ -71,6 +71,11 @@ uploaded_file = st.file_uploader("Upload a PowerPoint file", type=["pptx"])
 if uploaded_file is not None:
 	st.success("File uploaded successfully!")
 
+email_list = st.multiselect(
+	"Please select the email address you wish to send this report to",
+	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "yahya.wahyu@groupm.com", "ana.maratu@groupm.com", "aldi.firstanto@groupm.com", "muhammad.ilham@groupm.com")
+	)
+
 st.write("Selected Year : ", year)
 st.write("Selected Year_ : ", year_map)
 st.write("Selected Month : ", month)
@@ -817,7 +822,7 @@ if st.button("Submit"):
 if "report_filename" in st.session_state:
 	filename = st.session_state["report_filename"]
 else:
-	st.error("📧 : No file generated yet. Please generate the report first.")
+	st.error("can't send email 📧 : No file generated yet. Please generate the report first.")
 	st.stop()  # Stop execution if filename is missing
 		
 if st.button("Send Email"):
