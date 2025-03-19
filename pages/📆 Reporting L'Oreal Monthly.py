@@ -268,7 +268,7 @@ if st.button("Submit"):
 		return table
 
 	def horizontal_bar_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
-							 data_show=False, chart_title=False, title="", fontsize=Pt(12),
+							 data_show=True, chart_title=False, title="", fontsize=Pt(12),
 							 fontsize_title=Pt(14), percentage=False, bar_width=Pt(10)):
 		df.fillna(0, inplace=True)  # Fill NaN values
 		# Define chart data
