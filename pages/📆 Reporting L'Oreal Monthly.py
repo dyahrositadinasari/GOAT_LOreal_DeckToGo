@@ -76,13 +76,15 @@ email_list = st.multiselect(
 	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "yahya.wahyu@groupm.com", "ana.maratu@groupm.com", "aldi.firstanto@groupm.com", "muhammad.ilham@groupm.com")
 	)
 
-st.write("Selected Year : ", year)
-st.write("Selected Year_ : ", year_map)
-st.write("Selected Month : ", month)
-st.write("Month Number : ", month_num)
-st.write("Division : ", division)
-st.write("Category : ", category)
-st.write("Brands : ", brands)
+
+#st.write("Selected Year : ", year)
+#st.write("Selected Year_ : ", year_map)
+#st.write("Selected Month : ", month)
+#st.write("Month Number : ", month_num)
+#st.write("Division : ", division)
+#st.write("Category : ", category)
+#st.write("Brands : ", brands)
+
 
 if st.button("Submit"):
 #--- DATA PROCESSING ---
