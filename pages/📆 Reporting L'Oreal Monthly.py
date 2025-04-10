@@ -671,7 +671,7 @@ if st.button("Submit"):
 # Sort months correctly
 	month_order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 	stacked_data_eng = stacked_data_eng.reindex(month_order)
-	stacked_data_views = stacked_data_views.reidex(month_order)
+	stacked_data_views = stacked_data_views.reindex(month_order)
 
 # Add combo stacked bar chart
 	combo_chart(ppt.slides[page_no], stacked_data_views, Inches(.1), Inches(1.5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Views",
