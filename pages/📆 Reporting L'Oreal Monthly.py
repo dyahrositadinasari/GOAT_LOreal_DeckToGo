@@ -465,7 +465,7 @@ if st.button("Submit"):
 	,SUM(engagements) as engagements
 	,SUM(content) as content
 	FROM loreal-id-prod.loreal_storage.advocacy_tdk_df
-	WHERE years is in {}
+	WHERE years = {} or years = {}
 	GROUP BY 
 	date
 	,month
@@ -476,7 +476,7 @@ if st.button("Submit"):
 	,category
 	,manufacturer
 	,advertiser_name
-	""".format(year_range)
+	""".format(year_map, (year_map-1))
 
 	# Fetch data
 	df = client.query(query).to_dataframe()
