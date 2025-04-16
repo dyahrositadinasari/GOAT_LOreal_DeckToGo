@@ -901,6 +901,6 @@ if st.button("Send Report", type= "secondary"):
 	except Exception as e:
 		st.error(f"❌ Error: {e}")
 			
-else:
-	st.warning("⚠ Please fill in the details and click 'Submit'.")
+#else:
+	#st.warning("⚠ Please fill in the details and click 'Submit'.")
   
