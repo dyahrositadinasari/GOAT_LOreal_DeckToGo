@@ -589,6 +589,7 @@ if st.button("Submit"):
 	others_sov = 1 - top_brands["SOV%"].sum()  # Remaining percentage
 
 	# Append "Others" row if applicable
+	top_brands_q= top_brands.copy()
 	if others_sov > 0:
 		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
 		top_brands_q = pd.concat([top_brands, others_row], ignore_index=True)
@@ -640,6 +641,7 @@ if st.button("Submit"):
 	others_sov = 1 - top_brands["SOV%"].sum()  # Remaining percentage
 
 	# Append "Others" row if applicable
+	top_brands_y= top_brands.copy()
 	if others_sov > 0:
 		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
 		top_brands_y = pd.concat([top_brands, others_row], ignore_index=True)
