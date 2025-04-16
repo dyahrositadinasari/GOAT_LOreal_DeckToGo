@@ -845,7 +845,7 @@ if st.button("Send Email"):
 	EMAIL_USER = "dyah.dinasari.groupm@gmail.com"
 	EMAIL_PASS = "koxp pzgm ixws ihek"
     # Email Details
-	send_to = ["dyah.dinasari@groupm.com"]		
+	send_to = email_list #["dyah.dinasari@groupm.com"]		
 	subject = "[Test] m-Slide Goat-L'Oreal"
 	body = """Hi team,
         
