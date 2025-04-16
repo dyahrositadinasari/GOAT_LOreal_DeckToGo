@@ -84,7 +84,7 @@ brands = st.multiselect(
 uploaded_file = st.file_uploader("Upload the PPT Template for this report, make sure the page is 16 pages or more.", type=["pptx"])
 if uploaded_file is not None:
 	st.success("File uploaded successfully!")
-	else
+else:
 	uploaded_file = "pages/Template Deck to Go - Loreal Indonesia.pptx"
 
 email_list = st.multiselect(
