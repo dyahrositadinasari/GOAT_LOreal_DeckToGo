@@ -849,7 +849,7 @@ else:
 	st.error("can't send email 📧 : No file generated yet. Please generate the report first.")
 	st.stop()  # Stop execution if filename is missing
 		
-if st.button("Send Report"):
+if st.button("Send Report", type= "secondary"):
 	wib = pytz.timezone("Asia/Jakarta")
 	now = datetime.now(wib)
 	formatted_date = now.strftime("%Y-%m-%d %H:%M")
