@@ -503,7 +503,7 @@ if st.button("Generate Report", type="primary"):
 
 	df['quarter'] = (df['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
 
-	st.write(df.head())
+	st.write(df)
 #---- SLIDES PRESENTATION ----
 #	ppt_temp_loc = "GOAT_LOreal_DeckToGo/pages/Template Deck to Go - Loreal Indonesia.pptx"
   
