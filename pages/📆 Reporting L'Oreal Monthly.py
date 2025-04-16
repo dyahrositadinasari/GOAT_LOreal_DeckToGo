@@ -843,7 +843,7 @@ if st.button("Generate Report", type="primary"):
 	files = ppt.save(filename)
 
 # ✅ This code runs **only after clicking the submit button**
-	st.success(f"✅ Ready to send report: {category_title} Monthly Report - {month} {year}")
+	st.success(f"✅ Your report is ready : {category_title} Monthly Report - {month} {year}")
 
 	# Store filename in session state for later use
 	st.session_state["report_filename"] = filename
