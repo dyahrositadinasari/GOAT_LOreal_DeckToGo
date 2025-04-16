@@ -525,7 +525,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 
 	# Filter the dataframe
-	df_m = df[(df['division'] in division) & (df['years'] == year_map) &  (df['month'] == month)]
+	df_m = df[(df['division'].isin(division)) & (df['years'] == year_map) &  (df['month'] == month)]
 
 	# Perform groupby and aggregation with handling for datetime64 columns
 	grouped_df_m = df_m.groupby('brand').agg({
