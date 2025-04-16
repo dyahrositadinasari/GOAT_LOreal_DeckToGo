@@ -89,7 +89,7 @@ uploaded_file = st.file_uploader("Upload the PPT Template for this report, make 
 if uploaded_file is not None:
 	st.success("File uploaded successfully!")
 else:
-	uploaded_file = "pages/Template Deck to Go - Loreal Indonesia.pptx"
+	uploaded_file = "pages/Template Deck to Go - L'Oreal Indonesia.pptx"
 
 
 
