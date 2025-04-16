@@ -25,7 +25,7 @@ from pptx.enum.text import MSO_ANCHOR
 st.logo(
     "image/goat_logo.png", size="medium", link=None, icon_image=None
 )
-st.logo("image/goat_logo.png", icon_image=main_body_logo)
+st.image("image/Capture.png")
 st.title("GOAT-L'Oreal Monthly Report")
 year = st.selectbox(
   'Please select the reporting year',
