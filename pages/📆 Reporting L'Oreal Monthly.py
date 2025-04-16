@@ -83,9 +83,9 @@ email_list = st.multiselect(
 #st.write("Selected Year_ : ", year_map)
 #st.write("Selected Month : ", month)
 #st.write("Month Number : ", month_num)
-#st.write("Division : ", division)
-#st.write("Category : ", category)
-#st.write("Brands : ", brands)
+st.write("Division : ", division)
+st.write("Category : ", category)
+st.write("Brands : ", brands)
 
 
 if st.button("Submit"):
@@ -537,6 +537,7 @@ if st.button("Submit"):
 	others_sov = 1 - top_brands["SOV%"].sum()  # Remaining percentage
 
 	# Append "Others" row if applicable
+	top_brands_m = top_brands.copy()
 	if others_sov > 0:
 		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
 		top_brands_m = pd.concat([top_brands, others_row], ignore_index=True)
