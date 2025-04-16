@@ -59,23 +59,33 @@ month_map = {
 
 month_num = month_map.get(month, "")  # Returns '' if month is not found
 
-division = st.selectbox(
+division = st.multiselect(
   "Please select the reporting L'Oreal Division",
-  ('CPD', 'LDB', 'LLD', 'PPD')
+  ['Select All', 'CPD', 'LDB', 'LLD', 'PPD']
 )
-category = st.selectbox(
-  "Please select the reporting L'Oreal tdk_category",
-  ('Hair Care', 'Female Skin', 'Make Up', 'Fragrance', 'Men Skin', 'Hair Color')
+if 'Select All' in division:
+    division = ['CPD', 'LDB', 'LLD', 'PPD']
+division
+
+category = st.multiselect(
+  "Please select the reporting L'Oreal Category",
+  ['Select All', 'Hair Care', 'Female Skin', 'Make Up', 'Fragrance', 'Men Skin', 'Hair Color']
 )
+if 'Select All' in category:
+    category = ['Hair Care', 'Female Skin', 'Make Up', 'Fragrance', 'Men Skin', 'Hair Color']
+category
+
 brands = st.multiselect(
-    "Please Select 3 L'Oreal Brands to compare in the report",
+    "Please Select max 5 L'Oreal Brands to compare in the report",
     ["BLP Skin", "Garnier", "L'Oreal Paris", "GMN Shampoo Color", "Armani", "Kiehls", "Lancome", "Shu Uemura", "Urban Decay", "YSL", "Cerave", "La Roche Posay", "L'Oreal Professionel", "Matrix", "Biolage", "Kerastase", "Maybelline"]
-,max_selections=3
+,max_selections=5
 )
 
 uploaded_file = st.file_uploader("Upload the PPT Template for this report, make sure the page is 16 pages or more.", type=["pptx"])
 if uploaded_file is not None:
 	st.success("File uploaded successfully!")
+	else
+	uploaded_file = "pages/Template Deck to Go - Loreal Indonesia.pptx"
 
 email_list = st.multiselect(
 	"Please select the email address you wish to send this report to",
@@ -87,10 +97,10 @@ email_list = st.multiselect(
 #st.write("Selected Year_ : ", year_map)
 #st.write("Selected Month : ", month)
 #st.write("Month Number : ", month_num)
-st.write("Division : ", division)
-st.write("Category : ", category)
-st.write("Brands : ", brands)
-st.write("Email list : ", email_list)
+#st.write("Division : ", division)
+#st.write("Category : ", category)
+#st.write("Brands : ", brands)
+#st.write("Email list : ", email_list)
 
 if st.button("Submit"):
 #--- DATA PROCESSING ---
