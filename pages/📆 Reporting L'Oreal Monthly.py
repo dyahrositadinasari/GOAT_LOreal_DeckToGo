@@ -59,18 +59,18 @@ month_map = {
 
 month_num = month_map.get(month, "")  # Returns '' if month is not found
 
-division = st.multiselect(
+division_selection = st.multiselect(
   "Please select the reporting L'Oreal Division",
   ['Select All', 'CPD', 'LDB', 'LLD', 'PPD']
 )
-if 'Select All' in division:
+if 'Select All' in division_selection:
     division = ['CPD', 'LDB', 'LLD', 'PPD']
 
-category = st.multiselect(
+category_selection = st.multiselect(
   "Please select the reporting L'Oreal Category",
   ['Select All', 'Hair Care', 'Female Skin', 'Make Up', 'Fragrance', 'Men Skin', 'Hair Color']
 )
-if 'Select All' in category:
+if 'Select All' in category_selection:
     category = ['Hair Care', 'Female Skin', 'Make Up', 'Fragrance', 'Men Skin', 'Hair Color']
 
 brands = st.multiselect(
@@ -523,7 +523,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 
 	# Filter the dataframe
-	df_m = df[(df['tdk_category'] == category) & (df['division'] == division) & (df['years'] == year_map) &  (df['month'] == month)]
+	df_m = df[(df['division'] is in division) & (df['years'] == year_map) &  (df['month'] == month)]
 
 	# Perform groupby and aggregation with handling for datetime64 columns
 	grouped_df_m = df_m.groupby('brand').agg({
