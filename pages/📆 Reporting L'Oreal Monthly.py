@@ -83,7 +83,7 @@ email_list = st.multiselect(
 	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "yahya.wahyu@groupm.com", "ana.maratu@groupm.com", "aldi.firstanto@groupm.com", "muhammad.ilham@groupm.com")
 	)
 
-st.badge("Success", icon="⚠️", color="green")
+st.badge(" Optional", icon="⚠️", color="green")
 
 uploaded_file = st.file_uploader("Upload the PPT Template for this report, make sure the page is 16 pages or more.", type=["pptx"])
 if uploaded_file is not None:
