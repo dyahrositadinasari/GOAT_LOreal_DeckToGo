@@ -705,7 +705,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "VIEWS PERFORMANCE: YTD and YTG with SOV PROJECTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-	df_y2 = df[(df['division'] == division) & (df['years'] == year_map)]
+	df_y2 = df[(df['division'].isin(division)) & (df['years'] == year_map)]
 
 # Calculate Total Views per Category
 	total_views = df_y2.groupby('category')['views'].sum().reset_index()
