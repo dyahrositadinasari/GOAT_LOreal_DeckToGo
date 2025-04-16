@@ -78,18 +78,19 @@ brands = st.multiselect(
     ["BLP Skin", "Garnier", "L'Oreal Paris", "GMN Shampoo Color", "Armani", "Kiehls", "Lancome", "Shu Uemura", "Urban Decay", "YSL", "Cerave", "La Roche Posay", "L'Oreal Professionel", "Matrix", "Biolage", "Kerastase", "Maybelline"]
 ,max_selections=5
 )
+email_list = st.multiselect(
+	"Please select the email address you wish to send this report to",
+	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "yahya.wahyu@groupm.com", "ana.maratu@groupm.com", "aldi.firstanto@groupm.com", "muhammad.ilham@groupm.com")
+	)
 
-st.write("Optional")
+st.badge("Optional", icon=":exclamation:", color="yellow")
 uploaded_file = st.file_uploader("Upload the PPT Template for this report, make sure the page is 16 pages or more.", type=["pptx"])
 if uploaded_file is not None:
 	st.success("File uploaded successfully!")
 else:
 	uploaded_file = "pages/Template Deck to Go - Loreal Indonesia.pptx"
 
-email_list = st.multiselect(
-	"Please select the email address you wish to send this report to",
-	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "yahya.wahyu@groupm.com", "ana.maratu@groupm.com", "aldi.firstanto@groupm.com", "muhammad.ilham@groupm.com")
-	)
+
 
 
 #st.write("Selected Year : ", year)
