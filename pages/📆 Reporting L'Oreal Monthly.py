@@ -825,7 +825,7 @@ if st.button("Generate Report", type="primary"):
 		category_title = "ALL"
 	else: category_title = "| ".join(category_selection)
 	
-	format_title(ppt.slides[page_no], category.upper()+" CATEGORY KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], category_title.upper()+" CATEGORY KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 
 	page_no = page_no + 1
