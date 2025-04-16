@@ -65,13 +65,15 @@ division_selection = st.multiselect(
 )
 if 'Select All' in division_selection:
     division = ['CPD', 'LDB', 'LLD', 'PPD']
-
+else: division = division_selection
+	
 category_selection = st.multiselect(
   "Please select the reporting L'Oreal Category",
   ['Select All', 'Hair Care', 'Female Skin', 'Make Up', 'Fragrance', 'Men Skin', 'Hair Color']
 )
 if 'Select All' in category_selection:
     category = ['Hair Care', 'Female Skin', 'Make Up', 'Fragrance', 'Men Skin', 'Hair Color']
+else: category = category_selection
 
 brands = st.multiselect(
     "Please Select max 5 L'Oreal Brands to compare in the report",
