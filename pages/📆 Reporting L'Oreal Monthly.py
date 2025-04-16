@@ -23,7 +23,7 @@ from pptx.enum.chart import XL_LABEL_POSITION
 from pptx.enum.text import MSO_ANCHOR
 
 st.logo(
-    "image/goat-agency-logo2.png", size="medium", link=None, icon_image=None
+    "image/goat-agency-logo.png", size="medium", link=None, icon_image=None
 )
 st.image("image/goat-agency-logo2.png")
 st.header("L'Oreal Monthly Report")
