@@ -69,10 +69,10 @@ else: division = division_selection
 	
 category_selection = st.multiselect(
   "Please select the reporting L'Oreal Category",
-  ['Select All', 'Hair Care', 'Female Skin', 'Make Up', 'Fragrance', 'Men Skin', 'Hair Color']
+  ['Select All', 'Pro Hair', 'Skincare', 'Makeup', 'Fragrance', 'Men Skincare', 'Haircolor', 'Haircare']
 )
 if 'Select All' in category_selection:
-    category = ['Hair Care', 'Female Skin', 'Make Up', 'Fragrance', 'Men Skin', 'Hair Color']
+    category = ['Pro Hair', 'Skincare', 'Makeup', 'Fragrance', 'Men Skincare', 'Haircolor', 'Haircare']
 else: category = category_selection
 
 brands = st.multiselect(
@@ -82,7 +82,7 @@ brands = st.multiselect(
 )
 email_list = st.multiselect(
 	"Please select the email address you wish to send this report to",
-	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "yahya.wahyu@groupm.com", "ana.maratu@groupm.com", "aldi.firstanto@groupm.com", "muhammad.ilham@groupm.com")
+	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "yahya.wahyu@groupm.com", "ana.maratu@groupm.com", "aldi.firstanto@groupm.com", "muhammad.ilham@groupm.com", )
 	)
 
 st.badge(" Optional", icon="⚠️", color="blue")
