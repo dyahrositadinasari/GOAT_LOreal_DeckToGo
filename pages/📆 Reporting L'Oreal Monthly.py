@@ -103,7 +103,7 @@ else:
 #st.write("Brands : ", brands)
 #st.write("Email list : ", email_list)
 
-if st.button("Submit"):
+if st.button("Generate Report", type="primary"):
 #--- DATA PROCESSING ---
 
 #CHART FORMATING
