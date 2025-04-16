@@ -86,7 +86,7 @@ email_list = st.multiselect(
 st.write("Division : ", division)
 st.write("Category : ", category)
 st.write("Brands : ", brands)
-
+st.write("Email list : ", email_list)
 
 if st.button("Submit"):
 #--- DATA PROCESSING ---
