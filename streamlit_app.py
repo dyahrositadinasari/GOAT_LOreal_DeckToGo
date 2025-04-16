@@ -4,8 +4,7 @@ import streamlit as st
 st.title("GOAT L'Oreal PPT Report Automation")
 st.write("Please select the report type")
 st.logo(
-    "image/goat_logo.png",
-    *, size="small", link=None, icon_image=None
+    "image/goat_logo.png", size="small", link=None, icon_image=None
 )
 
 
