@@ -26,7 +26,7 @@ st.logo(
     "image/goat_logo.png", size="medium", link=None, icon_image=None
 )
 st.image("image/Capture.png")
-st.title("GOAT 🔥 L'Oreal Monthly Report")
+st.subtitle("GOAT 🔥 L'Oreal Monthly Report")
 year = st.selectbox(
   'Please select the reporting year',
   ('2024', '2025')
