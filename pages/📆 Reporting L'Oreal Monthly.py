@@ -578,6 +578,7 @@ if st.button("Generate Report", type="primary"):
   	,grid_year as years
  	,brand
  	,division
+  	,tier
 	,SUM(actual_views) as views
 	,SUM(engagement) as engagements
 	,COUNT(brand) as content
@@ -589,6 +590,7 @@ if st.button("Generate Report", type="primary"):
   	,grid_year as years
  	,brand
  	,division
+  	,tier
 	""".format(year)
 
 	# Fetch data
@@ -604,14 +606,14 @@ if st.button("Generate Report", type="primary"):
   
 	ppt = Presentation(uploaded_file)
 
-#------------PAGE1--------------
+#------------PAGE 1--------------
 	page_no = 0 #PAGE1
 
 ## Title Slide
 # Add a title to the slide
 	format_title(ppt.slides[page_no], "MONTHLY BRAND & DIVISION REPORT", alignment=PP_ALIGN.LEFT, font_name= 'Aptos Display', font_size=50, font_bold=True,left=Pt(35), top=Pt(150), width=Pt(500), height=Pt(70), font_color=RGBColor(255, 255, 255))
 
-#------------PAGE2--------------
+#------------PAGE 2--------------
 	page_no = page_no + 1 #PAGE2
 
 	# Add a title to the slide
@@ -665,7 +667,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_engagement_m, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(11.7), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 
-#------------PAGE3--------------
+#------------PAGE 3--------------
 	page_no = page_no + 1 #PAGE3
 
 # Add a title to the slide
@@ -717,7 +719,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_engagement_q, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(11.7), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 
-#------------PAGE4--------------
+#------------PAGE 4--------------
 	page_no = page_no + 1 #PAGE4
 
 # Add a title to the slide
@@ -769,7 +771,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_engagement_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(11.7), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 
-#------------PAGE5--------------
+#------------PAGE 5--------------
 	page_no = page_no + 1 #PAGE5
 
 # Add a title to the slide
@@ -794,7 +796,7 @@ if st.button("Generate Report", type="primary"):
 	combo_chart(ppt.slides[page_no], stacked_data_eng, Inches(.1), Inches(4.5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Engagements",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True)
 	
-#------------PAGE6--------------
+#------------PAGE 6--------------
 	page_no = page_no + 1 #PAGE6
 
 	format_title(ppt.slides[page_no], "VIEWS PERFORMANCE: YTD and YTG with SOV PROJECTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
@@ -822,7 +824,7 @@ if st.button("Generate Report", type="primary"):
 	table_default(ppt.slides[page_no], df_final, Inches(1), Inches(1.2), Inches(12.2), Inches(5.2),
 				  [Inches(1.5)]*2+[Inches(0.75)]*3+[Inches(1),Inches(0.5)], Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 
-#------------PAGE7--------------
+#------------PAGE 7--------------
 	page_no = page_no + 1 #PAGE7
 
 	format_title(ppt.slides[page_no], "MONTHLY TIMELINE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
@@ -855,7 +857,7 @@ if st.button("Generate Report", type="primary"):
 	table_default(ppt.slides[page_no], df_views, Inches(8), Inches(1.7), Inches(5), Inches(5),
 								[Inches(1.5)]+[Inches(0.75)]*3+[Inches(1),Inches(0.5)], Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 
-#------------PAGE8--------------
+#------------PAGE 8--------------
 	page_no = page_no + 1 
 	format_title(ppt.slides[page_no], "QUARTERLY TIMELINE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
@@ -869,7 +871,7 @@ if st.button("Generate Report", type="primary"):
 	table_default(ppt.slides[page_no], df_views, Inches(8), Inches(1.7), Inches(5), Inches(5),
 								[Inches(1.5)]+[Inches(0.75)]*3+[Inches(1),Inches(0.5)], Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 
-#------------PAGE9--------------
+#------------PAGE 9--------------
 	page_no = page_no + 1 
 	format_title(ppt.slides[page_no], "BAR CHART COMPARISON QTR VERSUS", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
@@ -899,7 +901,7 @@ if st.button("Generate Report", type="primary"):
                      legend=True, legend_position=XL_LEGEND_POSITION.TOP,
                      bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 
-#------------PAGE10--------------
+#------------PAGE 10--------------
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "MONTHLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
@@ -927,7 +929,7 @@ if st.button("Generate Report", type="primary"):
 	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4), Inches(6), Inches(3), Inches(2))
 	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(7.5), Inches(6), Inches(3), Inches(2))
 	
-#------------PAGE11--------------
+#------------PAGE 11--------------
 	page_no = page_no + 1 
 	format_title(ppt.slides[page_no], "QUARTERLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
@@ -956,14 +958,14 @@ if st.button("Generate Report", type="primary"):
 	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(7.5), Inches(6), Inches(3), Inches(2))
 	
 	
-#------------PAGE12--------------
+#------------PAGE 12--------------
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "BRAND SCORE-CARD", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
-#------------PAGE13--------------
+#------------PAGE 13--------------
 	page_no = page_no + 1
 
-#------------PAGE14--------------
+#------------PAGE 14--------------
 	page_no = page_no + 1
 	if 'Select All' in category_selection:
 		category_title = "ALL CATEGORY"
@@ -971,6 +973,22 @@ if st.button("Generate Report", type="primary"):
 	
 	format_title(ppt.slides[page_no], category_title.upper()+" KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
+	# Filter the dataframe
+	df_14 = df2[(df2['years'] == year) &  (df2['month'] == month)]
+	df_14_views = pd.pivot_table(df_14[['tier', 'views']], index = 'tier', aggfunc = 'sum', fill_value = 0)
+
+# Add vertical bar chart
+	vertical_bar_chart(ppt.slides[page_no], df_14_views, Inches(1), Inches(1.7), Inches(11), Inches(5),
+                     chart_title = True, title= f"{category_title}", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+	
+#-----------PAGE 15---------------
+	page_no = page_no + 1
+
+#-----------PAGE 16---------------
+	page_no = page_no + 1	
+	
 
 	page_no = page_no + 1
 	for i in range(page_no,len(ppt.slides)):
