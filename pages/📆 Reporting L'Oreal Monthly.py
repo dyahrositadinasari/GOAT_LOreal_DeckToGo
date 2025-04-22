@@ -531,6 +531,7 @@ if st.button("Generate Report", type="primary"):
 	# Initialize BigQuery Client
 	client = bigquery.Client(credentials=credentials, project=credentials.project_id)
    
+# df for Competitive data (TDK)
 	# Query Code
 	query = """
  	SELECT 
@@ -568,7 +569,36 @@ if st.button("Generate Report", type="primary"):
 
 	df['quarter'] = (df['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
 
-	st.write(df)
+# df2 for INTERNAL DATA
+	# Query Code 2
+	query2 = """
+ 	SELECT 
+	date_post as date
+ 	,grid_month as month
+  	,grid_year as years
+ 	,brand
+ 	,division
+	,SUM(actual_views) as views
+	,SUM(engagement) as engagements
+	,COUNT(brand) as content
+	FROM loreal-id-prod.loreal_storage.advocacy_campaign_df
+	WHERE grid_year = {}
+	GROUP BY 
+	date_post
+  	,grid_month as month
+  	,grid_year as years
+ 	,brand
+ 	,division
+	""".format(year)
+
+	# Fetch data
+	df2 = client.query(query).to_dataframe()
+
+	# Add Date & Quarter column
+	df2['date'] = pd.to_datetime(df2['date'], format='%y-%m-%d')
+
+	df2['quarter'] = (df2['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
+	
 #---- SLIDES PRESENTATION ----
 #	ppt_temp_loc = "GOAT_LOreal_DeckToGo/pages/Template Deck to Go - Loreal Indonesia.pptx"
   
@@ -874,7 +904,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "MONTHLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-	df_10 = df[(df['brand'].isin(brands)) & (df['years'] == year_map) &  (df['month'] == month)]
+	df_10 = df2[(df2['brand'].isin(brands)) & (df2['years'] == year) &  (df2['month'] == month)]
 	df_10_views = pd.pivot_table(df_10[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_eng = pd.pivot_table(df_10[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_content = pd.pivot_table(df_10[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
@@ -901,6 +931,31 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1 
 	format_title(ppt.slides[page_no], "QUARTERLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
+# Filter the dataframe
+	df_11 = df2[(df2['brand'].isin(brands)) & (df2['years'] == year) &  (df2['quarter'] == quarter)]
+	df_11_views = pd.pivot_table(df_11[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+	df_11_eng = pd.pivot_table(df_11[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+	df_11_content = pd.pivot_table(df_11[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+
+# Add vertical bar chart
+	vertical_bar_chart(ppt.slides[page_no], df_11_views, Inches(0.5), Inches(1.9), Inches(3.7), Inches(3),
+                     chart_title = True, title= "View Performance", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+	vertical_bar_chart(ppt.slides[page_no], df_11_eng, Inches(4), Inches(1.9), Inches(3.7), Inches(3),
+                     chart_title = True, title= "Engagement Performance", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+	vertical_bar_chart(ppt.slides[page_no], df_11_content, Inches(7.5), Inches(1.9), Inches(3.7), Inches(3),
+                     chart_title = True, title= "Content Performance", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+# Add rectangle
+	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.5), Inches(6), Inches(3), Inches(2))
+	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4), Inches(6), Inches(3), Inches(2))
+	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(7.5), Inches(6), Inches(3), Inches(2))
+	
+	
 #------------PAGE12--------------
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "BRAND SCORE-CARD", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
