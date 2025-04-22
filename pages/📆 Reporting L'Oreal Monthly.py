@@ -874,10 +874,20 @@ if st.button("Generate Report", type="primary"):
 
 # Filter the dataframe
 	df_10 = df[(df['brand'].isin(brands)) & (df['years'] == year_map) &  (df['month'] == month)]
-	df_10_pivot = pd.pivot_table(df_10[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+	df_10_views = pd.pivot_table(df_10[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+	df_10_eng = pd.pivot_table(df_10[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+	df_10_content = pd.pivot_table(df_10[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 
-# Add horizontal bar chart content
-	horizontal_bar_chart(ppt.slides[page_no], df_10_pivot, Inches(7), Inches(1.9), Inches(5.5), Inches(5),
+# Add horizontal bar chart
+	horizontal_bar_chart(ppt.slides[page_no], df_10_views, Inches(0.5), Inches(1.9), Inches(3.7), Inches(3),
+                     chart_title = True, title= f"{title_q} Content Contribution", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+	horizontal_bar_chart(ppt.slides[page_no], df_10_eng, Inches(4), Inches(1.9), Inches(3.7), Inches(3),
+                     chart_title = True, title= f"{title_q} Content Contribution", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+	horizontal_bar_chart(ppt.slides[page_no], df_10_content, Inches(7.5), Inches(1.9), Inches(3.7), Inches(3),
                      chart_title = True, title= f"{title_q} Content Contribution", fontsize_title = Pt(16),
                      legend=True, legend_position=XL_LEGEND_POSITION.TOP,
                      bar_width = Pt(8), percentage=False, fontsize=Pt(10))
