@@ -872,12 +872,15 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "MONTHLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
-	# Filter the dataframe
+# Filter the dataframe
 	df_10 = df[(df['brand'].isin(brands)) & (df['years'] == year_map) &  (df['month'] == month)]
-	
 	df_10_pivot = pd.pivot_table(df_10[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	df_10_pivot
 
+# Add horizontal bar chart content
+	horizontal_bar_chart(ppt.slides[page_no], df_10_pivot, Inches(7), Inches(1.9), Inches(5.5), Inches(5),
+                     chart_title = True, title= f"{title_q} Content Contribution", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 	
 #------------PAGE11--------------
 	page_no = page_no + 1 
