@@ -594,7 +594,7 @@ if st.button("Generate Report", type="primary"):
 	""".format(year)
 
 	# Fetch data
-	df2 = client.query(query).to_dataframe()
+	df2 = client.query(query2).to_dataframe()
 
 	# Add Date & Quarter column
 	df2['date'] = pd.to_datetime(df2['date'], format='%y-%m-%d')
