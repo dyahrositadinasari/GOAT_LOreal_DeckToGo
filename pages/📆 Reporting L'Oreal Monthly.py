@@ -600,6 +600,7 @@ if st.button("Generate Report", type="primary"):
 	df2['date'] = pd.to_datetime(df2['date'], format='%y-%m-%d')
 
 	df2['quarter'] = (df2['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
+	df2.head()
 	
 #---- SLIDES PRESENTATION ----
 #	ppt_temp_loc = "GOAT_LOreal_DeckToGo/pages/Template Deck to Go - Loreal Indonesia.pptx"
