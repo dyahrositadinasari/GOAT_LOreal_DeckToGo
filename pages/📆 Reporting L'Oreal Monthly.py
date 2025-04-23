@@ -602,7 +602,7 @@ if st.button("Generate Report", type="primary"):
 	df2['date'] = pd.to_datetime(df2['date'], format='%y-%m-%d')
 
 	df2['quarter'] = (df2['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
-	df2.head()
+	st.write(df2.head())
 	
 #---- SLIDES PRESENTATION ----
 #	ppt_temp_loc = "GOAT_LOreal_DeckToGo/pages/Template Deck to Go - Loreal Indonesia.pptx"
@@ -949,7 +949,6 @@ if st.button("Generate Report", type="primary"):
                      chart_title = True, title= "View Performance", fontsize_title = Pt(16),
                      legend=True, legend_position=XL_LEGEND_POSITION.TOP,
                      bar_width = Pt(8), percentage=False, fontsize=Pt(10))
-	print(df_11_views)
 	
 # Add rectangle
 	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.9), Inches(5), Inches(3.7), Inches(2))
