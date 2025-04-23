@@ -1003,9 +1003,9 @@ if st.button("Generate Report", type="primary"):
 
 	# Filter the dataframe
 	df_14 = df2[(df2['category'].isin(category)) & (df2['years'] == year) &  (df2['month'] == month)]
-	df_14_views = pd.pivot_table(df_14[['tier', 'views']], index = 'tier', aggfunc = 'sum', fill_value = 0)
-	df_14_views = df_14_views.sort_values(by=['tier'], ascending=False)
-	st.write("df_14_views :", df_14_views)
+	df_14_ = pd.pivot_table(df_14[['tier', 'views', 'engagement']], index = 'tier', values=['views', 'engagement'], aggfunc = 'sum', fill_value = 0)
+	df_14_ = df_14_.sort_values(by=['tier'], ascending=False)
+	st.write("df_14_v :", df_14_)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_14_views, Inches(1), Inches(1.7), Inches(11), Inches(5),
