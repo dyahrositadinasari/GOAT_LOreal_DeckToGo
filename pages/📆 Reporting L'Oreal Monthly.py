@@ -794,6 +794,7 @@ if st.button("Generate Report", type="primary"):
 	month_order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 	stacked_data_eng = stacked_data_eng.reindex(month_order)
 	stacked_data_views = stacked_data_views.reindex(month_order)
+	st.write("Page 5 Table :", stacked_data_views)
 
 # Add combo stacked bar chart
 	combo_chart(ppt.slides[page_no], stacked_data_views, Inches(.1), Inches(1.5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Views",
