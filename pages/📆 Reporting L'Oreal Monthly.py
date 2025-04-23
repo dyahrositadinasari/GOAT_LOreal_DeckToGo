@@ -541,7 +541,7 @@ if st.button("Generate Report", type="primary"):
 	,month
 	,years
 	,brand
-	,tdk_category
+	,category
 	,division
 	,category
 	,manufacturer
@@ -580,6 +580,7 @@ if st.button("Generate Report", type="primary"):
   	,grid_year as years
  	,brand
  	,division
+  	,main_category as category
   	,tier
 	,SUM(actual_views) as views
 	,SUM(engagement) as engagements
@@ -592,6 +593,7 @@ if st.button("Generate Report", type="primary"):
   	,grid_year
  	,brand
  	,division
+  	,main_category
   	,tier
 	""".format(year)
 
@@ -915,7 +917,7 @@ if st.button("Generate Report", type="primary"):
 	df_10_views = pd.pivot_table(df_10[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_eng = pd.pivot_table(df_10[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_content = pd.pivot_table(df_10[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	st.write("df_10_views:", df_10_views)
+	st.write("df_10_views :", df_10_views)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_10_views, Inches(0.9), Inches(1.9), Inches(3.7), Inches(3),
@@ -943,7 +945,7 @@ if st.button("Generate Report", type="primary"):
 	df_11_views = pd.pivot_table(df_11[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_eng = pd.pivot_table(df_11[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_content = pd.pivot_table(df_11[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	st.write("df_11_views:", df_11_views)
+	st.write("df_11_views :", df_11_views)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_11_views, Inches(0.9), Inches(1.9), Inches(3.7), Inches(3),
@@ -960,9 +962,30 @@ if st.button("Generate Report", type="primary"):
                      bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 	
 # Add rectangle
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.9), Inches(5), Inches(3.7), Inches(2))
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4.9), Inches(5), Inches(3.7), Inches(2))
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(8.9), Inches(5), Inches(3.7), Inches(2))
+	shapes1 = ppt.slides[page_no].shapes
+	rectangle1 = shapes1.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.9), Inches(5), Inches(3.7), Inches(2))
+	rectangle1.adjustments[0] = 0.5
+	fill1 = rectangle1.fill.background()
+	text_frame1 = rectangle1.text_frame
+	text_frame1.text = "1. ..."
+	text_frame1.paragraphs[0].font.size = Pt(13)
+
+	shapes2 = ppt.slides[page_no].shapes
+	rectangle2 = shapes2.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(4.9), Inches(5), Inches(3.7), Inches(2))
+	rectangle2.adjustments[0] = 0.5
+	fill2 = rectangle2.fill.background()
+	text_frame2 = rectangle2.text_frame
+	text_frame2.text = "1. ..."
+	text_frame2.paragraphs[0].font.size = Pt(13)
+
+	shapes3 = ppt.slides[page_no].shapes
+	rectangle3 = shapes3.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(8.9), Inches(5), Inches(3.7), Inches(2))
+	rectangle3.adjustments[0] = 0.5
+	fill3 = rectangle3.fill.background()
+	text_frame3 = rectangle3.text_frame
+	text_frame3.text = "1. ..."
+	text_frame3.paragraphs[0].font.size = Pt(13)
+
 	
 	
 #------------PAGE 12--------------
@@ -981,8 +1004,9 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], category_title.upper()+" KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 	# Filter the dataframe
-	df_14 = df2[(df2['years'] == year) &  (df2['month'] == month)]
+	df_14 = df2[(df2['category'].isin(category) & (df2['years'] == year) &  (df2['month'] == month)]
 	df_14_views = pd.pivot_table(df_14[['tier', 'views']], index = 'tier', aggfunc = 'sum', fill_value = 0)
+	st.write("df_14_views :", df_14_views)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_14_views, Inches(1), Inches(1.7), Inches(11), Inches(5),
