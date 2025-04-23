@@ -658,7 +658,7 @@ if st.button("Generate Report", type="primary"):
 		top_brands_m = pd.concat([top_brands, others_row], ignore_index=True)
 
 	# Add pie chart
-	st.write(top_brands_m.set_index('brand'))
+	### st.write(top_brands_m.set_index('brand'))
 	pie_chart(ppt.slides[page_no], top_brands_m.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], top_brands_m.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
@@ -710,7 +710,7 @@ if st.button("Generate Report", type="primary"):
 		top_brands_q = pd.concat([top_brands, others_row], ignore_index=True)
 		
 	# Add pie chart
-	st.write(top_brands_q.set_index('brand'))
+	### st.write(top_brands_q.set_index('brand'))
 	pie_chart(ppt.slides[page_no], top_brands_q.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], top_brands_q.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
@@ -762,7 +762,7 @@ if st.button("Generate Report", type="primary"):
 		top_brands_y = pd.concat([top_brands, others_row], ignore_index=True)
 
 # Add pie chart
-	st.write(top_brands_y.set_index('brand'))
+	### st.write(top_brands_y.set_index('brand'))
 	pie_chart(ppt.slides[page_no], top_brands_y.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], top_brands_y.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
@@ -911,6 +911,7 @@ if st.button("Generate Report", type="primary"):
 	df_10_views = pd.pivot_table(df_10[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_eng = pd.pivot_table(df_10[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_content = pd.pivot_table(df_10[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+	df_10_views	
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_10_views, Inches(0.5), Inches(1.9), Inches(3.7), Inches(3),
@@ -939,20 +940,15 @@ if st.button("Generate Report", type="primary"):
 	df_11_views = pd.pivot_table(df_11[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_eng = pd.pivot_table(df_11[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_content = pd.pivot_table(df_11[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+	st.write(df_11_views)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_11_views, Inches(0.5), Inches(1.9), Inches(3.7), Inches(3),
                      chart_title = True, title= "View Performance", fontsize_title = Pt(16),
                      legend=True, legend_position=XL_LEGEND_POSITION.TOP,
                      bar_width = Pt(8), percentage=False, fontsize=Pt(10))
-	vertical_bar_chart(ppt.slides[page_no], df_11_eng, Inches(4), Inches(1.9), Inches(3.7), Inches(3),
-                     chart_title = True, title= "Engagement Performance", fontsize_title = Pt(16),
-                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
-                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
-	vertical_bar_chart(ppt.slides[page_no], df_11_content, Inches(7.5), Inches(1.9), Inches(3.7), Inches(3),
-                     chart_title = True, title= "Content Performance", fontsize_title = Pt(16),
-                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
-                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+	print(df_11_views)
+	
 # Add rectangle
 	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.5), Inches(6), Inches(3), Inches(2))
 	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4), Inches(6), Inches(3), Inches(2))
