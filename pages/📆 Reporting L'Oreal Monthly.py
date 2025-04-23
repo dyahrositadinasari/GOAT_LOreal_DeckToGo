@@ -780,7 +780,7 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1 #PAGE5
 
 # Add a title to the slide
-	format_title(ppt.slides[page_no], "YTD BEAUTY MARKET VIEWS AND ENGAGEMENT SUMMARY", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "YTD BEAUTY MARKET VIEWS AND ENGAGEMENT SUMMARY", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.3), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Aggregate Views by Month and Manufacturer
 	stacked_data_views = df_y.pivot_table(index="month", columns="manufacturer", values="views", aggfunc="sum", fill_value=0)
