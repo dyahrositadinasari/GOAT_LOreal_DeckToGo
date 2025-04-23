@@ -30,10 +30,10 @@ st.image("image/goat-agency-logo2.png")
 st.header("L'Oreal Monthly Report")
 year = st.selectbox(
   'Please select the reporting year',
-  (2024, 2025)
+  ('2024', '2025')
 )
 year_ = {
-  2024:24, 2025:25
+  '2024':24, '2025':25
 }
 
 year_map = year_.get(year, "")  # Returns '' if year is not found
@@ -909,7 +909,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "MONTHLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-	df_10 = df2[(df2['years'] == year) &  (df2['month'] == month)]
+	df_10 = df2[(df2['years'] == year.astype(str)) &  (df2['month'] == month)]
 	df_10_views = pd.pivot_table(df_10[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_eng = pd.pivot_table(df_10[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_content = pd.pivot_table(df_10[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
