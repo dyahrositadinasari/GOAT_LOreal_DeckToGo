@@ -543,7 +543,6 @@ if st.button("Generate Report", type="primary"):
 	,brand
 	,category
 	,division
-	,category
 	,manufacturer
 	,advertiser_name
 	,SUM(views_float) as views
@@ -556,7 +555,6 @@ if st.button("Generate Report", type="primary"):
 	,month
 	,years
 	,brand
-	,tdk_category
 	,division
 	,category
 	,manufacturer
