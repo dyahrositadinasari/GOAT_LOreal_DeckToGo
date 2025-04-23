@@ -1004,6 +1004,7 @@ if st.button("Generate Report", type="primary"):
 	# Filter the dataframe
 	df_14 = df2[(df2['category'].isin(category)) & (df2['years'] == year) &  (df2['month'] == month)]
 	df_14_views = pd.pivot_table(df_14[['tier', 'views']], index = 'tier', aggfunc = 'sum', fill_value = 0)
+	df_14_views.sort_values(by=['tier'], ascending=False)
 	st.write("df_14_views :", df_14_views)
 
 # Add vertical bar chart
