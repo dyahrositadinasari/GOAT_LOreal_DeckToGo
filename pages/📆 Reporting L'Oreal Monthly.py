@@ -514,6 +514,71 @@ if st.button("Generate Report", type="primary"):
 		
 		return chart
 
+
+	#----------------
+	def combo_chart2(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
+							 data_show=True, chart_title=False, title="", fontsize=Pt(12),
+							 fontsize_title=Pt(14), percentage=False, bar_width=Pt(10)):
+		df.fillna(0, inplace=True)  # Fill NaN values
+		# Define chart data
+		chart_data = CategoryChartData()
+		for i in df.index:
+			chart_data.add_category(i)
+		for col in df.columns:
+			chart_data.add_series(col, np.where(df[col].values == 0, None, df[col].values))
+	
+	    # Create vertical bar chart
+		chart = slide.shapes.add_chart(XL_CHART_TYPE.COLUMN_CLUSTERED, x, y, cx, cy, chart_data).chart
+	
+	    # Add legend
+		if legend:
+			chart.has_legend = True
+			chart.legend.include_in_layout = False
+			chart.legend.position = legend_position
+			chart.legend.font.size = fontsize
+		else:
+			chart.has_legend = False
+	
+	    # Show data labels
+		if data_show:
+			for series in chart.series:
+				for point in series.points:
+					point.data_label.show_value = True
+					point.data_label.font.size = fontsize
+					point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
+	
+	    # Customize category axis (y-axis) label font size
+		chart.category_axis.tick_labels.font.size = fontsize
+	
+	    # Customize value axis (x-axis) label font size and format
+		chart.value_axis.tick_labels.font.size = fontsize
+		if percentage:
+			chart.value_axis.tick_labels.number_format = '0%'
+		elif df.max().max() >= 1000:
+			chart.value_axis.tick_labels.number_format = '#,##0'  # Add commas for thousands
+	
+	    # Adjust bar width
+		for series in chart.series:
+			series.format.line.width = bar_width
+	
+		# Set chart title
+		if chart_title:
+			chart.chart_title.text_frame.text = title
+			title_font = chart.chart_title.text_frame.paragraphs[0].font
+			title_font.bold = True
+			title_font.size = fontsize_title
+		else:
+			chart.has_title = False
+	
+	    # Remove Gridlines
+		value_axis = chart.value_axis
+		category_axis = chart.category_axis
+		value_axis.has_major_gridlines = False
+		value_axis.has_minor_gridlines = False
+		category_axis.has_major_gridlines = False
+		category_axis.has_minor_gridlines = False
+	#----------------
+
 	def adjust_dataframe(df, columns, index=False):
 		# Combine existing and desired columns/index
 		all_columns = list(df.columns) + [col for col in columns if col not in df.columns]
@@ -931,10 +996,31 @@ if st.button("Generate Report", type="primary"):
                      chart_title = True, title= "Content Performance", fontsize_title = Pt(16),
                      legend=True, legend_position=XL_LEGEND_POSITION.TOP,
                      bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+	
 # Add rectangle
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.9), Inches(5), Inches(3.7), Inches(2))
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4.9), Inches(5), Inches(3.7), Inches(2))
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(8.9), Inches(5), Inches(3.7), Inches(2))
+	shapes1 = ppt.slides[page_no].shapes
+	rectangle1 = shapes1.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.9), Inches(5), Inches(3.7), Inches(2))
+	rectangle1.adjustments[0] = 0.1
+	rectangle1.fill.background()
+	text_frame1 = rectangle1.text_frame
+	text_frame1.text = "1. ..." 
+	text_frame1.paragraphs[0].font.size = Pt(13)
+
+	shapes2 = ppt.slides[page_no].shapes
+	rectangle2 = shapes2.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(4.9), Inches(5), Inches(3.7), Inches(2))
+	rectangle2.adjustments[0] = 0.1
+	rectangle2.fill.background()
+	text_frame2 = rectangle2.text_frame
+	text_frame2.text = "1. ..."
+	text_frame2.paragraphs[0].font.size = Pt(13)
+
+	shapes3 = ppt.slides[page_no].shapes
+	rectangle3 = shapes3.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(8.9), Inches(5), Inches(3.7), Inches(2))
+	rectangle3.adjustments[0] = 0.1
+	rectangle3.fill.background()
+	text_frame3 = rectangle3.text_frame
+	text_frame3.text = "1. ..."
+	text_frame3.paragraphs[0].font.size = Pt(13)
 	
 #------------PAGE 11--------------
 	page_no = page_no + 1 
@@ -963,24 +1049,24 @@ if st.button("Generate Report", type="primary"):
 # Add rectangle
 	shapes1 = ppt.slides[page_no].shapes
 	rectangle1 = shapes1.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.9), Inches(5), Inches(3.7), Inches(2))
-	rectangle1.adjustments[0] = 0.5
-	fill1 = rectangle1.fill.background()
+	rectangle1.adjustments[0] = 0.1
+	rectangle1.fill.background()
 	text_frame1 = rectangle1.text_frame
-	text_frame1.text = "1. ..."
+	text_frame1.text = "1. ..." 
 	text_frame1.paragraphs[0].font.size = Pt(13)
 
 	shapes2 = ppt.slides[page_no].shapes
 	rectangle2 = shapes2.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(4.9), Inches(5), Inches(3.7), Inches(2))
-	rectangle2.adjustments[0] = 0.5
-	fill2 = rectangle2.fill.background()
+	rectangle2.adjustments[0] = 0.1
+	rectangle2.fill.background()
 	text_frame2 = rectangle2.text_frame
 	text_frame2.text = "1. ..."
 	text_frame2.paragraphs[0].font.size = Pt(13)
 
 	shapes3 = ppt.slides[page_no].shapes
 	rectangle3 = shapes3.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(8.9), Inches(5), Inches(3.7), Inches(2))
-	rectangle3.adjustments[0] = 0.5
-	fill3 = rectangle3.fill.background()
+	rectangle3.adjustments[0] = 0.1
+	rectangle3.fill.background()
 	text_frame3 = rectangle3.text_frame
 	text_frame3.text = "1. ..."
 	text_frame3.paragraphs[0].font.size = Pt(13)
