@@ -911,11 +911,11 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "MONTHLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-	df_10 = df2[(df2['years'] == year) &  (df2['month'] == month)]
+	df_10 = df2[(df2['brand'].isin(brands)) & (df2['years'] == year) &  (df2['month'] == month)]
 	df_10_views = pd.pivot_table(df_10[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_eng = pd.pivot_table(df_10[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_content = pd.pivot_table(df_10[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	st.write("df_10", df_10)
+	st.write("df_10_views", df_10_views)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_10_views, Inches(0.9), Inches(1.9), Inches(3.7), Inches(3),
@@ -939,11 +939,11 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1 
 	format_title(ppt.slides[page_no], "QUARTERLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
-	df_11 = df2[(df2['years'] == year) &  (df2['quarter'] == quarter)]
+	df_11 = df2[(df2['brand'].isin(brands)) & (df2['years'] == year) &  (df2['quarter'] == quarter)]
 	df_11_views = pd.pivot_table(df_11[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_eng = pd.pivot_table(df_11[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_content = pd.pivot_table(df_11[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	st.write("df_11", df_11)
+	st.write("df_11_views", df_11_views)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_11_views, Inches(0.9), Inches(1.9), Inches(3.7), Inches(3),
