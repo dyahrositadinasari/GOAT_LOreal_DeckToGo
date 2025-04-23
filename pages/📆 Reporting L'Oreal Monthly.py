@@ -917,7 +917,7 @@ if st.button("Generate Report", type="primary"):
 	st.write(df2['years'])
 	st.write(df2['month'])
 	st.write(month)
-	st.write(df_11_views)
+	st.write(df_10_views)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_10_views, Inches(0.5), Inches(1.9), Inches(3.7), Inches(3),
