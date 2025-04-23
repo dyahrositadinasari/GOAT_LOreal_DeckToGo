@@ -915,7 +915,7 @@ if st.button("Generate Report", type="primary"):
 	df_10_views = pd.pivot_table(df_10[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_eng = pd.pivot_table(df_10[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_content = pd.pivot_table(df_10[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	st.write("df_10_views", df_10_views)
+	st.write("df_10_views:", df_10_views)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_10_views, Inches(0.9), Inches(1.9), Inches(3.7), Inches(3),
@@ -943,7 +943,7 @@ if st.button("Generate Report", type="primary"):
 	df_11_views = pd.pivot_table(df_11[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_eng = pd.pivot_table(df_11[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_content = pd.pivot_table(df_11[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	st.write("df_11_views", df_11_views)
+	st.write("df_11_views:", df_11_views)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_11_views, Inches(0.9), Inches(1.9), Inches(3.7), Inches(3),
