@@ -30,10 +30,10 @@ st.image("image/goat-agency-logo2.png")
 st.header("L'Oreal Monthly Report")
 year = st.selectbox(
   'Please select the reporting year',
-  ('2024', '2025')
+  (2024, 2025)
 )
 year_ = {
-  '2024':24, '2025':25
+  2024:24, 2025:25
 }
 
 year_map = year_.get(year, "")  # Returns '' if year is not found
