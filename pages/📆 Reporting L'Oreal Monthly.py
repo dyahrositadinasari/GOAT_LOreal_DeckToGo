@@ -78,9 +78,11 @@ else: category = category_selection
 
 brands = st.multiselect(
     "Please Select max 5 L'Oreal Brands to compare in the report",
-    ["BLP Skin", "Garnier", "L'Oreal Paris", "GMN Shampoo Color", "Armani", "Kiehls", "Lancome", "Shu Uemura", "Urban Decay", "YSL", "Cerave", "La Roche Posay", "L'Oreal Professionel", "Matrix", "Biolage", "Kerastase", "Maybelline"]
-,max_selections=5
+	["OAP", "MNY", "GAR", "3CE", "MNY", "CRV", "LRP", "YSL", "ARM", "LAN", "SHU", "KIE", "LP", "KER", "MXBIO"]
+	,max_selections=5
 )
+# brand full name -> ["BLP Skin", "Garnier", "L'Oreal Paris", "GMN Shampoo Color", "Armani", "Kiehls", "Lancome", "Shu Uemura", "Urban Decay", "YSL", "Cerave", "La Roche Posay", "L'Oreal Professionel", "Matrix", "Biolage", "Kerastase", "Maybelline"]
+
 email_list = st.multiselect(
 	"Please select the email address you wish to send this report to",
 	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "yahya.wahyu@groupm.com", "ana.maratu@groupm.com", "aldi.firstanto@groupm.com", "muhammad.ilham@groupm.com", )
@@ -927,9 +929,9 @@ if st.button("Generate Report", type="primary"):
                      legend=True, legend_position=XL_LEGEND_POSITION.TOP,
                      bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 # Add rectangle
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.5), Inches(6), Inches(3), Inches(2))
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4), Inches(6), Inches(3), Inches(2))
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(7.5), Inches(6), Inches(3), Inches(2))
+	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.9), Inches(5), Inches(3.7), Inches(2))
+	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4.9), Inches(5), Inches(3.7), Inches(2))
+	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(8.9), Inches(5), Inches(3.7), Inches(2))
 	
 #------------PAGE 11--------------
 	page_no = page_no + 1 
@@ -950,9 +952,9 @@ if st.button("Generate Report", type="primary"):
 	print(df_11_views)
 	
 # Add rectangle
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.5), Inches(6), Inches(3), Inches(2))
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4), Inches(6), Inches(3), Inches(2))
-	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(7.5), Inches(6), Inches(3), Inches(2))
+	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.9), Inches(5), Inches(3.7), Inches(2))
+	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4.9), Inches(5), Inches(3.7), Inches(2))
+	ppt.slides[page_no].shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(8.9), Inches(5), Inches(3.7), Inches(2))
 	
 	
 #------------PAGE 12--------------
