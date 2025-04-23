@@ -1015,6 +1015,11 @@ if st.button("Generate Report", type="primary"):
 	
 #-----------PAGE 15---------------
 	page_no = page_no + 1
+	
+	# Add combo stacked bar chart
+	st.write("stacked_data_views :", stacked_data_views)
+	combo_chart(ppt.slides[page_no], df_14_views, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title}",
+            fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
 
 #-----------PAGE 16---------------
 	page_no = page_no + 1	
