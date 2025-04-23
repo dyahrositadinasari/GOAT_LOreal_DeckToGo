@@ -78,7 +78,7 @@ else: category = category_selection
 
 brands = st.multiselect(
     "Please Select max 5 L'Oreal Brands to compare in the report",
-	["OAP", "MNY", "GAR", "3CE", "MNY", "CRV", "LRP", "YSL", "ARM", "LAN", "SHU", "KIE", "LP", "KER", "MXBIO"]
+	["3CE", "ARM", "CRV", "GAR", "KER", "KIE", "LAN", "LP", "LRP", "MNY", "MXBIO", "OAP", "SHU", "YSL"]
 	,max_selections=5
 )
 # brand full name -> ["BLP Skin", "Garnier", "L'Oreal Paris", "GMN Shampoo Color", "Armani", "Kiehls", "Lancome", "Shu Uemura", "Urban Decay", "YSL", "Cerave", "La Roche Posay", "L'Oreal Professionel", "Matrix", "Biolage", "Kerastase", "Maybelline"]
