@@ -1008,7 +1008,7 @@ if st.button("Generate Report", type="primary"):
 	st.write("df_14_v :", df_14_)
 
 # Add vertical bar chart
-	vertical_bar_chart(ppt.slides[page_no], df_14_views, Inches(1), Inches(1.7), Inches(11), Inches(5),
+	vertical_bar_chart(ppt.slides[page_no], df_14_, Inches(1), Inches(1.7), Inches(11), Inches(5),
                      chart_title = True, title= f"{category_title}", fontsize_title = Pt(16),
                      legend=True, legend_position=XL_LEGEND_POSITION.TOP,
                      bar_width = Pt(8), percentage=False, fontsize=Pt(10))
@@ -1017,8 +1017,7 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1
 	
 	# Add combo stacked bar chart
-	st.write("stacked_data_views :", stacked_data_views)
-	combo_chart(ppt.slides[page_no], df_14_views, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title}",
+	combo_chart(ppt.slides[page_no], df_14_, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title}",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
 
 #-----------PAGE 16---------------
