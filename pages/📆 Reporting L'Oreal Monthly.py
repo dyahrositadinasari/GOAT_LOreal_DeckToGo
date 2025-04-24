@@ -1123,7 +1123,7 @@ if st.button("Generate Report", type="primary"):
 	
 # Add table	
 	table_default(ppt.slides[page_no], df_12_transpose, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
-		      [Inches(1)]*7, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
+		      [Inches(0.7)]*10, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 
 #------------PAGE 13--------------
 	page_no = page_no + 1
