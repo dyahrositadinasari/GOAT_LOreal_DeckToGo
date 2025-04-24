@@ -383,6 +383,7 @@ if st.button("Generate Report", type="primary"):
 					point.data_label.show_value = True
 					point.data_label.font.size = fontsize
 					point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
+					point.data_label.number_format = '#,##0'
 	
 	    # Customize category axis (y-axis) label font size
 		chart.category_axis.tick_labels.font.size = fontsize
@@ -1112,25 +1113,27 @@ if st.button("Generate Report", type="primary"):
 	
 	# Filter the dataframe
 	df_13 = df_y # data TDK YTD
-	df_13_views = pd.pivot_table(df_13[['brand','views']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=False)
-	df_13_eng = pd.pivot_table(df_13[['brand','engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('engagements', ascending=False)
-	df_13_content = pd.pivot_table(df_13[['brand','content']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('content', ascending=False)
+	df_13_views = pd.pivot_table(df_13[['brand','views']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
+	df_13_eng = pd.pivot_table(df_13[['brand','engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('engagements', ascending=True)
+	df_13_content = pd.pivot_table(df_13[['brand','content']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('content', ascending=True)
+
+	df_13_views = np.ceil(df_13_views * 10) / 10 # Round up with 1 decimal place
+	df_13_eng = np.ceil(df_13_eng * 10) / 10 # Round up with 1 decimal place
+	df_13_content = np.ceil(df_13_content * 10) / 10 # Round up with 1 decimal place	
+	
 	st.write("df_13_views :", df_13_views)
 
 	# Add horizontal bar chart views
 	horizontal_bar_chart(ppt.slides[page_no], df_13_views, Inches(0.5), Inches(1.9), Inches(4), Inches(5),
                      chart_title = True, title= "SOV", fontsize_title = Pt(16),
-                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
-                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+                     legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 	horizontal_bar_chart(ppt.slides[page_no], df_13_eng, Inches(4.5), Inches(1.9), Inches(4), Inches(5),
                      chart_title = True, title= "SOE", fontsize_title = Pt(16),
-                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
-                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+                     legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 	horizontal_bar_chart(ppt.slides[page_no], df_13_content, Inches(8.5), Inches(1.9), Inches(4), Inches(5),
                      chart_title = True, title= "SOC", fontsize_title = Pt(16),
-                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
-                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
-			     
+                     legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+	
 
 #------------PAGE 14--------------
 	page_no = page_no + 1
