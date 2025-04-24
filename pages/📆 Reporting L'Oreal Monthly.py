@@ -923,6 +923,7 @@ if st.button("Generate Report", type="primary"):
 	df_final = df_grouped[df_grouped['advertiser_name'] == "L'Oreal"][['category', 'brand', 'views', 'SOV', '#Rank']]
 	df_final = df_final.sort_values(['category', 'brand'])
 
+# Add table
 	table_default(ppt.slides[page_no], df_final, Inches(1), Inches(1.2), Inches(12.2), Inches(5.2),
 				  [Inches(1.5)]*2+[Inches(0.75)]*3+[Inches(1),Inches(0.5)], Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 
@@ -1119,6 +1120,10 @@ if st.button("Generate Report", type="primary"):
 	
 	st.write("df_11 :", df_11)
 	st.write("df_12_transpose  :", df_12_transpose )
+	
+# Add table	
+	table_default(ppt.slides[page_no], df_12_transpose, Inches(1), Inches(1.2), Inches(12.2), Inches(5.2),
+				  [Inches(1.5)]*7], Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 
 #------------PAGE 13--------------
 	page_no = page_no + 1
