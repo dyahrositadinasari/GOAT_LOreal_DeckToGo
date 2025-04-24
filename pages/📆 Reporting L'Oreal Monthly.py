@@ -957,7 +957,7 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1 
 	format_title(ppt.slides[page_no], "QUARTERLY TIMELINE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
-# Aggregate total views per brand and rank them
+	# Aggregate total views per brand and rank them
 	df_q_views = pd.pivot_table(df_top_brands[['quarter','brand','views']], columns = 'quarter', index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_q_views.columns = df_q_views.columns.droplevel() # drop column level
 
@@ -1106,9 +1106,9 @@ if st.button("Generate Report", type="primary"):
 	
 	# Filter the dataframe
 	df_13 = df_y # data TDK YTD
-	df_13_views = pd.pivot_table(df_13[['brand','views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	df_13_eng = pd.pivot_table(df_13[['brand','engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	df_13_content = pd.pivot_table(df_13[['brand','content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+	df_13_views = pd.pivot_table(df_13[['brand','views']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('views')
+	df_13_eng = pd.pivot_table(df_13[['brand','engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('engagements')
+	df_13_content = pd.pivot_table(df_13[['brand','content']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('content')
 	st.write("df_13_views :", df_13_views)
 
 	# Add horizontal bar chart views
