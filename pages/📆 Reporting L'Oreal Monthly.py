@@ -579,12 +579,12 @@ if st.button("Generate Report", type="primary"):
 	    	line_chart.value_axis.tick_labels.number_format = '""'
 
     	# Add data labels to line chart
-	    	for series in line_chart.series:
-	        	series.has_data_labels = True
-	        	for point in series.points:
-	            		point.has_data_label = True
-	            		point.data_label.number_format = "#,##0"
-	            		point.data_label.font.size = fontsize
+		for series in line_chart.series:
+			series.has_data_labels = True
+			for point in series.points:
+				point.has_data_label = True
+				point.data_label.number_format = "#,##0"
+				point.data_label.font.size = fontsize
 
     	# Smooth line option
 	    	if smooth:
