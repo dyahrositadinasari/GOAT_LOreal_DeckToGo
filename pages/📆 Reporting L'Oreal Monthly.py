@@ -585,7 +585,7 @@ if st.button("Generate Report", type="primary"):
 				point.data_label.font.size = fontsize
 
     	# Smooth line option
-	    	if smooth:
+		if smooth:
 			for series in line_chart.series:
 				series.smooth = True
 
@@ -599,15 +599,15 @@ if st.button("Generate Report", type="primary"):
 		line_series.format.line.fill.fore_color.rgb = RGBColor(78, 167, 46)
 
 	# Chart title
-	    	if chart_title:
-	        	chart.chart_title.text_frame.text = title
-	        	p = chart.chart_title.text_frame.paragraphs[0]
-	        	p.font.size = fontsize_title
-	        	p.font.bold = True
-	    	else:
-	        	chart.has_title = False
+		if chart_title:
+			chart.chart_title.text_frame.text = title
+			p = chart.chart_title.text_frame.paragraphs[0]
+			p.font.size = fontsize_title
+			p.font.bold = True
+		else:
+			chart.has_title = False
 
-    		return chart
+		return chart
 	#----------------
 
 	def adjust_dataframe(df, columns, index=False):
