@@ -568,13 +568,13 @@ if st.button("Generate Report", type="primary"):
 		line_chart = line_chart_shape.chart
 
     	# Hide line chart axes
-	    	line_chart.category_axis.visible = False
-	    	line_chart.value_axis.visible = False
-	    	line_chart.value_axis.has_major_gridlines = False
-	    	line_chart.category_axis.has_major_gridlines = False
-	    	line_chart.has_legend = False
-	    	line_chart.has_title = False
-	    	line_chart.value_axis.tick_labels.number_format = '""'
+		line_chart.category_axis.visible = False
+		line_chart.value_axis.visible = False
+		line_chart.value_axis.has_major_gridlines = False
+		line_chart.category_axis.has_major_gridlines = False
+		line_chart.has_legend = False
+		line_chart.has_title = False
+		line_chart.value_axis.tick_labels.number_format = '""'
 
     	# Add data labels to line chart
 		for series in line_chart.series:
