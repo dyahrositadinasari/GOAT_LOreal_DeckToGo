@@ -665,6 +665,7 @@ if st.button("Generate Report", type="primary"):
  	,grid_month as month
   	,grid_year as years
  	,brand
+  	,sub_brand
  	,division
   	,main_category as category
   	,tier
@@ -679,6 +680,7 @@ if st.button("Generate Report", type="primary"):
   	,grid_month
   	,grid_year
  	,brand
+    	,sub_brand
  	,division
   	,main_category
   	,tier
@@ -1099,6 +1101,10 @@ if st.button("Generate Report", type="primary"):
 #------------PAGE 12--------------
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "BRAND SCORE-CARD", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	df_12 = pd.pivot_table(df_11[['category', 'brand', 'sub_brand', 'views', 'engagements', 'content']], index = 'brand', values = ['views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
+	df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0)
+	
+	st.write("df_12 :", df_12)
 
 #------------PAGE 13--------------
 	page_no = page_no + 1
