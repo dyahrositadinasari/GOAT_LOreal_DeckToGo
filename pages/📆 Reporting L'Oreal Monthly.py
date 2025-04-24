@@ -517,31 +517,29 @@ if st.button("Generate Report", type="primary"):
 
 	#----------------
 	def combo2_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.TOP,
-                 data_show=False, chart_title=False, title="", fontsize=Pt(10), fontsize_title=Pt(12),
-                 line_width=Pt(1), smooth=False, font_name='Neue Haas Grotesk Text Pro'):
-
-    		df.fillna(0, inplace=True)
+			 data_show=False, chart_title=False, title="", fontsize=Pt(10), fontsize_title=Pt(12),
+			 line_width=Pt(1), smooth=False, font_name='Neue Haas Grotesk Text Pro'):
+		df.fillna(0, inplace=True)
 
     	# Split data: Bar chart (categories) & Line chart (Total)
-    		df_categories = df.iloc[:, :-1]  # All but last column
-    		df_total = df.iloc[:, -1]        # Last column (for line)
+		df_categories = df.iloc[:, :-1]  # All but last column
+		df_total = df.iloc[:, -1]        # Last column (for line)
 
     	# Bar Chart Data
-    		chart_data = CategoryChartData()
-    		chart_data.categories = df.index
-    		for category in df_categories.columns:
-        		chart_data.add_series(category, df_categories[category].tolist())
+		chart_data = CategoryChartData()
+		chart_data.categories = df.index
+		for category in df_categories.columns:
+			chart_data.add_series(category, df_categories[category].tolist())
 
     	# Add Clustered Column Chart (Bar)
-    		chart_shape = slide.shapes.add_chart(
+		chart_shape = slide.shapes.add_chart(
 			XL_CHART_TYPE.COLUMN_CLUSTERED, x, y, cx, cy, chart_data
 		)
-    		chart = chart_shape.chart
-
-    		chart.value_axis.tick_labels.font.size = fontsize
-    		chart.category_axis.tick_labels.font.size = fontsize
-    		chart.value_axis.tick_labels.number_format = "#,##0"
-    		chart.value_axis.has_major_gridlines = False
+		chart = chart_shape.chart
+		chart.value_axis.tick_labels.font.size = fontsize
+		chart.category_axis.tick_labels.font.size = fontsize
+		chart.value_axis.tick_labels.number_format = "#,##0"
+		chart.value_axis.has_major_gridlines = False
 
     	# Show data labels (if enabled)
     		if data_show:
