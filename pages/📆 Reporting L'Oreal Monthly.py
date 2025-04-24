@@ -601,50 +601,6 @@ if st.button("Generate Report", type="primary"):
 
 		return chart
 	#----------------
-	def h_stacked_bar_chart(slide, df, x, y, cx, cy, chart_title=False, title="", fontsize=Pt(10), fontsize_title=Pt(12), legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,data_show=True, percentage=False):
-    		df.fillna(0, inplace=True)
-	# Create chart data
-		chart_data = CategoryChartData()
-		chart_data.categories = df.index.tolist()
-		for col in df.columns:
-			chart_data.add_series(col, df[col].tolist())
-	# Add horizontal stacked bar chart
-		chart = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED, x, y, cx, cy, chart_data).chart
-
-	# Chart title
-		if chart_title:
-			chart.has_title = True
-			chart.chart_title.text_frame.text = title
-			title_font = chart.chart_title.text_frame.paragraphs[0].font
-			title_font.size = fontsize_title
-			title_font.bold = True
-		else:
-			chart.has_title = False
-	
-	# Axis formatting
-		chart.category_axis.tick_labels.font.size = fontsize
-		chart.value_axis.tick_labels.font.size = fontsize
-		if percentage:
-			chart.value_axis.tick_labels.number_format = '0%'
-		elif df.max().max() >= 1000:
-			chart.value_axis.tick_labels.number_format = '#,##0'
-			chart.value_axis.has_major_gridlines = False
-			chart.category_axis.has_major_gridlines = False
-	# Legend
-		chart.has_legend = legend
-			if legend:
-				chart.legend.include_in_layout = False
-				chart.legend.position = legend_position
-				chart.legend.font.size = fontsize
-	# Data labels
-		if data_show:
-			for series in chart.series:
-				for point in series.points:
-					point.data_label.show_value = True
-					point.data_label.font.size = fontsize
-
-		return chart
-	#----------------
 
 	def adjust_dataframe(df, columns, index=False):
 		# Combine existing and desired columns/index
@@ -1153,9 +1109,22 @@ if st.button("Generate Report", type="primary"):
 	df_13_views = pd.pivot_table(df_13[['brand','views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_13_eng = pd.pivot_table(df_13[['brand','engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_13_content = pd.pivot_table(df_13[['brand','content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	st.write("df_13 :", df_13_views)
+	st.write("df_13_views :", df_13_views)
 
-	h_stacked_bar_chart
+	# Add horizontal bar chart views
+	horizontal_bar_chart(ppt.slides[page_no], df_13_views, Inches(0.5), Inches(1.9), Inches(4), Inches(5),
+                     chart_title = True, title= "SOV", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+	horizontal_bar_chart(ppt.slides[page_no], df_13_eng, Inches(4.5), Inches(1.9), Inches(4), Inches(5),
+                     chart_title = True, title= "SOE", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+	horizontal_bar_chart(ppt.slides[page_no], df_13_content, Inches(8.5), Inches(1.9), Inches(4), Inches(5),
+                     chart_title = True, title= "SOC", fontsize_title = Pt(16),
+                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+			     
 
 #------------PAGE 14--------------
 	page_no = page_no + 1
