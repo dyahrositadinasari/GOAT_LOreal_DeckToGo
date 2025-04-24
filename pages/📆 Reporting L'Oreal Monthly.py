@@ -1110,7 +1110,7 @@ if st.button("Generate Report", type="primary"):
 	df_12 = df_12.reset_index()
 	df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0)
 	df_12['CPV'] =  np.where(df_12['views'] != 0, df_12['rate'] / df_12['views'], 0)
-	df_12_transpose = df_12.set_index(['sub_category', 'brand', 'sub_brand']).transpose()
+	df_12_transpose = df_12.transpose()
 	
 	st.write("df_11 :", df_11)
 	st.write("df_12_transpose  :", df_12_transpose )
