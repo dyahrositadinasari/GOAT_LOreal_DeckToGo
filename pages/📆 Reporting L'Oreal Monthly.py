@@ -520,7 +520,7 @@ if st.button("Generate Report", type="primary"):
 
     	# Split data: Bar chart (categories) & Line chart (Total)
 		df_categories = df.iloc[:, :-1]  # All but last column
-		df_total = df.iloc[:, -1]        # Last column (for line)
+		df_2nd = df.iloc[:, -1]        # Last column (for line)
 
     	# Bar Chart Data
 		chart_data = CategoryChartData()
@@ -551,10 +551,10 @@ if st.button("Generate Report", type="primary"):
 		else:
 			chart.has_legend = False
 
-    	# Line Chart Data (Total)
+    	# Line Chart Data
 		line_chart_data = CategoryChartData()
 		line_chart_data.categories = df.index
-		line_chart_data.add_series("Total", df_total.tolist())
+		line_chart_data.add_series("value", df_2nd.tolist())
 
     	# Add Line Chart Overlay
 		line_chart_shape = slide.shapes.add_chart(XL_CHART_TYPE.LINE, x, y, cx, cy, line_chart_data)
@@ -1109,7 +1109,7 @@ if st.button("Generate Report", type="primary"):
 
 #------------PAGE 13--------------
 	page_no = page_no + 1
-	format_title(ppt.slides[page_no], "place title here", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "---TITLE---", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 	
 	# Filter the dataframe
 	df_13 = df_y # data TDK YTD
@@ -1145,7 +1145,7 @@ if st.button("Generate Report", type="primary"):
 
 	# Filter the dataframe
 	df_14 = df2[(df2['category'].isin(category)) & (df2['years'] == year) &  (df2['month'] == month)]
-	df_14_ = pd.pivot_table(df_14[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
+	df_14_ = pd.pivot_table(df_14[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)[['views', 'engagements']]
 	df_14_ = df_14_.sort_values(by=['tier'], ascending=False)
 	st.write("df_14_v :", df_14_)
 
