@@ -85,7 +85,9 @@ brands = st.multiselect(
 
 email_list = st.multiselect(
 	"Please select the email address you wish to send this report to",
-	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "yahya.wahyu@groupm.com", "ana.maratu@groupm.com", "aldi.firstanto@groupm.com", "muhammad.ilham@groupm.com", )
+	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "alfian.hidayatulloh@groupm.com",
+	 "yahya.wahyu@groupm.com", "agusta.jalasena@groupm.com", "ana.maratu@groupm.com", "aldi.firstanto@groupm.com", 
+	 "muhammad.ilham@groupm.com")
 	)
 
 st.badge(" Optional", icon="⚠️", color="blue")
@@ -95,8 +97,6 @@ if uploaded_file is not None:
 	st.success("File uploaded successfully!")
 else:
 	uploaded_file = "pages/Template Deck to Go - L'Oreal Indonesia.pptx"
-
-
 
 
 #st.write("Selected Year : ", year)
@@ -516,67 +516,100 @@ if st.button("Generate Report", type="primary"):
 
 
 	#----------------
-	def combo_chart2(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
-							 data_show=True, chart_title=False, title="", fontsize=Pt(12),
-							 fontsize_title=Pt(14), percentage=False, bar_width=Pt(10)):
-		df.fillna(0, inplace=True)  # Fill NaN values
-		# Define chart data
-		chart_data = CategoryChartData()
-		for i in df.index:
-			chart_data.add_category(i)
-		for col in df.columns:
-			chart_data.add_series(col, np.where(df[col].values == 0, None, df[col].values))
-	
-	    # Create vertical bar chart
-		chart = slide.shapes.add_chart(XL_CHART_TYPE.COLUMN_CLUSTERED, x, y, cx, cy, chart_data).chart
-	
-	    # Add legend
-		if legend:
-			chart.has_legend = True
-			chart.legend.include_in_layout = False
-			chart.legend.position = legend_position
-			chart.legend.font.size = fontsize
-		else:
-			chart.has_legend = False
-	
-	    # Show data labels
-		if data_show:
-			for series in chart.series:
-				for point in series.points:
-					point.data_label.show_value = True
-					point.data_label.font.size = fontsize
-					point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
-	
-	    # Customize category axis (y-axis) label font size
-		chart.category_axis.tick_labels.font.size = fontsize
-	
-	    # Customize value axis (x-axis) label font size and format
-		chart.value_axis.tick_labels.font.size = fontsize
-		if percentage:
-			chart.value_axis.tick_labels.number_format = '0%'
-		elif df.max().max() >= 1000:
-			chart.value_axis.tick_labels.number_format = '#,##0'  # Add commas for thousands
-	
-	    # Adjust bar width
-		for series in chart.series:
-			series.format.line.width = bar_width
-	
-		# Set chart title
-		if chart_title:
-			chart.chart_title.text_frame.text = title
-			title_font = chart.chart_title.text_frame.paragraphs[0].font
-			title_font.bold = True
-			title_font.size = fontsize_title
-		else:
-			chart.has_title = False
-	
-	    # Remove Gridlines
-		value_axis = chart.value_axis
-		category_axis = chart.category_axis
-		value_axis.has_major_gridlines = False
-		value_axis.has_minor_gridlines = False
-		category_axis.has_major_gridlines = False
-		category_axis.has_minor_gridlines = False
+	def combo2_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.TOP,
+                 data_show=False, chart_title=False, title="", fontsize=Pt(10), fontsize_title=Pt(12),
+                 line_width=Pt(1), smooth=False, font_name='Neue Haas Grotesk Text Pro'):
+
+    		df.fillna(0, inplace=True)
+
+    	# Split data: Bar chart (categories) & Line chart (Total)
+    		df_categories = df.iloc[:, :-1]  # All but last column
+    		df_total = df.iloc[:, -1]        # Last column (for line)
+
+    	# Bar Chart Data
+    		chart_data = CategoryChartData()
+    		chart_data.categories = df.index
+    		for category in df_categories.columns:
+        		chart_data.add_series(category, df_categories[category].tolist())
+
+    	# Add Clustered Column Chart (Bar)
+    		chart_shape = slide.shapes.add_chart(
+			XL_CHART_TYPE.COLUMN_CLUSTERED, x, y, cx, cy, chart_data
+		)
+    		chart = chart_shape.chart
+
+    		chart.value_axis.tick_labels.font.size = fontsize
+    		chart.category_axis.tick_labels.font.size = fontsize
+    		chart.value_axis.tick_labels.number_format = "#,##0"
+    		chart.value_axis.has_major_gridlines = False
+
+    	# Show data labels (if enabled)
+    		if data_show:
+        		for series in chart.series:
+            			series.data_labels.show_value = True
+            			series.data_labels.font.size = fontsize
+
+    	# Add legend
+    		if legend:
+        		chart.has_legend = True
+        		chart.legend.include_in_layout = False
+        		chart.legend.position = legend_position
+        		chart.legend.font.size = fontsize
+    		else:
+        		chart.has_legend = False
+
+    	# Line Chart Data (Total)
+    		line_chart_data = CategoryChartData()
+    		line_chart_data.categories = df.index
+    		line_chart_data.add_series("Total", df_total.tolist())
+
+    	# Add Line Chart Overlay
+    		line_chart_shape = slide.shapes.add_chart(
+			XL_CHART_TYPE.LINE, x, y, cx, cy, line_chart_data
+		)
+    		line_chart = line_chart_shape.chart
+
+    	# Hide line chart axes
+	    	line_chart.category_axis.visible = False
+	    	line_chart.value_axis.visible = False
+	    	line_chart.value_axis.has_major_gridlines = False
+	    	line_chart.category_axis.has_major_gridlines = False
+	    	line_chart.has_legend = False
+	    	line_chart.has_title = False
+	    	line_chart.value_axis.tick_labels.number_format = '""'
+
+    	# Add data labels to line chart
+	    	for series in line_chart.series:
+	        	series.has_data_labels = True
+	        	for point in series.points:
+	            		point.has_data_label = True
+	            		point.data_label.number_format = "#,##0"
+	            		point.data_label.font.size = fontsize
+
+    	# Smooth line option
+	    	if smooth:
+	        	for series in line_chart.series:
+	            		series.smooth = True
+
+	    # Style line chart
+		line_series = line_chart.series[0]
+		line_series.marker.style = XL_MARKER_STYLE.CIRCLE
+		line_series.marker.format.fill.solid()
+		line_series.marker.format.fill.fore_color.rgb = RGBColor(78, 167, 46)  # Lime green
+		line_series.format.line.width = line_width
+		line_series.format.line.fill.solid()
+		line_series.format.line.fill.fore_color.rgb = RGBColor(78, 167, 46)
+
+	    # Chart title
+	    	if chart_title:
+	        	chart.chart_title.text_frame.text = title
+	        	p = chart.chart_title.text_frame.paragraphs[0]
+	        	p.font.size = fontsize_title
+	        	p.font.bold = True
+	    	else:
+	        	chart.has_title = False
+
+    		return chart
 	#----------------
 
 	def adjust_dataframe(df, columns, index=False):
