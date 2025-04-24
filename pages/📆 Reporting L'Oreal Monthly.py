@@ -669,6 +669,7 @@ if st.button("Generate Report", type="primary"):
   	,sub_brand
  	,division
   	,main_category as category
+   	,sub_category as sub_category
   	,tier
    	,spark_ads as advocacy
 	,SUM(actual_views) as views
@@ -684,6 +685,7 @@ if st.button("Generate Report", type="primary"):
     	,sub_brand
  	,division
   	,main_category
+   	,sub_category
   	,tier
    	,spark_ads
 	""".format(year)
@@ -1102,10 +1104,11 @@ if st.button("Generate Report", type="primary"):
 #------------PAGE 12--------------
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "BRAND SCORE-CARD", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	df_12 = pd.pivot_table(df_11[['category', 'brand', 'sub_brand', 'views', 'engagements', 'content']], index= ['category', 'brand', 'sub_brand'], values = ['views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
+	df_12 = pd.pivot_table(df_11[['sub_category', 'brand', 'sub_brand', 'views', 'engagements', 'content']], index= ['sub_category', 'brand', 'sub_brand'], values = ['views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
 	#df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0)
 	
 	st.write("df_11 :", df_11)
+	st.write("df_12 :", df_12)
 
 #------------PAGE 13--------------
 	page_no = page_no + 1
