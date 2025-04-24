@@ -434,9 +434,7 @@ if st.button("Generate Report", type="primary"):
 			chart_data.add_series(category, df_categories[category].values.tolist())
 	
 	    # Add Stacked Bar Chart
-		chart_shape = slide.shapes.add_chart(
-			XL_CHART_TYPE.COLUMN_STACKED, x, y, cx, cy, chart_data
-	    )
+		chart_shape = slide.shapes.add_chart(XL_CHART_TYPE.COLUMN_STACKED, x, y, cx, cy, chart_data)
 		chart = chart_shape.chart
 	
 		chart.value_axis.tick_labels.font.size = fontsize
@@ -468,9 +466,7 @@ if st.button("Generate Report", type="primary"):
 		line_chart_data.add_series("Total", df_total.values.tolist())
 	
 	    # Add Line Chart Overlay
-		line_chart_shape = slide.shapes.add_chart(
-			XL_CHART_TYPE.LINE, x, y, cx, cy, line_chart_data
-	    )
+		line_chart_shape = slide.shapes.add_chart(XL_CHART_TYPE.LINE, x, y, cx, cy, line_chart_data)
 		line_chart = line_chart_shape.chart
 	
 	    # Remove X-axis and Gridlines from Line Chart
@@ -532,9 +528,7 @@ if st.button("Generate Report", type="primary"):
 			chart_data.add_series(category, df_categories[category].tolist())
 
     	# Add Clustered Column Chart (Bar)
-		chart_shape = slide.shapes.add_chart(
-			XL_CHART_TYPE.COLUMN_CLUSTERED, x, y, cx, cy, chart_data
-		)
+		chart_shape = slide.shapes.add_chart(XL_CHART_TYPE.COLUMN_CLUSTERED, x, y, cx, cy, chart_data)
 		chart = chart_shape.chart
 		chart.value_axis.tick_labels.font.size = fontsize
 		chart.category_axis.tick_labels.font.size = fontsize
@@ -562,9 +556,7 @@ if st.button("Generate Report", type="primary"):
 		line_chart_data.add_series("Total", df_total.tolist())
 
     	# Add Line Chart Overlay
-		line_chart_shape = slide.shapes.add_chart(
-			XL_CHART_TYPE.LINE, x, y, cx, cy, line_chart_data
-		)
+		line_chart_shape = slide.shapes.add_chart(XL_CHART_TYPE.LINE, x, y, cx, cy, line_chart_data)
 		line_chart = line_chart_shape.chart
 
     	# Hide line chart axes
@@ -606,6 +598,50 @@ if st.button("Generate Report", type="primary"):
 			p.font.bold = True
 		else:
 			chart.has_title = False
+
+		return chart
+	#----------------
+	def h_stacked_bar_chart(slide, df, x, y, cx, cy, chart_title=False, title="", fontsize=Pt(10), fontsize_title=Pt(12), legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,data_show=True, percentage=False):
+    		df.fillna(0, inplace=True)
+	# Create chart data
+		chart_data = CategoryChartData()
+		chart_data.categories = df.index.tolist()
+		for col in df.columns:
+			chart_data.add_series(col, df[col].tolist())
+	# Add horizontal stacked bar chart
+		chart = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED, x, y, cx, cy, chart_data).chart
+
+	# Chart title
+		if chart_title:
+			chart.has_title = True
+			chart.chart_title.text_frame.text = title
+			title_font = chart.chart_title.text_frame.paragraphs[0].font
+			title_font.size = fontsize_title
+			title_font.bold = True
+		else:
+			chart.has_title = False
+	
+	# Axis formatting
+		chart.category_axis.tick_labels.font.size = fontsize
+		chart.value_axis.tick_labels.font.size = fontsize
+		if percentage:
+			chart.value_axis.tick_labels.number_format = '0%'
+		elif df.max().max() >= 1000:
+			chart.value_axis.tick_labels.number_format = '#,##0'
+			chart.value_axis.has_major_gridlines = False
+			chart.category_axis.has_major_gridlines = False
+	# Legend
+		chart.has_legend = legend
+			if legend:
+				chart.legend.include_in_layout = False
+				chart.legend.position = legend_position
+				chart.legend.font.size = fontsize
+	# Data labels
+		if data_show:
+			for series in chart.series:
+				for point in series.points:
+					point.data_label.show_value = True
+					point.data_label.font.size = fontsize
 
 		return chart
 	#----------------
@@ -676,6 +712,7 @@ if st.button("Generate Report", type="primary"):
  	,division
   	,main_category as category
   	,tier
+   	,spark_ads as advocacy
 	,SUM(actual_views) as views
 	,SUM(engagement) as engagements
 	,COUNT(brand) as content
@@ -689,6 +726,7 @@ if st.button("Generate Report", type="primary"):
  	,division
   	,main_category
   	,tier
+   	,spark_ads
 	""".format(year)
 
 	# Fetch data
@@ -1101,8 +1139,6 @@ if st.button("Generate Report", type="primary"):
 	text_frame3 = rectangle3.text_frame
 	text_frame3.text = "1. ..."
 	text_frame3.paragraphs[0].font.size = Pt(13)
-
-	
 	
 #------------PAGE 12--------------
 	page_no = page_no + 1
@@ -1110,6 +1146,16 @@ if st.button("Generate Report", type="primary"):
 
 #------------PAGE 13--------------
 	page_no = page_no + 1
+	format_title(ppt.slides[page_no], "place title here", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	
+	# Filter the dataframe
+	df_13 = df_y # data TDK YTD
+	df_13_views = pd.pivot_table(df_13[['brand','views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+	df_13_eng = pd.pivot_table(df_13[['brand','engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+	df_13_content = pd.pivot_table(df_13[['brand','content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
+	st.write("df_13 :", df_13_views)
+
+	h_stacked_bar_chart
 
 #------------PAGE 14--------------
 	page_no = page_no + 1
@@ -1135,7 +1181,7 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1
 	
 	# Add combo stacked bar chart
-	combo_chart(ppt.slides[page_no], df_14_, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title}",
+	combo2_chart(ppt.slides[page_no], df_14_, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title}",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
 
 #-----------PAGE 16---------------
