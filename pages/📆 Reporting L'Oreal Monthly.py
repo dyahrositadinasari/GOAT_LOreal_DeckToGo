@@ -1108,8 +1108,8 @@ if st.button("Generate Report", type="primary"):
 	df_12 = pd.pivot_table(df_11[['sub_category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content']], index= ['sub_category', 'brand', 'sub_brand'],
 			       values = ['rate', 'views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
 	df_12 = df_12.reset_index()
-	df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0) * 100/100
-	df_12['CPV'] =  np.where(df_12['views'] != 0, df_12['rate'] / df_12['views'], 0) * 100/100
+	df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'] * 100, 0) /100
+	df_12['CPV'] =  np.where(df_12['views'] != 0, df_12['rate'] / df_12['views'] * 100, 0) /100
 	df_12[['rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate']]
 	df_12_transpose = df_12.transpose()
 	
