@@ -542,10 +542,10 @@ if st.button("Generate Report", type="primary"):
 		chart.value_axis.has_major_gridlines = False
 
     	# Show data labels (if enabled)
-    		if data_show:
-        		for series in chart.series:
-            			series.data_labels.show_value = True
-            			series.data_labels.font.size = fontsize
+		if data_show:
+			for series in chart.series:
+				series.data_labels.show_value = True
+				series.data_labels.font.size = fontsize
 
     	# Add legend
     		if legend:
