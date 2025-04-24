@@ -1105,7 +1105,7 @@ if st.button("Generate Report", type="primary"):
 	df_12 = pd.pivot_table(df_11[['category', 'brand', 'sub_brand', 'views', 'engagements', 'content']], index= ['category', 'brand', 'sub_brand'], values = ['views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
 	#df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0)
 	
-	st.write("df_12 :", df_12)
+	st.write("df_11 :", df_11)
 
 #------------PAGE 13--------------
 	page_no = page_no + 1
