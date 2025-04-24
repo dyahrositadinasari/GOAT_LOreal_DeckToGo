@@ -1102,7 +1102,7 @@ if st.button("Generate Report", type="primary"):
 #------------PAGE 12--------------
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "BRAND SCORE-CARD", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	df_12 = pd.pivot_table(df_11[['category', 'brand', 'sub_brand', 'views', 'engagements', 'content']], index = 'brand', values = ['views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
+	df_12 = pd.pivot_table(df_11[['category', 'brand', 'sub_brand', 'views', 'engagements', 'content']], columns= ['category', 'brand', 'sub_brand'], values = ['views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
 	df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0)
 	
 	st.write("df_12 :", df_12)
@@ -1138,30 +1138,26 @@ if st.button("Generate Report", type="primary"):
 #------------PAGE 14--------------
 	page_no = page_no + 1
 	if 'Select All' in category_selection:
-		category_title = "ALL CATEGORY"
+		category_title = "All"
 	else: category_title = "| ".join(category_selection)
 	
-	format_title(ppt.slides[page_no], category_title.upper()+" KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], category_title.upper()+" CATEGORY KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
-	# Filter the dataframe
+# Filter the dataframe
 	df_14 = df2[(df2['category'].isin(category)) & (df2['years'] == year) &  (df2['month'] == month)]
 	df_14_ = pd.pivot_table(df_14[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
 	df_14_ = df_14_.sort_values(by=['tier'], ascending=False)
 	df_14_ = df_14_[['views', 'engagements']]
 	st.write("df_14_v :", df_14_)
 
-# Add vertical bar chart
-	vertical_bar_chart(ppt.slides[page_no], df_14_, Inches(1), Inches(1.7), Inches(11), Inches(5),
-                     chart_title = True, title= f"{category_title}", fontsize_title = Pt(16),
-                     legend=True, legend_position=XL_LEGEND_POSITION.TOP,
-                     bar_width = Pt(8), percentage=False, fontsize=Pt(10))
+# Add combo stacked bar chart
+	combo2_chart(ppt.slides[page_no], df_14_, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title} Category",
+            fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
 	
 #-----------PAGE 15---------------
 	page_no = page_no + 1
 	
-	# Add combo stacked bar chart
-	combo2_chart(ppt.slides[page_no], df_14_, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title}",
-            fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
+	
 
 #-----------PAGE 16---------------
 	page_no = page_no + 1	
