@@ -548,13 +548,13 @@ if st.button("Generate Report", type="primary"):
 				series.data_labels.font.size = fontsize
 
     	# Add legend
-    		if legend:
-        		chart.has_legend = True
-        		chart.legend.include_in_layout = False
-        		chart.legend.position = legend_position
-        		chart.legend.font.size = fontsize
-    		else:
-        		chart.has_legend = False
+		if legend:
+			chart.has_legend = True
+			chart.legend.include_in_layout = False
+			chart.legend.position = legend_position
+			chart.legend.font.size = fontsize
+		else:
+			chart.has_legend = False
 
     	# Line Chart Data (Total)
     		line_chart_data = CategoryChartData()
