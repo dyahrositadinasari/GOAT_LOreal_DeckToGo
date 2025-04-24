@@ -557,9 +557,9 @@ if st.button("Generate Report", type="primary"):
 			chart.has_legend = False
 
     	# Line Chart Data (Total)
-    		line_chart_data = CategoryChartData()
-    		line_chart_data.categories = df.index
-    		line_chart_data.add_series("Total", df_total.tolist())
+		line_chart_data = CategoryChartData()
+		line_chart_data.categories = df.index
+		line_chart_data.add_series("Total", df_total.tolist())
 
     	# Add Line Chart Overlay
     		line_chart_shape = slide.shapes.add_chart(
