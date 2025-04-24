@@ -588,10 +588,10 @@ if st.button("Generate Report", type="primary"):
 
     	# Smooth line option
 	    	if smooth:
-	        	for series in line_chart.series:
-	            		series.smooth = True
+			for series in line_chart.series:
+				series.smooth = True
 
-	    # Style line chart
+	# Style line chart
 		line_series = line_chart.series[0]
 		line_series.marker.style = XL_MARKER_STYLE.CIRCLE
 		line_series.marker.format.fill.solid()
@@ -600,7 +600,7 @@ if st.button("Generate Report", type="primary"):
 		line_series.format.line.fill.solid()
 		line_series.format.line.fill.fore_color.rgb = RGBColor(78, 167, 46)
 
-	    # Chart title
+	# Chart title
 	    	if chart_title:
 	        	chart.chart_title.text_frame.text = title
 	        	p = chart.chart_title.text_frame.paragraphs[0]
