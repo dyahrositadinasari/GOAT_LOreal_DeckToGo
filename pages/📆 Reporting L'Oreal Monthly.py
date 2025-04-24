@@ -1122,7 +1122,7 @@ if st.button("Generate Report", type="primary"):
 	st.write("df_12_transpose  :", df_12_transpose )
 	
 # Add table	
-	table_default(ppt.slides[page_no], df_12_transpose, Inches(1), Inches(1.2), Inches(12.2), Inches(5.2),
+	table_default(ppt.slides[page_no], df_12_transpose, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
 		      [Inches(1)]*7, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 
 #------------PAGE 13--------------
