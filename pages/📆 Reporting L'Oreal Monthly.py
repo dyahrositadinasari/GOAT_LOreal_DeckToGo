@@ -562,10 +562,10 @@ if st.button("Generate Report", type="primary"):
 		line_chart_data.add_series("Total", df_total.tolist())
 
     	# Add Line Chart Overlay
-    		line_chart_shape = slide.shapes.add_chart(
+		line_chart_shape = slide.shapes.add_chart(
 			XL_CHART_TYPE.LINE, x, y, cx, cy, line_chart_data
 		)
-    		line_chart = line_chart_shape.chart
+		line_chart = line_chart_shape.chart
 
     	# Hide line chart axes
 	    	line_chart.category_axis.visible = False
