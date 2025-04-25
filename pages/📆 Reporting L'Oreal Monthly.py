@@ -1167,7 +1167,7 @@ if st.button("Generate Report", type="primary"):
 	df_13_content = df_13_content[df_13_content['brand'].isin(top10_content_brands)]
 	#df_13_content['content'] = np.ceil(df_13_content['content'] * 10) / 10 # Round up with 1 decimal place	
 	
-	st.write("df_13_views :", df_13_views)
+	st.write("df_13_views :", rank_view)
 
 	# Add horizontal bar chart views
 	horizontal_bar_chart(ppt.slides[page_no], df_13_views, Inches(0.5), Inches(1.9), Inches(4), Inches(5),
