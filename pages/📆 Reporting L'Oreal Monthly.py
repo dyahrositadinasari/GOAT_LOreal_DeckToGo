@@ -1154,7 +1154,7 @@ if st.button("Generate Report", type="primary"):
 
 	df_13_views = rank_view
 	df_13_views = df_13_views[df_13_views['brand'].isin(top10_views_brands)]
-	df_13_views = df_13_views.reset_index(drop=True, inplace=True)
+	df_13_views.reset_index(drop=True, inplace=True)
 	#df_13_views['views'] = np.ceil(df_13_views['views'] * 10) / 10 # Round up with 1 decimal place
 	
 	df_13_eng = pd.pivot_table(df_13[['brand','engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('engagements', ascending=True)
@@ -1167,7 +1167,7 @@ if st.button("Generate Report", type="primary"):
 	df_13_content = df_13_content[df_13_content['brand'].isin(top10_content_brands)]
 	#df_13_content['content'] = np.ceil(df_13_content['content'] * 10) / 10 # Round up with 1 decimal place	
 	
-	st.write("df_13_views :", rank_view)
+	st.write("df_13_views :", df_13_views)
 
 	# Add horizontal bar chart views
 	horizontal_bar_chart(ppt.slides[page_no], df_13_views, Inches(0.5), Inches(1.9), Inches(4), Inches(5),
