@@ -1129,14 +1129,39 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "---TITLE---", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 	
-	# Filter the dataframe
 	df_13 = df_y # data TDK YTD
-	df_13_views = pd.pivot_table(df_13[['brand','views']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
-	df_13_eng = pd.pivot_table(df_13[['brand','engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('engagements', ascending=True)
-	df_13_content = pd.pivot_table(df_13[['brand','content']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('content', ascending=True)
+	
+# Aggregate total views per brand and rank them
+	rank_view = df_13.groupby('brand')['views'].sum().reset_index()
+	rank_view['Brand_Rank'] = rank_view['views'].rank(method='dense', ascending=False)
 
+# Keep only the top 10 brands
+	top10_views_brands = rank_view[rank_view['Brand_Rank'] <= 10]['brand']
+
+# Aggregate total engagements per brand and rank them
+	rank_eng = df_13.groupby('brand')['engagements'].sum().reset_index()
+	rank_eng['Brand_Rank'] = rank_eng['engagements'].rank(method='dense', ascending=False)
+
+# Keep only the top 10 brands
+	top10_eng_brands = rank_eng[rank_eng['Brand_Rank'] <= 10]['brand']
+
+# Aggregate total content per brand and rank them
+	rank_content = df_13.groupby('brand')['content'].sum().reset_index()
+	rank_content['Brand_Rank'] = rank_content['content'].rank(method='dense', ascending=False)
+
+# Keep only the top 10 brands
+	top10_content_brands = rank_content[rank_content['Brand_Rank'] <= 10]['brand']
+
+	df_13_views = pd.pivot_table(df_13[['brand','views']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
+	df_13_views = df_13_views[df_13_views['brand'].isin(top10_views_brands)]
 	df_13_views = np.ceil(df_13_views * 10) / 10 # Round up with 1 decimal place
+	
+	df_13_eng = pd.pivot_table(df_13[['brand','engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('engagements', ascending=True)
+	df_13_eng = df_13_eng[df_13_eng['brand'].isin(top10_eng_brands)]
 	df_13_eng = np.ceil(df_13_eng * 10) / 10 # Round up with 1 decimal place
+	
+	df_13_content = pd.pivot_table(df_13[['brand','content']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('content', ascending=True)
+	df_13_content = df_13_content[df_13_content['brand'].isin(top10_content_brands)]
 	df_13_content = np.ceil(df_13_content * 10) / 10 # Round up with 1 decimal place	
 	
 	st.write("df_13_views :", df_13_views)
@@ -1165,7 +1190,7 @@ if st.button("Generate Report", type="primary"):
 	df_14 = df2[(df2['category'].isin(category)) & (df2['years'] == year) &  (df2['month'] == month)]
 	df_14_ = pd.pivot_table(df_14[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
 	df_14_ = df_14_.sort_values(by=['tier'], ascending=False)
-	#df_14_ = df_14_[['views', 'engagements']]
+	df_14_ = df_14_[['views', 'engagements']]
 	st.write("df_14_v :", df_14_)
 
 # Add combo stacked bar chart
