@@ -743,8 +743,8 @@ if st.button("Generate Report", type="primary"):
 	sov_df_m = grouped_df_m[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
 	soe_df_m = grouped_df_m[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 
-	# Sort by 'SOV%' and keep the top 10 brands
-	top_brands = sov_df_m.head(10)
+	# Sort by 'SOV%' and keep the top 14 brands
+	top_brands = sov_df_m.head(14)
 
 	# Group all other brands into "Others"
 	others_sov = 1 - top_brands["SOV%"].sum()  # Remaining percentage
@@ -796,8 +796,8 @@ if st.button("Generate Report", type="primary"):
 	sov_df_q = grouped_df_q[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
 	soe_df_q = grouped_df_q[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 	
-	# Sort by 'SOV%' and keep the top 10 brands
-	top_brands = sov_df_q.head(10)
+	# Sort by 'SOV%' and keep the top 14 brands
+	top_brands = sov_df_q.head(14)
 
 	# Group all other brands into "Others"
 	others_sov = 1 - top_brands["SOV%"].sum()  # Remaining percentage
@@ -851,8 +851,8 @@ if st.button("Generate Report", type="primary"):
 	sov_df_y = grouped_df_y[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
 	soe_df_y = grouped_df_y[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 	
-	# Sort by 'SOV%' and keep the top 10 brands
-	top_brands = sov_df_y.head(10)
+	# Sort by 'SOV%' and keep the top 14 brands
+	top_brands = sov_df_y.head(14)
 
 	# Group all other brands into "Others"
 	others_sov = 1 - top_brands["SOV%"].sum()  # Remaining percentage
