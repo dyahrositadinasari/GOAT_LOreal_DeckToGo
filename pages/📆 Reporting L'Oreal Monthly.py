@@ -1126,6 +1126,7 @@ if st.button("Generate Report", type="primary"):
 	table_default(ppt.slides[page_no], df_12_transpose, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
 		      [Inches(1.2)]*10, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 
+	st.write("df 2 transpose : ", df_12_transpose)
 	st.write("Page 12 - done")
 	
 #------------PAGE 13--------------
