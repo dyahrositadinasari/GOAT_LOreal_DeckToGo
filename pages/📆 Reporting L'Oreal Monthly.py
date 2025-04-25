@@ -1153,7 +1153,6 @@ if st.button("Generate Report", type="primary"):
 	top10_content_brands = rank_content[rank_content['Brand_Rank'] <= 10]['brand']
 
 	df_13_views = pd.pivot_table(df_13[['brand','views']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
-	df_13_views = df_13_views.reset_index()
 	df_13_views = df_13_views[df_13_views['brand'].isin(top10_views_brands)]
 	#df_13_views['views'] = np.ceil(df_13_views['views'] * 10) / 10 # Round up with 1 decimal place
 	
