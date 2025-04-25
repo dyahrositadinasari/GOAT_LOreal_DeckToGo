@@ -1181,7 +1181,8 @@ if st.button("Generate Report", type="primary"):
                      chart_title = True, title= "SOC", fontsize_title = Pt(16),
                      legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 
-	st.write("Page 13 - done")
+	st.write("df_13 :", df_13_views)
+	ST.write("Page 13 - done")
 	
 #-----------PAGE 14---------------
 	page_no = page_no + 1
