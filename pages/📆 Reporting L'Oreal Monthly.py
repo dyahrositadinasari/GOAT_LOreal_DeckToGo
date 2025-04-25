@@ -325,10 +325,6 @@ if st.button("Generate Report", type="primary"):
 	
 	    # Customize value axis (x-axis) label font size and format
 		chart.value_axis.tick_labels.font.size = fontsize
-		if percentage:
-			chart.value_axis.tick_labels.number_format = '0%'
-		elif df.max().max() >= 1000:
-			chart.value_axis.tick_labels.number_format = '#,##0'  # Add commas for thousands
 	
 	    # Adjust bar width
 		for series in chart.series:
