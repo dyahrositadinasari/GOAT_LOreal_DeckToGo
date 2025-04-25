@@ -1125,11 +1125,9 @@ if st.button("Generate Report", type="primary"):
 	df_12 = pd.pivot_table(df_11[['sub_category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content']], index= ['sub_category', 'brand', 'sub_brand'],
 			       values = ['rate', 'views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
 	df_12 = df_12.reset_index()
-	df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0)
+	df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0).map('{:.1%}'.format)
 	df_12['CPV'] =  np.where(df_12['views'] != 0, df_12['rate'] / df_12['views'], 0)
-	
-	df_12['eng_rate'] = np.ceil(df_12['eng_rate'] * 10000) / 10000
-	df_12['CPV'] = np.ceil(df_12['CPV'] * 10000) / 10000
+	df_12['CPV'] = np.ceil(df_12['CPV'] * 100) / 100
 	
 	df_12 = df_12[['sub_category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate']]
 	df_12_transpose = df_12.transpose()
@@ -1156,7 +1154,7 @@ if st.button("Generate Report", type="primary"):
 	rank_view = df_13.groupby('brand')['views'].sum().reset_index()
 	rank_view['views'] = np.ceil(rank_view['views'] * 10) / 10
 	rank_view['Rank'] = rank_view['views'].rank(method='dense', ascending=False)
-	rank_view['SOV%'] = (rank_view['views'] / total_views_y).map('{:.0%}'.format)
+	rank_view['SOV%'] = (rank_view['views'] / total_views_y).map('{:.1%}'.format)
 	rank_view.sort_values('Rank', ascending=True, inplace=True)
 
 # Keep only the top 10 brands
@@ -1166,7 +1164,7 @@ if st.button("Generate Report", type="primary"):
 	rank_eng = df_13.groupby('brand')['engagements'].sum().reset_index()
 	rank_eng['engagements'] = np.ceil(rank_eng['engagements'] * 10) / 10
 	rank_eng['Rank'] = rank_eng['engagements'].rank(method='dense', ascending=False)
-	rank_eng['SOE%'] = (rank_eng['engagements'] / total_engagement_y).map('{:.0%}'.format)
+	rank_eng['SOE%'] = (rank_eng['engagements'] / total_engagement_y).map('{:.1%}'.format)
 	rank_eng.sort_values('Rank', ascending=True, inplace=True)
 
 # Keep only the top 10 brands
@@ -1176,7 +1174,7 @@ if st.button("Generate Report", type="primary"):
 	rank_content = df_13.groupby('brand')['content'].sum().reset_index()
 	rank_content['content'] = np.ceil(rank_content['content'] * 10) / 10
 	rank_content['Rank'] = rank_content['content'].rank(method='dense', ascending=False)
-	rank_content['SOC%'] = (rank_content['content'] / total_content_y).map('{:.0%}'.format)
+	rank_content['SOC%'] = (rank_content['content'] / total_content_y).map('{:.1%}'.format)
 	rank_content.sort_values('Rank', ascending=True, inplace=True)
 
 # Keep only the top 10 brands
@@ -1298,7 +1296,9 @@ if st.button("Send Report", type= "secondary"):
 	subject = "[Test] m-Slide Goat-L'Oreal"
 	body = """Hi team,
         
-		Sending you the m-slide progress up until today.
+		This is a test email sent via Python SMTP. Please don't reply to this email!
+  
+  	Sending you the m-slide progress up until today.
   	This report is generated automatically with the following selection:
   	
    	year		: {}
@@ -1309,9 +1309,7 @@ if st.button("Send Report", type= "secondary"):
       	division	: {}	
        			{}
        	brand comparison: {}
-
- 	Please review the data and let me know if you have any questions or need further information.
-  
+   
 	Regards,
 	Dyah Dinasari""".format(year, month, quarter_, category_selection, category, division_selection, division, brands)
 
