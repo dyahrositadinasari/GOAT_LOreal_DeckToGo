@@ -110,7 +110,7 @@ else:
 
 if st.button("Generate Report", type="primary"):
 	with st.spinner("Operation in progress. Please wait..", show_time=True):
-		time.sleep(1)
+		time.sleep(3)
 		
 #--- DATA PROCESSING ---
 
