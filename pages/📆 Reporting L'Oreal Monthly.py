@@ -91,7 +91,7 @@ email_list = st.multiselect(
 	)
 
 st.badge(" Optional", icon="⚠️", color="blue")
-st.info("You can upload PPT Template for this report, make sure the page is 20 pages or more.")
+st.info("You can upload PPT Template for this report, make sure it have 20 slides or more.")
 uploaded_file = st.file_uploader("", type=["pptx"])
 if uploaded_file is not None:
 	st.success("File uploaded successfully!")
