@@ -1309,7 +1309,9 @@ if st.button("Send Report", type= "secondary"):
       	division	: {}	
        			{}
        	brand comparison: {}
-       
+
+ 	Please review the data and let me know if you have any questions or need further information.
+  
 	Regards,
 	Dyah Dinasari""".format(year, month, quarter_, category_selection, category, division_selection, division, brands)
 
