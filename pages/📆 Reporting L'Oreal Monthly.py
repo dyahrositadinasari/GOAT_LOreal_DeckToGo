@@ -839,9 +839,10 @@ if st.button("Generate Report", type="primary"):
 	})
 	grouped_df_y = grouped_df_y.reset_index()
 
-# Calculate Total Views
+# Calculate Total Views, Engagements & Content
 	total_views_y = (grouped_df_y['views'].sum()).astype(int)
 	total_engagement_y = (grouped_df_y['engagements'].sum()).astype(int)
+	total_content_y = (grouped_df_y['content'].sum()).astype(int)
 
 # Calculate SOV (%)
 	grouped_df_y['SOV%'] = (grouped_df_y['views'] / total_views_y)
@@ -1155,6 +1156,7 @@ if st.button("Generate Report", type="primary"):
 	rank_view = df_13.groupby('brand')['views'].sum().reset_index()
 	rank_view['views'] = np.ceil(rank_view['views'] * 10) / 10
 	rank_view['Rank'] = rank_view['views'].rank(method='dense', ascending=False)
+	rank_view['SOV%'] = (rank_view['views'] / total_views_y).map('{:.0%}'.format)
 	rank_view.sort_values('Rank', ascending=True, inplace=True)
 
 # Keep only the top 10 brands
@@ -1164,6 +1166,7 @@ if st.button("Generate Report", type="primary"):
 	rank_eng = df_13.groupby('brand')['engagements'].sum().reset_index()
 	rank_eng['engagements'] = np.ceil(rank_eng['engagements'] * 10) / 10
 	rank_eng['Rank'] = rank_eng['engagements'].rank(method='dense', ascending=False)
+	rank_eng['SOE%'] = (rank_eng['engagements'] / total_engagement_y).map('{:.0%}'.format)
 	rank_eng.sort_values('Rank', ascending=True, inplace=True)
 
 # Keep only the top 10 brands
@@ -1173,6 +1176,7 @@ if st.button("Generate Report", type="primary"):
 	rank_content = df_13.groupby('brand')['content'].sum().reset_index()
 	rank_content['content'] = np.ceil(rank_content['content'] * 10) / 10
 	rank_content['Rank'] = rank_content['content'].rank(method='dense', ascending=False)
+	rank_content['SOC%'] = (rank_content['content'] / total_content_y).map('{:.0%}'.format)
 	rank_content.sort_values('Rank', ascending=True, inplace=True)
 
 # Keep only the top 10 brands
