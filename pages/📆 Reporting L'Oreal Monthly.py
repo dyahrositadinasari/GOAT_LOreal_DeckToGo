@@ -1152,7 +1152,7 @@ if st.button("Generate Report", type="primary"):
 # Keep only the top 10 brands
 	top10_content_brands = rank_content[rank_content['Brand_Rank'] <= 10]['brand']
 
-	df_13_views = rank_view[:, :-1].sort_values('views', ascending=True)
+	df_13_views = rank_view.iloc[:, :-1].sort_values('views', ascending=True)
 	df_13_views = df_13_views[df_13_views['brand'].isin(top10_views_brands)].reset_index(drop=True, inplace=True)
 	#df_13_views['views'] = np.ceil(df_13_views['views'] * 10) / 10 # Round up with 1 decimal place
 	
