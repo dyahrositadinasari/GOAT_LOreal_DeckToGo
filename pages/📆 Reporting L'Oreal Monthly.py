@@ -1213,7 +1213,7 @@ if st.button("Generate Report", type="primary"):
 		      [Inches(1.3)]*3, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)
 	table_default(ppt.slides[page_no], rank_content[rank_content['Rank'] <= 20], Inches(8.5), Inches(1.2), Inches(4), Inches(7),
 		      [Inches(1.3)]*3, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)	
-	
+	st.write("rank_view : ", rank_view[rank_view['Rank'] <= 20] )
 	st.write("Slide 14 of 17")
 	
 #------------PAGE 15--------------
@@ -1303,7 +1303,7 @@ if st.button("Send Report", type= "secondary"):
        	brand comparison: {}
        
 	Regards,
-	Dyah Dinasari""".format(year, month, quarter_, category_selection, category, division_selection, category, brands)
+	Dyah Dinasari""".format(year, month, quarter_, category_selection, category, division_selection, division, brands)
 
 	# ✅ Create Email Message
 	msg = MIMEMultipart()
