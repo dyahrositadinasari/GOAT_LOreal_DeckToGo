@@ -1172,10 +1172,10 @@ if st.button("Generate Report", type="primary"):
 	df_13_views = pd.pivot_table(df_13[(df_13['brand'].isin(top10_views_brands))], index = 'brand', values= 'views', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
 	df_13_views['views'] = np.ceil(df_13_views['views'] * 10) / 10 # Round up with 1 decimal place
 	
-	df_13_eng = pd.pivot_table(df_13[(df_13['brand'].isin(top10_eng_brands))], index = 'brand', values= 'engagements', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
+	df_13_eng = pd.pivot_table(df_13[(df_13['brand'].isin(top10_eng_brands))], index = 'brand', values= 'engagements', aggfunc = 'sum', fill_value = 0).sort_values('engagements', ascending=True)
 	df_13_eng['engagements'] = np.ceil(df_13_eng['engagements'] * 10) / 10 # Round up with 1 decimal place
 
-	df_13_content = pd.pivot_table(df_13[(df_13['brand'].isin(top10_content_brands))], index = 'brand', values= 'content', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
+	df_13_content = pd.pivot_table(df_13[(df_13['brand'].isin(top10_content_brands))], index = 'brand', values= 'content', aggfunc = 'sum', fill_value = 0).sort_values('content', ascending=True)
 	df_13_content['content'] = np.ceil(df_13_content['Content'] * 10) / 10 # Round up with 1 decimal place
 
 	# Add horizontal bar chart views
