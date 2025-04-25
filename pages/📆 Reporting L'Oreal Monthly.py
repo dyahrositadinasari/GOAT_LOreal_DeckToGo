@@ -1118,7 +1118,7 @@ if st.button("Generate Report", type="primary"):
 	df_12['eng_rate'] = np.ceil(df_12['eng_rate'] * 10000) / 10000
 	df_12['CPV'] = np.ceil(df_12['CPV'] * 10000) / 10000
 	
-	#df_12 = df_12[['rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate']]
+	df_12 = df_12[['sub_category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate']]
 	df_12_transpose = df_12.transpose()
 	
 	
