@@ -1169,32 +1169,23 @@ if st.button("Generate Report", type="primary"):
 # Keep only the top 10 brands
 	top10_content_brands = rank_content[rank_content['Brand_Rank'] <= 10]['brand']
 
-	df_13_views = pd.pivot_table(df_13[['brand','views']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
-	df_13_views  = df_13_views.reset_index()
-	df_13_views = df_13_views[df_13_views['brand'].isin(top10_views_brands)]
-	df_13_views  = df_13_views.reset_index(drop=True)
+	df_13_views = pd.pivot_table(df_13[(df_13['brand'].isin(top10_views_brands))], index = 'brand', values= 'views', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
 	df_13_views['views'] = np.ceil(df_13_views['views'] * 10) / 10 # Round up with 1 decimal place
 	
-	df_13_eng = pd.pivot_table(df_13[['brand','engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('engagements', ascending=True)
-	df_13_eng  = df_13_eng.reset_index()
-	df_13_eng = df_13_eng[df_13_eng['brand'].isin(top10_eng_brands)]
-	df_13_eng  = df_13_eng.reset_index(drop=True)
+	df_13_eng = pd.pivot_table(df_13[(df_13['brand'].isin(top10_eng_brands))], index = 'brand', values= 'engagements', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
 	df_13_eng['engagements'] = np.ceil(df_13_eng['engagements'] * 10) / 10 # Round up with 1 decimal place
-	
-	df_13_content = pd.pivot_table(df_13[['brand','content']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('content', ascending=True)
-	df_13_content = df_13_content.reset_index()
-	df_13_content = df_13_content[df_13_content['brand'].isin(top10_content_brands)]
-	df_13_content = df_13_content.reset_index(drop=True)
-	df_13_content['content'] = np.ceil(df_13_content['content'] * 10) / 10 # Round up with 1 decimal place	
+
+	df_13_content = pd.pivot_table(df_13[(df_13['brand'].isin(top10_content_brands))], index = 'brand', values= 'content', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
+	df_13_content['content'] = np.ceil(df_13_content['Content'] * 10) / 10 # Round up with 1 decimal place
 
 	# Add horizontal bar chart views
-	horizontal_bar_chart(ppt.slides[page_no], df_13_views[['brand','views']], Inches(0.5), Inches(1.9), Inches(4), Inches(5),
+	horizontal_bar_chart(ppt.slides[page_no], df_13_views, Inches(0.5), Inches(1.9), Inches(4), Inches(5),
                      chart_title = True, title= "SOV", fontsize_title = Pt(16),
                      legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
-	horizontal_bar_chart(ppt.slides[page_no], df_13_eng[['brand','engagements']], Inches(4.5), Inches(1.9), Inches(4), Inches(5),
+	horizontal_bar_chart(ppt.slides[page_no], df_13_eng, Inches(4.5), Inches(1.9), Inches(4), Inches(5),
                      chart_title = True, title= "SOE", fontsize_title = Pt(16),
                      legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
-	horizontal_bar_chart(ppt.slides[page_no], df_13_content[['brand','content']], Inches(8.5), Inches(1.9), Inches(4), Inches(5),
+	horizontal_bar_chart(ppt.slides[page_no], df_13_content, Inches(8.5), Inches(1.9), Inches(4), Inches(5),
                      chart_title = True, title= "SOC", fontsize_title = Pt(16),
                      legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 
