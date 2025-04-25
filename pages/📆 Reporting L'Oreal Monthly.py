@@ -109,6 +109,16 @@ else:
 #st.write("Email list : ", email_list)
 
 if st.button("Generate Report", type="primary"):
+	#------------PROGRESS------------
+	progress_text = "Operation in progress. Please wait."
+	my_bar = st.progress(0, text=progress_text)
+
+	for percent_complete in range(100):
+		time.sleep(0.01)
+		my_bar.progress(percent_complete + 1, text=progress_text)
+		time.sleep(1)
+		my_bar.empty()
+		
 #--- DATA PROCESSING ---
 
 #CHART FORMATING
@@ -701,13 +711,15 @@ if st.button("Generate Report", type="primary"):
 #	ppt_temp_loc = "GOAT_LOreal_DeckToGo/pages/Template Deck to Go - Loreal Indonesia.pptx"
   
 	ppt = Presentation(uploaded_file)
-
+		
 #------------PAGE 1--------------
 	page_no = 0 #PAGE1
 
 ## Title Slide
 # Add a title to the slide
 	format_title(ppt.slides[page_no], "MONTHLY BRAND & DIVISION REPORT", alignment=PP_ALIGN.LEFT, font_name= 'Aptos Display', font_size=50, font_bold=True,left=Pt(35), top=Pt(150), width=Pt(500), height=Pt(70), font_color=RGBColor(255, 255, 255))
+
+	st.progress(value, text=None)
 	st.write("Page 1 - done")
 
 #------------PAGE 2--------------
