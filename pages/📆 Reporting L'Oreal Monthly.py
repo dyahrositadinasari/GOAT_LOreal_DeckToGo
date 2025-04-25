@@ -1178,14 +1178,15 @@ if st.button("Generate Report", type="primary"):
 	
 #-----------PAGE 14---------------
 	page_no = page_no + 1
+format_title(ppt.slides[page_no], "BRAND RANK", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Add table	
-	table_default(ppt.slides[page_no], rank_view, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
-		      [Inches(0.7)]*10, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
-	table_default(ppt.slides[page_no], rank_eng, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
-		      [Inches(0.7)]*10, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
-	table_default(ppt.slides[page_no], rank_content, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
-		      [Inches(0.7)]*10, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
+	table_default(ppt.slides[page_no], rank_view, Inches(0.5), Inches(1.2), Inches(4), Inches(7),
+		      [Inches(0.5)]*3, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
+	table_default(ppt.slides[page_no], rank_eng, Inches(4.5), Inches(1.2), Inches(4), Inches(7),
+		      [Inches(0.5)]*3, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
+	table_default(ppt.slides[page_no], rank_content, Inches(8.5), Inches(1.2), Inches(4), Inches(7),
+		      [Inches(0.5)]*3, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
 	
 	
 #------------PAGE 15--------------
