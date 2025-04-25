@@ -1150,24 +1150,24 @@ if st.button("Generate Report", type="primary"):
 	
 # Aggregate total views per brand and rank them
 	rank_view = df_13.groupby('brand')['views'].sum().reset_index()
-	rank_view['Brand_Rank'] = rank_view['views'].rank(method='dense', ascending=False)
+	rank_view['Rank'] = rank_view['views'].rank(method='dense', ascending=False)
 
 # Keep only the top 10 brands
-	top10_views_brands = rank_view[rank_view['Brand_Rank'] <= 10]['brand']
+	top10_views_brands = rank_view[rank_view['Rank'] <= 10]['brand']
 
 # Aggregate total engagements per brand and rank them
 	rank_eng = df_13.groupby('brand')['engagements'].sum().reset_index()
-	rank_eng['Brand_Rank'] = rank_eng['engagements'].rank(method='dense', ascending=False)
+	rank_eng['Rank'] = rank_eng['engagements'].rank(method='dense', ascending=False)
 
 # Keep only the top 10 brands
-	top10_eng_brands = rank_eng[rank_eng['Brand_Rank'] <= 10]['brand']
+	top10_eng_brands = rank_eng[rank_eng['Rank'] <= 10]['brand']
 
 # Aggregate total content per brand and rank them
 	rank_content = df_13.groupby('brand')['content'].sum().reset_index()
-	rank_content['Brand_Rank'] = rank_content['content'].rank(method='dense', ascending=False)
+	rank_content['Rank'] = rank_content['content'].rank(method='dense', ascending=False)
 
 # Keep only the top 10 brands
-	top10_content_brands = rank_content[rank_content['Brand_Rank'] <= 10]['brand']
+	top10_content_brands = rank_content[rank_content['Rank'] <= 10]['brand']
 
 	df_13_views = pd.pivot_table(df_13[(df_13['brand'].isin(top10_views_brands))], index = 'brand', values= 'views', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
 	df_13_views['views'] = np.ceil(df_13_views['views'] * 10) / 10 # Round up with 1 decimal place
@@ -1201,12 +1201,12 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "SOC", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_bold=True,left=Inches(8.5), top=Inches(0.8), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 	
 # Add table	
-	table_default(ppt.slides[page_no], rank_view[rank_view['Brand_Rank'] <= 20], Inches(0.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(1.3)]*3, Inches(0.3), header=True, upper=True, fontsize=10, alignment=PP_ALIGN.LEFT)	
-	table_default(ppt.slides[page_no], rank_eng[rank_eng['Brand_Rank'] <= 20], Inches(4.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(1.3)]*3, Inches(0.3), header=True, upper=True, fontsize=10, alignment=PP_ALIGN.LEFT)
-	table_default(ppt.slides[page_no], rank_content[rank_content['Brand_Rank'] <= 20], Inches(8.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(1.3)]*3, Inches(0.3), header=True, upper=True, fontsize=10, alignment=PP_ALIGN.LEFT)	
+	table_default(ppt.slides[page_no], rank_view[rank_view['Rank'] <= 20], Inches(0.5), Inches(1.2), Inches(4), Inches(7),
+		      [Inches(1.3)]*3, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)	
+	table_default(ppt.slides[page_no], rank_eng[rank_eng['Rank'] <= 20], Inches(4.5), Inches(1.2), Inches(4), Inches(7),
+		      [Inches(1.3)]*3, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)
+	table_default(ppt.slides[page_no], rank_content[rank_content['Rank'] <= 20], Inches(8.5), Inches(1.2), Inches(4), Inches(7),
+		      [Inches(1.3)]*3, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)	
 	
 	st.write("Slide 14 of 17")
 	
