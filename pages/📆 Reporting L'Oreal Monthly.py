@@ -1154,7 +1154,7 @@ if st.button("Generate Report", type="primary"):
 # Aggregate total views per brand and rank them
 	rank_view = df_13.groupby('brand')['views'].sum().reset_index()
 	rank_view['Rank'] = rank_view['views'].rank(method='dense', ascending=False)
-	rank_view.sort_values('Rank', ascending=False, inplace=True)
+	rank_view.sort_values('Rank', ascending=True, inplace=True)
 
 # Keep only the top 10 brands
 	top10_views_brands = rank_view[rank_view['Rank'] <= 10]['brand']
@@ -1162,7 +1162,7 @@ if st.button("Generate Report", type="primary"):
 # Aggregate total engagements per brand and rank them
 	rank_eng = df_13.groupby('brand')['engagements'].sum().reset_index()
 	rank_eng['Rank'] = rank_eng['engagements'].rank(method='dense', ascending=False)
-	rank_eng.sort_values('Rank', ascending=False, inplace=True)
+	rank_eng.sort_values('Rank', ascending=True, inplace=True)
 
 # Keep only the top 10 brands
 	top10_eng_brands = rank_eng[rank_eng['Rank'] <= 10]['brand']
@@ -1170,7 +1170,7 @@ if st.button("Generate Report", type="primary"):
 # Aggregate total content per brand and rank them
 	rank_content = df_13.groupby('brand')['content'].sum().reset_index()
 	rank_content['Rank'] = rank_content['content'].rank(method='dense', ascending=False)
-	rank_content.sort_values('Rank', ascending=False, inplace=True)
+	rank_content.sort_values('Rank', ascending=True, inplace=True)
 
 # Keep only the top 10 brands
 	top10_content_brands = rank_content[rank_content['Rank'] <= 10]['brand']
