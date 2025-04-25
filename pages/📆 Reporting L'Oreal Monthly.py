@@ -694,7 +694,6 @@ if st.button("Generate Report", type="primary"):
 	df2['date'] = pd.to_datetime(df2['date'], format='%y-%m-%d')
 
 	df2['quarter'] = (df2['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
-	st.write(df2.head())
 
 	df2['years'] = df2['years'].astype(str)
 	
@@ -886,7 +885,6 @@ if st.button("Generate Report", type="primary"):
 	month_order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 	stacked_data_eng = stacked_data_eng.reindex(month_order)
 	stacked_data_views = stacked_data_views.reindex(month_order)
-	st.write("Page 5 Table :", stacked_data_views)
 
 # Add combo stacked bar chart
 	combo_chart(ppt.slides[page_no], stacked_data_views, Inches(.1), Inches(1.5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Views",
@@ -1009,7 +1007,6 @@ if st.button("Generate Report", type="primary"):
 	df_10_views = pd.pivot_table(df_10[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_eng = pd.pivot_table(df_10[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_10_content = pd.pivot_table(df_10[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	st.write("df_10_views :", df_10_views)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_10_views, Inches(0.9), Inches(1.9), Inches(3.7), Inches(3),
