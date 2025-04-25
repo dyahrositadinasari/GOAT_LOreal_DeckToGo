@@ -956,7 +956,7 @@ if st.button("Generate Report", type="primary"):
 	df_m_views2 = df_m_views.reset_index().melt(id_vars=['brand'], var_name='month', value_name='views')
 
 	df_views = df_m_views2.groupby(['brand'], as_index=False)['views'].sum()
-	df_views['SOV%'] = (df_views['views'] / total_views_y).map('{:.0%}'.format)
+	df_views['SOV%'] = (df_views['views'] / total_views_y).map('{:.1%}'.format)
 	df_views['views'] = df_views['views'].astype(int)
 	df_views['rank'] = df_views['views'].rank(method='dense', ascending=False).astype(int)
 	df_views = df_views.sort_values('rank')
@@ -1125,7 +1125,8 @@ if st.button("Generate Report", type="primary"):
 	df_12 = pd.pivot_table(df_11[['sub_category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content']], index= ['sub_category', 'brand', 'sub_brand'],
 			       values = ['rate', 'views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
 	df_12 = df_12.reset_index()
-	df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0).map('{:.1%}'.format)
+	df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0)
+	df_12['eng_rate'] = df_12['eng_rate'].map('{:.1%}'.format)
 	df_12['CPV'] =  np.where(df_12['views'] != 0, df_12['rate'] / df_12['views'], 0)
 	df_12['CPV'] = np.ceil(df_12['CPV'] * 100) / 100
 	
