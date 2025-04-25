@@ -1162,7 +1162,7 @@ if st.button("Generate Report", type="primary"):
 
 # Aggregate total engagements per brand and rank them
 	rank_eng = df_13.groupby('brand')['engagements'].sum().reset_index()
-	rank_eng['engagements'] = np.ciel(rank_eng['engagements'] * 10) / 10
+	rank_eng['engagements'] = np.ceil(rank_eng['engagements'] * 10) / 10
 	rank_eng['Rank'] = rank_eng['engagements'].rank(method='dense', ascending=False)
 	rank_eng.sort_values('Rank', ascending=True, inplace=True)
 
@@ -1171,7 +1171,7 @@ if st.button("Generate Report", type="primary"):
 
 # Aggregate total content per brand and rank them
 	rank_content = df_13.groupby('brand')['content'].sum().reset_index()
-	rank_content['content'] = np.ciel(rank_content['content'] * 10) / 10
+	rank_content['content'] = np.ceil(rank_content['content'] * 10) / 10
 	rank_content['Rank'] = rank_content['content'].rank(method='dense', ascending=False)
 	rank_content.sort_values('Rank', ascending=True, inplace=True)
 
