@@ -1108,6 +1108,7 @@ if st.button("Generate Report", type="primary"):
 #------------PAGE 12--------------
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "BRAND SCORE-CARD", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	
 	df_12 = pd.pivot_table(df_11[['sub_category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content']], index= ['sub_category', 'brand', 'sub_brand'],
 			       values = ['rate', 'views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
 	df_12 = df_12.reset_index()
@@ -1117,13 +1118,13 @@ if st.button("Generate Report", type="primary"):
 	df_12['eng_rate'] = np.ceil(df_12['eng_rate'] * 10000) / 10000
 	df_12['CPV'] = np.ceil(df_12['CPV'] * 10000) / 10000
 	
-	df_12[['rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate']]
+	#df_12 = df_12[['rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate']]
 	df_12_transpose = df_12.transpose()
 	
 	
 # Add table	
 	table_default(ppt.slides[page_no], df_12_transpose, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
-		      [Inches(0.7)]*10, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
+		      [Inches(1.2)]*10, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 
 	st.write("Page 12 - done")
 #------------PAGE 13--------------
@@ -1186,11 +1187,11 @@ if st.button("Generate Report", type="primary"):
 
 # Add table	
 	table_default(ppt.slides[page_no], rank_view[rank_view['Brand_Rank'] <= 20], Inches(0.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(0.5)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
+		      [Inches(1)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
 	table_default(ppt.slides[page_no], rank_eng[rank_eng['Brand_Rank'] <= 20], Inches(4.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(0.5)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
+		      [Inches(1)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 	table_default(ppt.slides[page_no], rank_content[rank_content['Brand_Rank'] <= 20], Inches(8.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(0.5)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
+		      [Inches(1)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
 	
 	st.write("Page 14 - done")
 #------------PAGE 15--------------
