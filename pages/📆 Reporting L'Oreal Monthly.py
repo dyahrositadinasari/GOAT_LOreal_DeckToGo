@@ -1127,6 +1127,7 @@ if st.button("Generate Report", type="primary"):
 		      [Inches(1.2)]*10, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 
 	st.write("Page 12 - done")
+	
 #------------PAGE 13--------------
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "---TITLE---", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
@@ -1155,12 +1156,12 @@ if st.button("Generate Report", type="primary"):
 	top10_content_brands = rank_content[rank_content['Brand_Rank'] <= 10]['brand']
 
 	df_13_views = pd.pivot_table(df_13[['brand','views']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
-	df_13_views  = df_13_views .reset_index(drop=True)
+	df_13_views  = df_13_views.reset_index(drop=True)
 	df_13_views = df_13_views[df_13_views['brand'].isin(top10_views_brands)]
 	df_13_views['views'] = np.ceil(df_13_views['views'] * 10) / 10 # Round up with 1 decimal place
 	
 	df_13_eng = pd.pivot_table(df_13[['brand','engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0).sort_values('engagements', ascending=True)
-	df_13_eng  = df_13_eng .reset_index(drop=True)
+	df_13_eng  = df_13_eng.reset_index(drop=True)
 	df_13_eng = df_13_eng[df_13_eng['brand'].isin(top10_eng_brands)]
 	df_13_eng['engagements'] = np.ceil(df_13_eng['engagements'] * 10) / 10 # Round up with 1 decimal place
 	
