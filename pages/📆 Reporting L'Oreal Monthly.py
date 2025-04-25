@@ -1136,6 +1136,7 @@ if st.button("Generate Report", type="primary"):
 	
 	df_12_transpose.columns = df_12_transpose.iloc[0]
 	df_12_transpose = df_12_transpose[1:].reset_index(drop=True)
+	df_12_transpose.rename(columns={'sub_category': 'Market'}, inplace=True)
 	
 # Add table	
 	table_default(ppt.slides[page_no], df_12_transpose, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
