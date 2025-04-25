@@ -1189,7 +1189,7 @@ if st.button("Generate Report", type="primary"):
                      chart_title = True, title= "SOC", fontsize_title = Pt(16),
                      legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 
-	st.write("df_13 :", df_13_views[['brand','views']])
+	st.write("df_13 :", df_13_views)
 	st.write("Slide 13 of 17")
 	
 #-----------PAGE 14---------------
