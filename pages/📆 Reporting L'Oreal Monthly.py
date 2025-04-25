@@ -1215,11 +1215,11 @@ if st.button("Generate Report", type="primary"):
 	
 # Add table	
 	table_default(ppt.slides[page_no], rank_view[rank_view['Rank'] <= 20], Inches(0.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(1)]*4, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)	
+		      [Inches(0.9)]*4, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)	
 	table_default(ppt.slides[page_no], rank_eng[rank_eng['Rank'] <= 20], Inches(4.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(1)]*4, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)
+		      [Inches(0.9)]*4, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)
 	table_default(ppt.slides[page_no], rank_content[rank_content['Rank'] <= 20], Inches(8.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(1)]*4, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)	
+		      [Inches(0.9)]*4, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)	
 	
 	st.write("rank_view : ", rank_view[rank_view['Rank'] <= 20] )
 	st.write("Slide 14 of 17")
