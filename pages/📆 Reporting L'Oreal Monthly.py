@@ -1058,7 +1058,6 @@ if st.button("Generate Report", type="primary"):
 	df_11_views = pd.pivot_table(df_11[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_eng = pd.pivot_table(df_11[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_content = pd.pivot_table(df_11[['brand', 'content']], index = 'brand', aggfunc = 'sum', fill_value = 0)
-	st.write("df_11_views :", df_11_views)
 
 # Add vertical bar chart
 	vertical_bar_chart(ppt.slides[page_no], df_11_views, Inches(0.9), Inches(1.9), Inches(3.7), Inches(3),
@@ -1114,8 +1113,6 @@ if st.button("Generate Report", type="primary"):
 	df_12[['rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate']]
 	df_12_transpose = df_12.transpose()
 	
-	st.write("df_11 :", df_11)
-	st.write("df_12_transpose  :", df_12_transpose )
 	
 # Add table	
 	table_default(ppt.slides[page_no], df_12_transpose, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
@@ -1182,11 +1179,11 @@ if st.button("Generate Report", type="primary"):
 
 # Add table	
 	table_default(ppt.slides[page_no], rank_view, Inches(0.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(0.5)]*3, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
+		      [Inches(0.5)]*3, Inches(0.2), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
 	table_default(ppt.slides[page_no], rank_eng, Inches(4.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(0.5)]*3, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
+		      [Inches(0.5)]*3, Inches(0.2), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 	table_default(ppt.slides[page_no], rank_content, Inches(8.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(0.5)]*3, Inches(0.5), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
+		      [Inches(0.5)]*3, Inches(0.2), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
 	
 	
 #------------PAGE 15--------------
@@ -1198,14 +1195,14 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], category_title.upper()+" CATEGORY KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-	df_14 = df2[(df2['category'].isin(category)) & (df2['years'] == year) &  (df2['month'] == month)]
-	df_14_ = pd.pivot_table(df_14[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
-	df_14_ = df_14_.sort_values(by=['tier'], ascending=False)
-	df_14_ = df_14_[['views', 'engagements']]
-	st.write("df_14_v :", df_14_)
+	df_15 = df2[(df2['category'].isin(category)) & (df2['years'] == year) &  (df2['month'] == month)]
+	df_15_ = pd.pivot_table(df_14[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
+	df_15_ = df_15_.sort_values(by=['tier'], ascending=False)
+	df_15_ = df_15_[['views', 'engagements']]
+	st.write("df_15_v :", df_15_)
 
 # Add combo stacked bar chart
-	combo2_chart(ppt.slides[page_no], df_14_, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title} Category",
+	combo2_chart(ppt.slides[page_no], df_15_, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title} Category",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
 	
 #-----------PAGE 16---------------
