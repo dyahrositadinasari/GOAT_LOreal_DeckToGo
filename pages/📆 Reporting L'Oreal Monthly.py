@@ -1132,6 +1132,7 @@ if st.button("Generate Report", type="primary"):
 	
 	df_12 = df_12[['sub_category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate']]
 	df_12_transpose = df_12.transpose()
+	df_12_transpose.reset_index(inplace=True)
 	
 	
 # Add table	
