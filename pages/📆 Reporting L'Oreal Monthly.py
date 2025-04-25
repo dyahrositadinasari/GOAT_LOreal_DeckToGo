@@ -1284,10 +1284,17 @@ if st.button("Send Report", type= "secondary"):
 	subject = "[Test] m-Slide Goat-L'Oreal"
 	body = """Hi team,
         
-		This is a test email sent via Python SMTP.
+		Sending you the m-slide progress up until today with the following selection:
+  	year   : {}
+   	month  : {}
+    	quarter: {}
+     	category: {}
+      	division: {}
+       	brands  : {}
+       
         
 	Regards,
-	Dyah Dinasari"""
+	Dyah Dinasari""".format(year_map, month, quarter, category, division, brands)
 
 	# ✅ Create Email Message
 	msg = MIMEMultipart()
