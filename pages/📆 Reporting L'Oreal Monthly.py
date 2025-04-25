@@ -1178,7 +1178,8 @@ if st.button("Generate Report", type="primary"):
 	
 #-----------PAGE 14---------------
 	page_no = page_no + 1
-format_title(ppt.slides[page_no], "BRAND RANK", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	
+	format_title(ppt.slides[page_no], "BRAND RANK", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Add table	
 	table_default(ppt.slides[page_no], rank_view, Inches(0.5), Inches(1.2), Inches(4), Inches(7),
