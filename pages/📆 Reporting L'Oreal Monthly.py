@@ -109,8 +109,6 @@ else:
 #st.write("Email list : ", email_list)
 
 if st.button("Generate Report", type="primary"):
-	with st.spinner("Operation in progress. Please wait..", show_time=True):
-		time.sleep(3)
 		
 #--- DATA PROCESSING ---
 
