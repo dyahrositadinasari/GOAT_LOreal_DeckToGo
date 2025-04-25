@@ -1254,7 +1254,7 @@ if st.button("Generate Report", type="primary"):
 			pass
 
 ####### ------------- SAVE PPT -----------------
-	st.info("Saving the PPT please wait...")
+	#st.info("Saving the PPT please wait...")
 	file = (f'{category_title.upper()} MONTHLY REPORT - {month} {year}')
 	filename = (f'{category_title.upper()} MONTHLY REPORT - {month} {year}.pptx')
 	files = ppt.save(filename)
@@ -1294,11 +1294,13 @@ if st.button("Send Report", type= "secondary"):
    	month		: {}
     	quarter		: {}
      	category	: {}
-      	division	: {}
-       	brands		: {}
+      			{}
+      	division	: {}	
+       			{}
+       	brand comparison: {}
        
 	Regards,
-	Dyah Dinasari""".format(year, month, quarter_, category_selection, division_selection, brands)
+	Dyah Dinasari""".format(year, month, quarter_, category_selection, category, division_selection, category, brands)
 
 	# ✅ Create Email Message
 	msg = MIMEMultipart()
