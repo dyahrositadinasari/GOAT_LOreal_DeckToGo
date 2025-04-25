@@ -1181,17 +1181,22 @@ if st.button("Generate Report", type="primary"):
                      legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 
 	st.write("Page 13 - done")
+	
 #-----------PAGE 14---------------
 	page_no = page_no + 1
-	format_title(ppt.slides[page_no], "BRAND RANK", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "BRAND RANK", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.3), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
+	format_title(ppt.slides[page_no], "SOV", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(0.5), top=Inches(1), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(4.5), top=Inches(1), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "SOC", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(8.5), top=Inches(1), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	
 # Add table	
 	table_default(ppt.slides[page_no], rank_view[rank_view['Brand_Rank'] <= 20], Inches(0.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(1)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
+		      [Inches(1.3)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
 	table_default(ppt.slides[page_no], rank_eng[rank_eng['Brand_Rank'] <= 20], Inches(4.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(1)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
+		      [Inches(1.3)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)
 	table_default(ppt.slides[page_no], rank_content[rank_content['Brand_Rank'] <= 20], Inches(8.5), Inches(1.2), Inches(4), Inches(7),
-		      [Inches(1)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
+		      [Inches(1.3)]*3, Inches(0.3), header=True, upper=True, fontsize=12, alignment=PP_ALIGN.LEFT)	
 	
 	st.write("Page 14 - done")
 #------------PAGE 15--------------
