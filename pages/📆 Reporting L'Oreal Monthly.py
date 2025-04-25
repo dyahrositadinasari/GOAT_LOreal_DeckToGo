@@ -91,8 +91,8 @@ email_list = st.multiselect(
 	)
 
 st.badge(" Optional", icon="⚠️", color="blue")
-
-uploaded_file = st.file_uploader("Upload the PPT Template for this report, make sure the page is 16 pages or more.", type=["pptx"])
+st.info("You can use different PPT Template for this report, make sure the page is 20 pages or more.")
+uploaded_file = st.file_uploader("", type=["pptx"])
 if uploaded_file is not None:
 	st.success("File uploaded successfully!")
 else:
@@ -1255,6 +1255,7 @@ if st.button("Generate Report", type="primary"):
 			pass
 
 ####### ------------- SAVE PPT -----------------
+	st.info("Saving the PPT please wait...")
 	file = (f'{category_title.upper()} MONTHLY REPORT - {month} {year}')
 	filename = (f'{category_title.upper()} MONTHLY REPORT - {month} {year}.pptx')
 	files = ppt.save(filename)
