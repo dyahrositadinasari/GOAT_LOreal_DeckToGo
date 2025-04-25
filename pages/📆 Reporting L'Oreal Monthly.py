@@ -1113,7 +1113,8 @@ if st.button("Generate Report", type="primary"):
 	text_frame3 = rectangle3.text_frame
 	text_frame3.text = "1. ..."
 	text_frame3.paragraphs[0].font.size = Pt(13)
-
+	
+	st.write("df_11_views :", df_11_views)
 	st.write("Slide 11 of 17")
 	
 #------------PAGE 12--------------
