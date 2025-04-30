@@ -1153,7 +1153,6 @@ if st.button("Generate Report", type="primary"):
 	df_12_transpose.columns = df_12_transpose.iloc[0]
 	df_12_transpose = df_12_transpose[1:].reset_index(drop=True)
 	df_12_transpose.rename(columns={'category': 'Market'}, inplace=True)
-	st.write("df_12_transpose", df_12_transpose)
 	num_columns = df_12_transpose.shape[1]
 	
 # Add table	
