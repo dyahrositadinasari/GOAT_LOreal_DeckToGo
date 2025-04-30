@@ -85,7 +85,7 @@ brands = st.multiselect(
 
 email_list = st.multiselect(
 	"Please select the email address you wish to send this report to",
-	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "alfian.hidayatulloh@groupm.com",
+	("dyah.dinasari@groupm.com", "bandi.wijaya@groupm.com", "alfian.hidayatulloh@groupm.com", "azka.fatharani@groupm.com",
 	 "yahya.wahyu@groupm.com", "agusta.jalasena@groupm.com", "ana.maratu@groupm.com", "aldi.firstanto@groupm.com", 
 	 "muhammad.ilham@groupm.com")
 	)
