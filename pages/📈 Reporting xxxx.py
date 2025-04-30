@@ -17,6 +17,11 @@ from pptx.enum.chart import XL_LEGEND_POSITION
 from pptx.enum.chart import XL_LABEL_POSITION
 from pptx.enum.text import MSO_ANCHOR
 
+st.logo(
+    "image/goat_logo.png", size="medium", link=None, icon_image=None
+)
+st.image("image/goat-agency-logo2.png")
+
 st.title("xxxx Report")
 st.badge("", icon="⚠️", color="red")
 st.info("You can develop new report here")
