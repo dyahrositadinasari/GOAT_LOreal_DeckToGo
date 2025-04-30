@@ -48,7 +48,7 @@ quarter_months = {
 
 quarter_ = st.selectbox(
   'Please select the reporting quarter',
-  list(quarter_months.keys()
+  list(quarter_months.keys())
 )
 q_map = {
   'Quarter 1': 'Q1', 'Quarter 2': 'Q2', 'Quarter 3': 'Q3', 'Quarter 4': 'Q4'
