@@ -329,11 +329,6 @@ if st.button("Generate Report", type="primary"):
 					point.data_label.font.size = fontsize
 					point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
 	
-	    # Customize category axis (y-axis) label font size
-		chart.category_axis.tick_labels.font.size = fontsize
-	
-	    # Customize value axis (x-axis) label font size and format
-		chart.value_axis.tick_labels.font.size = fontsize
 	
 	    # Adjust bar width
 		for series in chart.series:
@@ -356,11 +351,10 @@ if st.button("Generate Report", type="primary"):
 
 		# Hide X (value) and Y (category) axes
 		chart.value_axis.has_major_tick_marks = False
-		chart.value_axis.tick_labels.font.size = Pt(1)
+		chart.value_axis.tick_labels.font.size = fontsize
 		chart.value_axis.format.line.visible = False
 
 		chart.category_axis.has_major_tick_marks = False
-		chart.category_axis.tick_labels.font.size = Pt(1)
 		chart.category_axis.format.line.visible = False
 	
 		return chart
