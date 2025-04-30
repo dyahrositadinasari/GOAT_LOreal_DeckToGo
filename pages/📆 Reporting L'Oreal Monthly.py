@@ -1122,7 +1122,8 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "BRAND SCORE-CARD", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 	
-	df_12 = pd.pivot_table(df_11[['sub_category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content']], index= ['sub_category', 'brand', 'sub_brand'],
+	df_12 = df2[(df2['brand'].isin(brands)) & (df2['years'] == year)]
+	df_12 = pd.pivot_table(df_12[['sub_category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content']], index= ['sub_category', 'brand', 'sub_brand'],
 			       values = ['rate', 'views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
 	df_12 = df_12.reset_index()
 	df_12['rate'] = df_12['rate'].astype(int)
