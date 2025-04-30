@@ -695,6 +695,7 @@ if st.button("Generate Report", type="primary"):
 	df2['quarter'] = (df2['date'].dt.quarter).map({1: 'Q1', 2: 'Q2', 3: 'Q3', 4: 'Q4'})
 
 	df2['years'] = df2['years'].astype(str)
+	df2['month'] = df2['month'].astype(str)
 	
 #---- SLIDES PRESENTATION ----
 #	ppt_temp_loc = "GOAT_LOreal_DeckToGo/pages/Template Deck to Go - Loreal Indonesia.pptx"
