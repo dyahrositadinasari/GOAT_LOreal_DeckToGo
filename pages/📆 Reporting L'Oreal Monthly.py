@@ -772,7 +772,7 @@ if st.button("Generate Report", type="primary"):
 	# Append "Others" row if applicable
 	top_brands_soe = top_brands_soe.copy()
 	if others_soe > 0:
-		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
+		others_row = pd.DataFrame([{"brand": "Others", "SOE%": others_soe}])
 		top_brands_soe = pd.concat([top_brands_soe, others_row], ignore_index=True)
 
 	
@@ -839,7 +839,7 @@ if st.button("Generate Report", type="primary"):
 	# Append "Others" row if applicable
 	top_brands_soe = top_brands_soe.copy()
 	if others_soe > 0:
-		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
+		others_row = pd.DataFrame([{"brand": "Others", "SOE%": others_soe}])
 		top_brands_soe = pd.concat([top_brands_soe, others_row], ignore_index=True)
 
 	
@@ -908,7 +908,7 @@ if st.button("Generate Report", type="primary"):
 	# Append "Others" row if applicable
 	top_brands_soe = top_brands_soe.copy()
 	if others_soe > 0:
-		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
+		others_row = pd.DataFrame([{"brand": "Others", "SOE%": others_soe}])
 		top_brands_soe = pd.concat([top_brands_soe, others_row], ignore_index=True)
 # Add pie chart
 	### st.write(top_brands_y.set_index('brand'))
