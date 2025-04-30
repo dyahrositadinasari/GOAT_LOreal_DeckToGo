@@ -778,8 +778,8 @@ if st.button("Generate Report", type="primary"):
 	
 	# Add pie chart
 	### st.write(top_brands_m.set_index('brand'))
-	pie_chart(ppt.slides[page_no], top_brands_m.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
-	pie_chart(ppt.slides[page_no], top_brands_m.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands_sov.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands_soe.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
 	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_views_m, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
@@ -840,7 +840,7 @@ if st.button("Generate Report", type="primary"):
 	top_brands_soe = top_brands_soe.copy()
 	if others_soe > 0:
 		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
-		top_brandsQ_soe = pd.concat([top_brands_soe, others_row], ignore_index=True)
+		top_brands_soe = pd.concat([top_brands_soe, others_row], ignore_index=True)
 
 	
 	# Add pie chart
@@ -881,27 +881,39 @@ if st.button("Generate Report", type="primary"):
 
 # Calculate SOV (%)
 	grouped_df_y['SOV%'] = (grouped_df_y['views'] / total_views_y)
-	grouped_df_y['SOE%'] = (grouped_df_y['engagements'] / total_engagement_y)
-
 	sov_df_y = grouped_df_y[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
-	soe_df_y = grouped_df_y[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
-	
+
 	# Sort by 'SOV%' and keep the top 14 brands
-	top_brands = sov_df_y.head(14)
+	top_brands_sov = sov_df_y.head(14)
 
 	# Group all other brands into "Others"
-	others_sov = 1 - top_brands["SOV%"].sum()  # Remaining percentage
+	others_sov = 1 - top_brands_sov["SOV%"].sum()  # Remaining percentage
 
 	# Append "Others" row if applicable
-	top_brands_y= top_brands.copy()
+	top_brands_sov = top_brands_sov.copy()
 	if others_sov > 0:
 		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
-		top_brands_y = pd.concat([top_brands, others_row], ignore_index=True)
+		top_brands_sov = pd.concat([top_brands_sov, others_row], ignore_index=True)
 
+	# Calculate SOE (%)
+	grouped_df_y['SOE%'] = (grouped_df_y['engagements'] / total_engagement_y)
+	soe_df_y = grouped_df_y[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
+
+	# Sort by 'SOE%' and keep the top 14 brands
+	top_brands_soe = soe_df_y.head(14)
+
+	# Group all other brands into "Others"
+	others_soe = 1 - top_brands_soe["SOE%"].sum()  # Remaining percentage
+
+	# Append "Others" row if applicable
+	top_brands_soe = top_brands_soe.copy()
+	if others_soe > 0:
+		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
+		top_brands_soe = pd.concat([top_brands_soe, others_row], ignore_index=True)
 # Add pie chart
 	### st.write(top_brands_y.set_index('brand'))
-	pie_chart(ppt.slides[page_no], top_brands_y.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
-	pie_chart(ppt.slides[page_no], top_brands_y.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands_sov.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
+	pie_chart(ppt.slides[page_no], top_brands_soe.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
 	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_views_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
