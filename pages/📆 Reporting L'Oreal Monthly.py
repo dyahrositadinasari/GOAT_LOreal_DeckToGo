@@ -59,6 +59,7 @@ month = st.selectbox(
   'Please select the reporting month',
   quarter_months[quarter_]
 )
+
 month_map = {
     "Jan": "1", "Feb": "2", "Mar": "3", "Apr": "4",
     "May": "5", "Jun": "6", "Jul": "7", "Aug": "8",
@@ -744,23 +745,37 @@ if st.button("Generate Report", type="primary"):
 
 	# Calculate SOV (%)
 	grouped_df_m['SOV%'] = (grouped_df_m['views'] / total_views_m)
-	grouped_df_m['SOE%'] = (grouped_df_m['engagements'] / total_engagement_m)
-
 	sov_df_m = grouped_df_m[['brand', 'SOV%']].sort_values(by='SOV%', ascending=False)
-	soe_df_m = grouped_df_m[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
 
 	# Sort by 'SOV%' and keep the top 14 brands
-	top_brands = sov_df_m.head(14)
+	top_brands_sov = sov_df_m.head(14)
 
 	# Group all other brands into "Others"
-	others_sov = 1 - top_brands["SOV%"].sum()  # Remaining percentage
+	others_sov = 1 - top_brands_sov["SOV%"].sum()  # Remaining percentage
 
 	# Append "Others" row if applicable
-	top_brands_m = top_brands.copy()
+	top_brands_m = top_brands_sov.copy()
 	if others_sov > 0:
 		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
-		top_brands_m = pd.concat([top_brands, others_row], ignore_index=True)
+		top_brands_m = pd.concat([top_brands_sov, others_row], ignore_index=True)
 
+	# Calculate SOE (%)
+	grouped_df_m['SOE%'] = (grouped_df_m['engagements'] / total_engagement_m)
+	soe_df_m = grouped_df_m[['brand', 'SOE%']].sort_values(by='SOE%', ascending=False)
+
+	# Sort by 'SOE%' and keep the top 14 brands
+	top_brands_soe = soe_df_m.head(14)
+
+	# Group all other brands into "Others"
+	others_soe = 1 - top_brands_soe["SOE%"].sum()  # Remaining percentage
+
+	# Append "Others" row if applicable
+	top_brands_n = top_brands.copy()
+	if others_soe > 0:
+		others_row = pd.DataFrame([{"brand": "Others", "SOV%": others_sov}])
+		top_brands_n = pd.concat([top_brands_soe, others_row], ignore_index=True)
+
+	
 	# Add pie chart
 	### st.write(top_brands_m.set_index('brand'))
 	pie_chart(ppt.slides[page_no], top_brands_m.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
