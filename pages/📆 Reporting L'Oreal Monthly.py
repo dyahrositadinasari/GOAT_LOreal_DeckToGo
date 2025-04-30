@@ -1197,7 +1197,7 @@ if st.button("Generate Report", type="primary"):
 	num_columns = df_12_transpose.shape[1]
 	
 # Add table	
-	table_default(ppt.slides[page_no], df_12_transpose, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
+	table_default(ppt.slides[page_no], df_12_transpose, Inches(0.5), Inches(1.2), Inches(12.2), Inches(7),
 		      [Inches(1)]*num_columns, Inches(0.5), header=True, upper=True, fontsize=10, alignment=PP_ALIGN.LEFT)
 	
 	st.write("Slide 12 of 17")
