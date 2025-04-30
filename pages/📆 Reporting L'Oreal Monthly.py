@@ -1242,7 +1242,7 @@ if st.button("Generate Report", type="primary"):
 
 # Filter the dataframe
 	df_15 = df2[(df2['category'].isin(category)) & (df2['years'] == year) &  (df2['month'] == month)]
-	st.write("df_15_", df_15_)
+	st.write("df_15", df_15)
 	df_15_ = pd.pivot_table(df_15[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
 	st.write("df_15_", df_15_)
 	df_15_ = df_15_.sort_values(by=['tier'], ascending=False)
