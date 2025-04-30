@@ -676,8 +676,6 @@ if st.button("Generate Report", type="primary"):
 	WHERE grid_year = {}
 	GROUP BY 
 	date_post
-  	,grid_month
-  	,grid_year
  	,brand
     	,sub_brand
  	,division
