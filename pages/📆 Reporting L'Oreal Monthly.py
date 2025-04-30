@@ -681,7 +681,6 @@ if st.button("Generate Report", type="primary"):
  	,brand
     	,sub_brand
  	,division
-  	,main_category
    	,sub_category
   	,tier
    	,spark_ads
