@@ -299,7 +299,7 @@ if st.button("Generate Report", type="primary"):
 		return table
 
 	def horizontal_bar_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
-							 data_show=True, chart_title=False, title="", fontsize=Pt(12),
+							 data_show=True, chart_title=False, title="", fontsize=Pt(10),
 							 fontsize_title=Pt(14), percentage=False, bar_width=Pt(10)):
 		df.fillna(0, inplace=True)  # Fill NaN values
 		# Define chart data
@@ -323,9 +323,11 @@ if st.button("Generate Report", type="primary"):
 	
 	    # Show data labels
 		if data_show:
-			for series in chart.series:
-				for point in series.points:
-					point.data_label.show_value = True
+			for series_idx, series in enumerate(chart.series):
+				for point_idx, point in enumerate(series.points):
+					val = df.iloc[point_idx, series_idx]
+					label_text = format_number_kmb(val) if val != 0 else ""
+					point.data_label.text = label_text
 					point.data_label.font.size = fontsize
 					point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
 	
@@ -351,16 +353,16 @@ if st.button("Generate Report", type="primary"):
 
 		# Hide X (value) and Y (category) axes
 		chart.value_axis.has_major_tick_marks = False
-		chart.value_axis.tick_labels.font.size = fontsize
 		chart.value_axis.format.line.visible = False
 
 		chart.category_axis.has_major_tick_marks = False
+		chart.category_axis.tick_labels.font.size = fontsize						 
 		chart.category_axis.format.line.visible = False
 	
 		return chart
 
 	def vertical_bar_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.RIGHT,
-							 data_show=True, chart_title=False, title="", fontsize=Pt(12),
+							 data_show=True, chart_title=False, title="", fontsize=Pt(10),
 							 fontsize_title=Pt(14), percentage=False, bar_width=Pt(10)):
 		df.fillna(0, inplace=True)  # Fill NaN values
 		# Define chart data
@@ -393,7 +395,7 @@ if st.button("Generate Report", type="primary"):
 					point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
 	
 	    # Customize category axis (y-axis) label font size
-		chart.category_axis.tick_labels.font.size = fontsize
+		#chart.category_axis.tick_labels.font.size = fontsize
 	
 	    # Customize value axis (x-axis) label font size and format
 		chart.value_axis.tick_labels.font.size = fontsize
