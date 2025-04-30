@@ -1244,7 +1244,7 @@ if st.button("Generate Report", type="primary"):
 	df_15 = df2[(df2['category'].isin(category)) & (df2['years'] == year) &  (df2['month'] == month)]
 	df_15_ = pd.pivot_table(df_15[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
 	df_15_ = df_15_.sort_values(by=['tier'], ascending=False)
-	df_15_ = df_15_[['tier', 'views', 'engagements']]
+	#df_15_ = df_15_[['views', 'engagements']]
 
 # Add combo stacked bar chart
 	combo2_chart(ppt.slides[page_no], df_15_, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title} Category",
