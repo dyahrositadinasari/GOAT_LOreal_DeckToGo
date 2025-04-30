@@ -1239,7 +1239,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], category_title.upper()+" CATEGORY KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-	df_15 = df2[(df2['category'].isin(category)) & (df2['years'] == year) &  (df2['month'] == month)]
+	df_15 = df2[(df2['category'].isin(category)) & (df2['years'] == year) &  (df2['month'] == month_map)]
 	st.write("df_15", df_15)
 	df_15_ = pd.pivot_table(df_15[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
 	st.write("df_15_", df_15_)
