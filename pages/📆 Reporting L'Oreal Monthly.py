@@ -1149,8 +1149,7 @@ if st.button("Generate Report", type="primary"):
 # Add table	
 	table_default(ppt.slides[page_no], df_12_transpose, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
 		      [Inches(1.2)]*10, Inches(0.5), header=True, upper=True, fontsize=10, alignment=PP_ALIGN.LEFT)
-
-	st.write("df 2 transpose : ", df_12_transpose)
+	
 	st.write("Slide 12 of 17")
 	
 #------------PAGE 13--------------
@@ -1209,7 +1208,6 @@ if st.button("Generate Report", type="primary"):
                      chart_title = True, title= "SOC", fontsize_title = Pt(16),
                      legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 
-	st.write("df_13 :", df_13_views)
 	st.write("Slide 13 of 17")
 	
 #-----------PAGE 14---------------
@@ -1228,7 +1226,6 @@ if st.button("Generate Report", type="primary"):
 	table_default(ppt.slides[page_no], rank_content[rank_content['Rank'] <= 20], Inches(8.5), Inches(1.2), Inches(4), Inches(7),
 		      [Inches(0.9)]*4, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)	
 	
-	st.write("rank_view : ", rank_view[rank_view['Rank'] <= 20] )
 	st.write("Slide 14 of 17")
 	
 #------------PAGE 15--------------
@@ -1240,18 +1237,12 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], category_title.upper()+" CATEGORY KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-	st.write("df2", df2.head(10))
+
 	df_15 = df2[(df2['category'].isin(category)) & (df2['years'] == year) & (df2['month'] == month_num)]
-	st.write("category : ",category)
-	st.write("year : ", year)
-	st.write("month_num : ", month_num)
-	st.write("df_15", df_15)
 	df_15_ = pd.pivot_table(df_15[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
-	st.write("df_15_", df_15_)
 	df_15_ = df_15_.sort_values(by=['tier'], ascending=False)
-	st.write("df_15_", df_15_)
-	#df_15_ = df_15_[['views', 'engagements']]
-	st.write("df_15_", df_15_)
+	df_15_ = df_15_[['views', 'engagements']]
+
 # Add combo stacked bar chart
 	combo2_chart(ppt.slides[page_no], df_15_, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title} Category",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
