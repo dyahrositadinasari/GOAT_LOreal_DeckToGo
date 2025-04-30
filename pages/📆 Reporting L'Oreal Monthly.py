@@ -121,6 +121,20 @@ if st.button("Generate Report", type="primary"):
 #--- DATA PROCESSING ---
 
 #CHART FORMATING
+	#--------
+	def format_number_kmb(n):
+		if n is None:
+			return ""
+		abs_n = abs(n)
+		if abs_n >= 1_000_000_000:
+			return f"{n / 1_000_000_000:.1f}B"
+		elif abs_n >= 1_000_000:
+			return f"{n / 1_000_000:.1f}M"
+		elif abs_n >= 1_000:
+			return f"{n / 1_000:.1f}K"
+		else:
+			return str(int(n))
+	#-------
 	def format_title(slide, text, alignment, font_name, font_size, font_bold = False, font_italic = None, font_color = RGBColor(0, 0, 0),left=Pt(75), top=Pt(25), width=Pt(850), height=Pt(70)):
 		title_shape = slide.shapes.add_textbox(left=left, top=top, width=width, height=height)
 		title_text_frame = title_shape.text_frame
@@ -625,18 +639,6 @@ if st.button("Generate Report", type="primary"):
 	
 		return df
 	#-----------------
-	def format_number_kmb(n):
-		if n is None:
-			return ""
-		abs_n = abs(n)
-		if abs_n >= 1_000_000_000:
-			return f"{n / 1_000_000_000:.1f}B"
-		elif abs_n >= 1_000_000:
-			return f"{n / 1_000_000:.1f}M"
-		elif abs_n >= 1_000:
-			return f"{n / 1_000:.1f}K"
-		else:
-			return str(int(n))
 
 	# Load credentials from Streamlit Secrets
 	credentials_dict = st.secrets["gcp_service_account"]
@@ -1278,13 +1280,13 @@ if st.button("Generate Report", type="primary"):
 
 	# Add Total Views, Total Eng, Total Content
 	format_title(ppt.slides[page_no], "Views", alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=10.5,left=Inches(4), top=Inches(6.5), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], format(total_views_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=18, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
+	format_title(ppt.slides[page_no], format_number_kmb(total_views_y), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=18, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
 
 	format_title(ppt.slides[page_no], "Engagements", alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=10.5, left=Inches(8), top=Inches(6.5), width=Inches(1.3), height=Inches(0.6), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], format(total_engagement_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=18, font_bold=True,left=Inches(8), top=Inches(6.2), width=Inches(1.3), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
+	format_title(ppt.slides[page_no], format_number_kmb(total_engagement_y), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=18, font_bold=True,left=Inches(8), top=Inches(6.2), width=Inches(1.3), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
 
 	format_title(ppt.slides[page_no], "Contents", alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=10.5, font_italic=False,left=Inches(12), top=Inches(6.5), width=Inches(1), height=Inches(0.6), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], format(total_content_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=18, font_bold=True,left=Inches(12), top=Inches(6.2), width=Inches(1), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
+	format_title(ppt.slides[page_no], format_number_kmb(total_content_y), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=18, font_bold=True,left=Inches(12), top=Inches(6.2), width=Inches(1), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
 
 	st.write("Slide 13 of 17")
 	
