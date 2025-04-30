@@ -384,12 +384,13 @@ if st.button("Generate Report", type="primary"):
 	
 	    # Show data labels
 		if data_show:
-			for series in chart.series:
-				for point in series.points:
-					point.data_label.show_value = True
+			for series_idx, series in enumerate(chart.series):
+				for point_idx, point in enumerate(series.points):
+					val = df.iloc[point_idx, series_idx]
+					label_text = format_number_kmb(val) if val != 0 else ""
+					point.data_label.text = label_text
 					point.data_label.font.size = fontsize
 					point.data_label.position = XL_LABEL_POSITION.OUTSIDE_END
-					point.data_label.number_format = '#,##0'
 	
 	    # Customize category axis (y-axis) label font size
 		chart.category_axis.tick_labels.font.size = fontsize
@@ -620,6 +621,19 @@ if st.button("Generate Report", type="primary"):
 			df = df.reindex(columns=all_columns, index=all_index, fill_value=np.nan)
 	
 		return df
+	#-----------------
+	def format_number_kmb(n):
+		if n is None:
+			return ""
+		abs_n = abs(n)
+		if abs_n >= 1_000_000_000:
+			return f"{n / 1_000_000_000:.1f}B"
+		elif abs_n >= 1_000_000:
+			return f"{n / 1_000_000:.1f}M"
+		elif abs_n >= 1_000:
+			return f"{n / 1_000:.1f}K"
+		else:
+			return str(int(n))
 
 	# Load credentials from Streamlit Secrets
 	credentials_dict = st.secrets["gcp_service_account"]
