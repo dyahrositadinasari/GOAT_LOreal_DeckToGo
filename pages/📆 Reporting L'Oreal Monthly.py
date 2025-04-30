@@ -1280,13 +1280,13 @@ if st.button("Generate Report", type="primary"):
 
 	# Add Total Views, Total Eng, Total Content
 	format_title(ppt.slides[page_no], "Views", alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=10.5,left=Inches(4), top=Inches(6.5), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], format_number_kmb(total_views_y), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=18, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
+	format_title(ppt.slides[page_no], format_number_kmb(total_views_y), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=14, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
 
 	format_title(ppt.slides[page_no], "Engagements", alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=10.5, left=Inches(8), top=Inches(6.5), width=Inches(1.3), height=Inches(0.6), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], format_number_kmb(total_engagement_y), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=18, font_bold=True,left=Inches(8), top=Inches(6.2), width=Inches(1.3), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
+	format_title(ppt.slides[page_no], format_number_kmb(total_engagement_y), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=14, font_bold=True,left=Inches(8), top=Inches(6.2), width=Inches(1.3), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
 
 	format_title(ppt.slides[page_no], "Contents", alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=10.5, font_italic=False,left=Inches(12), top=Inches(6.5), width=Inches(1), height=Inches(0.6), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], format_number_kmb(total_content_y), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=18, font_bold=True,left=Inches(12), top=Inches(6.2), width=Inches(1), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
+	format_title(ppt.slides[page_no], format_number_kmb(total_content_y), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=14, font_bold=True,left=Inches(12), top=Inches(6.2), width=Inches(1), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
 
 	st.write("Slide 13 of 17")
 	
