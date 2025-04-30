@@ -17,8 +17,6 @@ from pptx.enum.chart import XL_LEGEND_POSITION
 from pptx.enum.chart import XL_LABEL_POSITION
 from pptx.enum.text import MSO_ANCHOR
 
-st.title("GOAT-L'Oreal Quarterly Report")
-
 st.title("zzzz Report")
 st.badge("", icon="⚠️", color="red")
 st.info("You can develop new report here")
