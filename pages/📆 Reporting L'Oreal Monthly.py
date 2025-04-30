@@ -657,32 +657,34 @@ if st.button("Generate Report", type="primary"):
 
 # df2 for INTERNAL DATA
 	# Query Code 2
-	query2 = """
- 	SELECT 
-	date_post as date
- 	,MONTH(date_post) AS month
-  	,YEAR(date_post) AS years
- 	,brand
-  	,sub_brand
- 	,division
-   	,sub_category as category
-  	,tier
-   	,spark_ads as advocacy
-    	,SUM(rate) as rate
-	,SUM(actual_views) as views
-	,SUM(engagement) as engagements
-	,COUNT(brand) as content
-	FROM loreal-id-prod.loreal_storage.advocacy_campaign_df
-	WHERE YEAR(date_post) = {}
+	query2 = f"""
+	SELECT 
+ 		DATE(date_post) AS date,
+  		EXTRACT(MONTH FROM date_post) AS month,
+   		EXTRACT(YEAR FROM date_post) AS years,
+    		brand,
+		sub_brand,
+		division,
+		sub_category AS category,
+		tier,
+		spark_ads AS advocacy,
+		SUM(rate) AS rate,
+		SUM(actual_views) AS views,
+		SUM(engagement) AS engagements,
+		COUNT(brand) AS content
+  		FROM loreal-id-prod.loreal_storage.advocacy_campaign_df
+    		WHERE EXTRACT(YEAR FROM date_post) = {year}
 	GROUP BY 
-	date_post
- 	,brand
-    	,sub_brand
- 	,division
-   	,sub_category
-  	,tier
-   	,spark_ads
-	""".format(year)
+		date,
+		month,
+		years,
+		brand,
+		sub_brand,
+		division,
+		category,
+		tier,
+		advocacy
+  	"""
 
 	# Fetch data
 	df2 = client.query(query2).to_dataframe()
