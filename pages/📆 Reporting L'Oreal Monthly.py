@@ -39,9 +39,16 @@ year_ = {
 year_map = year_.get(year, "")  # Returns '' if year is not found
 year_range = (year_map -1, year_map)
 
+quarter_months = {
+    'Quarter 1': ['Jan', 'Feb', 'Mar'],
+    'Quarter 2': ['Apr', 'May', 'Jun'],
+    'Quarter 3': ['Jul', 'Aug', 'Sep'],
+    'Quarter 4': ['Oct', 'Nov', 'Dec'],
+}
+
 quarter_ = st.selectbox(
   'Please select the reporting quarter',
-  ('Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4')
+  list(quarter_months.keys()
 )
 q_map = {
   'Quarter 1': 'Q1', 'Quarter 2': 'Q2', 'Quarter 3': 'Q3', 'Quarter 4': 'Q4'
@@ -50,7 +57,7 @@ quarter = q_map.get(quarter_, "")  # Returns '' if quarter is not found
 
 month = st.selectbox(
   'Please select the reporting month',
-  ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+  quarter_months[quarter_]
 )
 month_map = {
     "Jan": "1", "Feb": "2", "Mar": "3", "Apr": "4",
