@@ -992,6 +992,13 @@ if st.button("Generate Report", type="primary"):
 	quarter_compare = quarter_mapping.get(quarter, [quarter])
 	title_q = quarter_compare[0] + " vs " + quarter_compare[1]
 
+	if quarter_ == "Quarter 1":
+		df_y_qq = df[(df['division'].isin(division)) & (df['category'].isin(category)) & (df['years'].isin(year_range))]
+	else:
+		df_y_qq = df[(df['division'].isin(division)) & (df['category'].isin(category)) & (df['years'] == year_map)]
+	
+	df_top_brands = df_y_qq[df_y_qq['brand'].isin(top_brands)]  
+
 	df_q_views = pd.pivot_table(df_top_brands[['quarter','brand','views']], columns = 'quarter', index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_q_content = pd.pivot_table(df_top_brands[['quarter','brand','content']], columns = 'quarter', index = 'brand', aggfunc = 'sum', fill_value = 0)
 
