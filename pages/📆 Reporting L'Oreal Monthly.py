@@ -660,13 +660,12 @@ if st.button("Generate Report", type="primary"):
 	query2 = """
  	SELECT 
 	date_post as date
- 	,grid_month as month
-  	,grid_year as years
+ 	,MONTH(date_post) AS month
+  	,YEAR(date_post) AS years
  	,brand
   	,sub_brand
  	,division
-  	,main_category as category
-   	,sub_category as sub_category
+   	,sub_category as category
   	,tier
    	,spark_ads as advocacy
     	,SUM(rate) as rate
