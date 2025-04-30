@@ -348,13 +348,20 @@ if st.button("Generate Report", type="primary"):
 		else:
 			chart.has_title = False
 	
-	    # Remove Gridlines
-		value_axis = chart.value_axis
-		category_axis = chart.category_axis
-		value_axis.has_major_gridlines = False
-		value_axis.has_minor_gridlines = False
-		category_axis.has_major_gridlines = False
-		category_axis.has_minor_gridlines = False
+		# Remove gridlines
+		chart.value_axis.has_major_gridlines = False
+		chart.value_axis.has_minor_gridlines = False
+		chart.category_axis.has_major_gridlines = False
+		chart.category_axis.has_minor_gridlines = False
+
+		# Hide X (value) and Y (category) axes
+		chart.value_axis.has_major_tick_marks = False
+		chart.value_axis.tick_labels.font.size = Pt(1)
+		chart.value_axis.format.line.visible = False
+
+		chart.category_axis.has_major_tick_marks = False
+		chart.category_axis.tick_labels.font.size = Pt(1)
+		chart.category_axis.format.line.visible = False
 	
 		return chart
 
