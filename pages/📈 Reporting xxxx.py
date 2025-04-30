@@ -18,7 +18,8 @@ from pptx.enum.chart import XL_LABEL_POSITION
 from pptx.enum.text import MSO_ANCHOR
 
 st.title("xxxx Report")
-st.write("This report is not developed yet")
+st.badge(" Optional", icon="⚠️", color="red")
+st.info("You can develop new report here")
 
 year = st.selectbox(
   'Please select the reporting year',
