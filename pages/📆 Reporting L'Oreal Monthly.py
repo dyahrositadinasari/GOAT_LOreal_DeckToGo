@@ -673,7 +673,7 @@ if st.button("Generate Report", type="primary"):
 	,SUM(engagement) as engagements
 	,COUNT(brand) as content
 	FROM loreal-id-prod.loreal_storage.advocacy_campaign_df
-	WHERE grid_year = {}
+	WHERE YEAR(date_post) = {}
 	GROUP BY 
 	date_post
  	,brand
