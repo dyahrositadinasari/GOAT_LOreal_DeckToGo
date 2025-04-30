@@ -1154,10 +1154,11 @@ if st.button("Generate Report", type="primary"):
 	df_12_transpose = df_12_transpose[1:].reset_index(drop=True)
 	df_12_transpose.rename(columns={'category': 'Market'}, inplace=True)
 	st.write("df_12_transpose", df_12_transpose)
+	num_columns = df_12_transpose.shape[1]
 	
 # Add table	
 	table_default(ppt.slides[page_no], df_12_transpose, Inches(1), Inches(1.2), Inches(12.2), Inches(7),
-		      [Inches(1.2)]*10, Inches(0.5), header=True, upper=True, fontsize=10, alignment=PP_ALIGN.LEFT)
+		      [Inches(1)]*num_columns, Inches(0.5), header=True, upper=True, fontsize=10, alignment=PP_ALIGN.LEFT)
 	
 	st.write("Slide 12 of 17")
 	
