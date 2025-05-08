@@ -639,6 +639,23 @@ if st.button("Generate Report", type="primary"):
 	
 		return df
 	#-----------------
+	def df_to_bullets(slide, df, x, y, cx, cy, font_size=9):
+
+	# Add textbox
+		textbox = slide.shapes.add_textbox(left, top, width, height)
+		text_frame = textbox.text_frame
+		text_frame.word_wrap = True
+		text_frame.clear()  # Clear default paragraph
+
+		for value in df.iloc[:, 0]:  # Take values from the first (only) column
+			p = text_frame.add_paragraph()
+			p.text = str(value)
+			p.level = 0
+			p.font.size = Pt(font_size)
+			p.font.color.rgb = RGBColor(0, 0, 0)
+			p.alignment = PP_ALIGN.LEFT
+
+	#-----------------
 
 	# Load credentials from Streamlit Secrets
 	credentials_dict = st.secrets["gcp_service_account"]
@@ -696,6 +713,7 @@ if st.button("Generate Report", type="primary"):
 		sub_category AS category,
 		tier,
   		kol_name,
+    		kol_persona,
   		link_post,
 		campaign,
 		spark_ads AS advocacy,
@@ -1325,7 +1343,7 @@ if st.button("Generate Report", type="primary"):
 	
 #-----------PAGE 16---------------
 	page_no = page_no + 1
-	format_title(ppt.slides[page_no], category_title.upper()+" CATEGORY KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "FYP and Trending Content", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=False,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 	df_16 = df_15[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']]
 	df_16 = df_16.sort_values('er_content', ascending=False).head(4)
@@ -1336,14 +1354,22 @@ if st.button("Generate Report", type="primary"):
 	st.write("df_16_transpose", df_16_transpose)
 	st.write("df_16_transpose.iloc[:, 1]", df_16_transpose.iloc[:, [1]])
 
-	table_default(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2), Inches(1),
-								[Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTER)
-
+	#table_default(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2), Inches(1), [Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTER)
+# Add bullets text
+	df_to_bullets(slide, df_16_transpose.iloc[:, [1]])
 
 	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
 
 #-----------PAGE 17---------------
 	page_no = page_no + 1	
+	format_title(ppt.slides[page_no], "WINNING FORMULA FOR BOOSTED CONTENTS ", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	df_17 = df_15[['division', 'campaign', 'link_post', 'kol_name', 'kol_persona',  'views']]
+	df_17 = df17[(df17['spark_ads']== 'Boosted')]
+	df_17 = df_17.sort_values('views', ascending=False).head(6)
+	df_17_transpose = df_17.transpose()
+	df_17_transpose.reset_index(inplace=True)
+# Add bullets text
+	df_to_bullets(slide, df_17_transpose.iloc[:, [1]])	
 	
 	st.write("Slide 17 of 17 - still in development process")
 
