@@ -697,6 +697,7 @@ if st.button("Generate Report", type="primary"):
 		tier,
   		kol_name,
   		link_post,
+		campaign,
 		spark_ads AS advocacy,
 		rate,
 		actual_views as views,
