@@ -1337,7 +1337,7 @@ if st.button("Generate Report", type="primary"):
 	st.write("df_16_transpose.iloc[:, 1]", df_16_transpose.iloc[:, 1])
 
 	table_default(ppt.slides[page_no], df_16_transpose.iloc[:, 1], Inches(3.5), Inches(6), Inches(2), Inches(1),
-								[Inches(2)]+[Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTRE)
+								[Inches(2)]+[Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTER)
 
 
 	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
