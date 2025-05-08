@@ -1192,9 +1192,7 @@ if st.button("Generate Report", type="primary"):
 	df_12 = df2[(df2['brand'].isin(brands)) & (df2['years'] == year)]
 	df_12 = pd.pivot_table(df_12[['category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content']], index= ['category', 'brand', 'sub_brand'],
 			       values = ['rate', 'views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
-	st.write(df_12)
 	df_12 = df_12.reset_index()
-	st.write(df_12)
 	df_12['rate'] = df_12['rate'].fillna(0).astype(int)
 	df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0)
 	df_12['eng_rate'] = df_12['eng_rate'].map('{:.1%}'.format)
