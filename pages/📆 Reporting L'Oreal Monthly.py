@@ -33,7 +33,7 @@ year = st.selectbox(
   ['2023', '2024', '2025'], default=['2025']
 )
 year_ = {
-  '2024':24, '2025':25
+  '2023':23, '2024':24, '2025':25
 }
 
 year_map = year_.get(year, "")  # Returns '' if year is not found
