@@ -1328,7 +1328,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], category_title.upper()+" CATEGORY KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 	df_16 = df_15[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']]
-	df_16 = df_16.sort_values('er_content', ascending=False).head(4).reset_index(inplace=True)
+	df_16 = df_16.sort_values('er_content', ascending=False).head(4)
 	df_16_transpose = df_16.transpose()
 	df_16_transpose.reset_index(inplace=True)
 
@@ -1337,7 +1337,7 @@ if st.button("Generate Report", type="primary"):
 	st.write("df_16_transpose.iloc[:, 1]", df_16_transpose.iloc[:, 1])
 
 	table_default(ppt.slides[page_no], df_16_transpose.iloc[:, 1], Inches(3.5), Inches(6), Inches(2), Inches(1),
-								[Inches(2)]+[Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTER)
+								[Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTER)
 
 
 	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
