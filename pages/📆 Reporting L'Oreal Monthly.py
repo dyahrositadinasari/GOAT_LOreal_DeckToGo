@@ -653,7 +653,7 @@ if st.button("Generate Report", type="primary"):
 			p.level = 0
 			p.font.size = Pt(font_size)
 			p.font.color.rgb = RGBColor(0, 0, 0)
-			p.alignment = PP_ALIGN.LEFT
+			p.alignment = PP_ALIGN.CENTER
 
 	#-----------------
 
@@ -1356,7 +1356,7 @@ if st.button("Generate Report", type="primary"):
 
 	#table_default(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2), Inches(1), [Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTER)
 # Add bullets text
-	df_to_bullets(slide, df_16_transpose.iloc[:, [1]])
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2), Inches(1))
 
 	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
 
@@ -1369,7 +1369,7 @@ if st.button("Generate Report", type="primary"):
 	df_17_transpose = df_17.transpose()
 	df_17_transpose.reset_index(inplace=True)
 # Add bullets text
-	df_to_bullets(slide, df_17_transpose.iloc[:, [1]])	
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2.36), Inches(1))	
 	
 	st.write("Slide 17 of 17 - still in development process")
 
