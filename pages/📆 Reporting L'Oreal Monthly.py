@@ -70,7 +70,7 @@ month_num = month_map.get(month, "")  # Returns '' if month is not found
 
 division_selection = st.multiselect(
   "Please select the reporting L'Oreal Division",
-  ['Select All', 'CPD', 'LDB', 'LLD', 'PPD']
+  ['Select All', 'CPD', 'LDB', 'LLD', 'PPD'], default=['Select All']
 )
 if 'Select All' in division_selection:
     division = ['CPD', 'LDB', 'LLD', 'PPD']
@@ -78,7 +78,7 @@ else: division = division_selection
 	
 category_selection = st.multiselect(
   "Please select the reporting L'Oreal Category",
-  ['Select All', 'Pro Hair', 'Skincare', 'Makeup', 'Fragrance', 'Men Skincare', 'Haircolor', 'Haircare']
+  ['Select All', 'Pro Hair', 'Skincare', 'Makeup', 'Fragrance', 'Men Skincare', 'Haircolor', 'Haircare'], default=['Select All']
 )
 if 'Select All' in category_selection:
     category = ['Pro Hair', 'Skincare', 'Makeup', 'Fragrance', 'Men Skincare', 'Haircolor', 'Haircare']
@@ -87,6 +87,7 @@ else: category = category_selection
 brands = st.multiselect(
     "Please Select max 5 L'Oreal Brands to compare in the report",
 	["3CE", "ARM", "CRV", "GAR", "KER", "KIE", "LAN", "LP", "LRP", "MNY", "MXBIO", "OAP", "SHU", "YSL"]
+	,default=["GAR", "LP", "MNY"]
 	,max_selections=5
 )
 # brand full name -> ["BLP Skin", "Garnier", "L'Oreal Paris", "GMN Shampoo Color", "Armani", "Kiehls", "Lancome", "Shu Uemura", "Urban Decay", "YSL", "Cerave", "La Roche Posay", "L'Oreal Professionel", "Matrix", "Biolage", "Kerastase", "Maybelline"]
