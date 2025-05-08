@@ -1335,7 +1335,17 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], category_title.upper()+" CATEGORY KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
-	st.write("Slide 16 of 17 - still in development process")
+	df_16 = df_15[['division', 'campaign', 'kol_name', 'link_post', 'actual_views', 'er_content']]
+	df_16 = df_16.sort_values('er_content', ascending=False).head(4)
+	df_16_transpose = df_16.transpose()
+	df_16_transpose.reset_index(inplace=True)
+
+	format_title(ppt.slides[page_no], df_16[0], alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=9, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
+	format_title(ppt.slides[page_no], df_16[1], alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=9, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
+	format_title(ppt.slides[page_no], df_16[2], alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=9, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
+	format_title(ppt.slides[page_no], df_16[3], alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=9, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
+
+	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
 
 #-----------PAGE 17---------------
 	page_no = page_no + 1	
