@@ -756,8 +756,8 @@ if st.button("Generate Report", type="primary"):
 
 	# Add a title to the slide
 	format_title(ppt.slides[page_no], "MONTHLY SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
-	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
+	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(5), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
+	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 
 	# Filter the dataframe
 	df_m = df[(df['division'].isin(division)) & (df['category'].isin(category)) & (df['years'] == year_map) &  (df['month'] == month)]
@@ -880,10 +880,10 @@ if st.button("Generate Report", type="primary"):
 	pie_chart(ppt.slides[page_no], top_brands_sov.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], top_brands_soe.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
-	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_views_q, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 
-	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_engagement_q, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(11.7), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 	
 	st.write("Slide 3 of 17")
@@ -947,10 +947,10 @@ if st.button("Generate Report", type="primary"):
 	pie_chart(ppt.slides[page_no], top_brands_sov.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], top_brands_soe.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
-	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_views_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 
-	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_engagement_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(11.7), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 
 	st.write("Slide 4 of 17")
@@ -1356,10 +1356,10 @@ if st.button("Generate Report", type="primary"):
 
 	#table_default(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2), Inches(1), [Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTER)
 # Add bullets text
-	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [2]], Inches(6), Inches(6), Inches(2), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [3]], Inches(8.5), Inches(6), Inches(2), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [4]], Inches(11), Inches(6), Inches(2), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [2]], Inches(6), Inches(6), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [3]], Inches(8.5), Inches(6), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [4]], Inches(11), Inches(6), Inches(2.36), Inches(1))
 
 	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
 
@@ -1373,12 +1373,12 @@ if st.button("Generate Report", type="primary"):
 	df_17_transpose.reset_index(inplace=True)
 	
 # Add bullets text
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [1]], Inches(0.5), Inches(6), Inches(2.36), Inches(1))	
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [2]], Inches(2), Inches(6), Inches(2), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [3]], Inches(3.5), Inches(6), Inches(2), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [4]], Inches(7), Inches(6), Inches(2), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [5]], Inches(8.5), Inches(6), Inches(2), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [6]], Inches(10), Inches(6), Inches(2), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [1]], Inches(0.5), Inches(4), Inches(2.36), Inches(1))	
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [2]], Inches(2), Inches(4), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [3]], Inches(3.5), Inches(4), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [4]], Inches(7), Inches(4), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [5]], Inches(8.5), Inches(4), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [6]], Inches(10), Inches(4), Inches(2.36), Inches(1))
 
 	st.write("Slide 17 of 17 - still in development process")
 
