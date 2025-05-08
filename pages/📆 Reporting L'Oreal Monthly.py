@@ -639,7 +639,7 @@ if st.button("Generate Report", type="primary"):
 	
 		return df
 	#-----------------
-	def df_to_bullets(slide, df, x, y, cx, cy, font_size=9):
+	def df_to_bullets(slide, df, left=Inches(1), top=Inches(1), width=Inches(5), height=Inches(4), font_size=9):
 
 	# Add textbox
 		textbox = slide.shapes.add_textbox(left, top, width, height)
