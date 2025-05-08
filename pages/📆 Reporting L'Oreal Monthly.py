@@ -699,7 +699,7 @@ if st.button("Generate Report", type="primary"):
   		link_post,
 		spark_ads AS advocacy,
 		rate,
-		views,
+		actual_views as views,
 		engagements,
 		er_content,
 		1 AS content
