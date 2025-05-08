@@ -30,7 +30,7 @@ st.image("image/goat-agency-logo2.png")
 st.header("L'Oreal Monthly Report")
 year = st.selectbox(
   'Please select the reporting year',
-  ('2024', '2025')
+  ['2023', '2024', '2025'], default=['2025']
 )
 year_ = {
   '2024':24, '2025':25
@@ -87,7 +87,7 @@ else: category = category_selection
 brands = st.multiselect(
     "Please Select max 5 L'Oreal Brands to compare in the report",
 	["3CE", "ARM", "CRV", "GAR", "KER", "KIE", "LAN", "LP", "LRP", "MNY", "MXBIO", "OAP", "SHU", "YSL"]
-	,default=["GAR", "LP", "MNY"]
+	,default = ["GAR", "LP", "MNY"]
 	,max_selections=5
 )
 # brand full name -> ["BLP Skin", "Garnier", "L'Oreal Paris", "GMN Shampoo Color", "Armani", "Kiehls", "Lancome", "Shu Uemura", "Urban Decay", "YSL", "Cerave", "La Roche Posay", "L'Oreal Professionel", "Matrix", "Biolage", "Kerastase", "Maybelline"]
