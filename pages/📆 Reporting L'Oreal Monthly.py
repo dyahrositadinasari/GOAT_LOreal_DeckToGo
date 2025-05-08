@@ -700,7 +700,7 @@ if st.button("Generate Report", type="primary"):
 		spark_ads AS advocacy,
 		rate,
 		actual_views as views,
-		engagements,
+		engagement as engagements,
 		er_content,
 		1 AS content
   		FROM loreal-id-prod.loreal_storage.advocacy_campaign_df
