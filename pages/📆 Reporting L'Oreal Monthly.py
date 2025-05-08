@@ -30,7 +30,7 @@ st.image("image/goat-agency-logo2.png")
 st.header("L'Oreal Monthly Report")
 year = st.selectbox(
   'Please select the reporting year',
-  ('2023', '2024', '2025'), default='2025'
+  ('2023', '2024', '2025')
 )
 year_ = {
   '2023':23, '2024':24, '2025':25
