@@ -1357,6 +1357,9 @@ if st.button("Generate Report", type="primary"):
 	#table_default(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2), Inches(1), [Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTER)
 # Add bullets text
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [2]], Inches(6), Inches(6), Inches(2), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [3]], Inches(8.5), Inches(6), Inches(2), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [4]], Inches(11), Inches(6), Inches(2), Inches(1))
 
 	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
 
@@ -1368,9 +1371,15 @@ if st.button("Generate Report", type="primary"):
 	df_17 = df_17.sort_values('views', ascending=False).head(6)
 	df_17_transpose = df_17.transpose()
 	df_17_transpose.reset_index(inplace=True)
-# Add bullets text
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2.36), Inches(1))	
 	
+# Add bullets text
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [1]], Inches(0.5), Inches(6), Inches(2.36), Inches(1))	
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [2]], Inches(2), Inches(6), Inches(2), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [3]], Inches(3.5), Inches(6), Inches(2), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [4]], Inches(7), Inches(6), Inches(2), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [5]], Inches(8.5), Inches(6), Inches(2), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [6]], Inches(10), Inches(6), Inches(2), Inches(1))
+
 	st.write("Slide 17 of 17 - still in development process")
 
 #-----------END OF SLIDE---------------
