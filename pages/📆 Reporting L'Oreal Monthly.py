@@ -1328,7 +1328,7 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], category_title.upper()+" CATEGORY KOL MIX", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
-	df_16 = df_15[['division', 'campaign', 'kol_name', 'link_post', 'actual_views', 'er_content']]
+	df_16 = df_15[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']]
 	df_16 = df_16.sort_values('er_content', ascending=False).head(4)
 	df_16_transpose = df_16.transpose()
 	df_16_transpose.reset_index(inplace=True)
