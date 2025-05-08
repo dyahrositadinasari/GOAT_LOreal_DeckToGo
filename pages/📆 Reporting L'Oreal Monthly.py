@@ -695,23 +695,16 @@ if st.button("Generate Report", type="primary"):
 		division,
 		sub_category AS category,
 		tier,
+  		kol_name,
+  		link_post,
 		spark_ads AS advocacy,
-		SUM(rate) AS rate,
-		SUM(actual_views) AS views,
-		SUM(engagement) AS engagements,
-		COUNT(brand) AS content
+		rate,
+		views,
+		engagements,
+		er_content,
+		1 AS content
   		FROM loreal-id-prod.loreal_storage.advocacy_campaign_df
     		WHERE EXTRACT(YEAR FROM date_post) = {year}
-	GROUP BY 
-		date,
-		month,
-		years,
-		brand,
-		sub_brand,
-		division,
-		category,
-		tier,
-		advocacy
   	"""
 
 	# Fetch data
