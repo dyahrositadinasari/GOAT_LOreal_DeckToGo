@@ -1337,10 +1337,9 @@ if st.button("Generate Report", type="primary"):
 	st.write("df_16", df_16)
 	st.write("df_16_transpose", df_16_transpose)
 
-	format_title(ppt.slides[page_no], df_16[0], alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=9, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
-	format_title(ppt.slides[page_no], df_16[1], alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=9, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
-	format_title(ppt.slides[page_no], df_16[2], alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=9, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
-	format_title(ppt.slides[page_no], df_16[3], alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=9, font_bold=True,left=Inches(4), top=Inches(6.2), width=Inches(0.8), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
+	table_default(ppt.slides[page_no], df_16_transpose[:,1], Inches(3.5), Inches(6), Inches(2), Inches(1),
+								[Inches(2)]+[Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTRE)
+
 
 	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
 
