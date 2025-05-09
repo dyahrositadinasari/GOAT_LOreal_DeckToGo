@@ -30,10 +30,10 @@ st.image("image/goat-agency-logo2.png")
 st.header("L'Oreal Monthly Report")
 year = st.selectbox(
   'Please select the reporting year',
-  ('2024', '2025')
+  ('2025', '2024', '2023')
 )
 year_ = {
-  '2024':24, '2025':25
+  '2023':23, '2024':24, '2025':25
 }
 
 year_map = year_.get(year, "")  # Returns '' if year is not found
@@ -70,7 +70,7 @@ month_num = month_map.get(month, "")  # Returns '' if month is not found
 
 division_selection = st.multiselect(
   "Please select the reporting L'Oreal Division",
-  ['Select All', 'CPD', 'LDB', 'LLD', 'PPD']
+  ['Select All', 'CPD', 'LDB', 'LLD', 'PPD'], default=['Select All']
 )
 if 'Select All' in division_selection:
     division = ['CPD', 'LDB', 'LLD', 'PPD']
@@ -78,7 +78,7 @@ else: division = division_selection
 	
 category_selection = st.multiselect(
   "Please select the reporting L'Oreal Category",
-  ['Select All', 'Pro Hair', 'Skincare', 'Makeup', 'Fragrance', 'Men Skincare', 'Haircolor', 'Haircare']
+  ['Select All', 'Pro Hair', 'Skincare', 'Makeup', 'Fragrance', 'Men Skincare', 'Haircolor', 'Haircare'], default=['Select All']
 )
 if 'Select All' in category_selection:
     category = ['Pro Hair', 'Skincare', 'Makeup', 'Fragrance', 'Men Skincare', 'Haircolor', 'Haircare']
@@ -87,6 +87,7 @@ else: category = category_selection
 brands = st.multiselect(
     "Please Select max 5 L'Oreal Brands to compare in the report",
 	["3CE", "ARM", "CRV", "GAR", "KER", "KIE", "LAN", "LP", "LRP", "MNY", "MXBIO", "OAP", "SHU", "YSL"]
+	,default = ["GAR", "LP", "MNY"]
 	,max_selections=5
 )
 # brand full name -> ["BLP Skin", "Garnier", "L'Oreal Paris", "GMN Shampoo Color", "Armani", "Kiehls", "Lancome", "Shu Uemura", "Urban Decay", "YSL", "Cerave", "La Roche Posay", "L'Oreal Professionel", "Matrix", "Biolage", "Kerastase", "Maybelline"]
@@ -639,6 +640,23 @@ if st.button("Generate Report", type="primary"):
 	
 		return df
 	#-----------------
+	def df_to_bullets(slide, df, left=Inches(1), top=Inches(1), width=Inches(5), height=Inches(4), font_size=9):
+
+	# Add textbox
+		textbox = slide.shapes.add_textbox(left, top, width, height)
+		text_frame = textbox.text_frame
+		text_frame.word_wrap = True
+		text_frame.clear()  # Clear default paragraph
+
+		for value in df.iloc[:, 0]:  # Take values from the first (only) column
+			p = text_frame.add_paragraph()
+			p.text = str(value)
+			p.level = 0
+			p.font.size = Pt(font_size)
+			p.font.color.rgb = RGBColor(0, 0, 0)
+			p.alignment = PP_ALIGN.CENTER
+
+	#-----------------
 
 	# Load credentials from Streamlit Secrets
 	credentials_dict = st.secrets["gcp_service_account"]
@@ -695,23 +713,18 @@ if st.button("Generate Report", type="primary"):
 		division,
 		sub_category AS category,
 		tier,
+  		kol_name,
+    		kol_persona,
+  		link_post,
+		campaign,
 		spark_ads AS advocacy,
-		SUM(rate) AS rate,
-		SUM(actual_views) AS views,
-		SUM(engagement) AS engagements,
-		COUNT(brand) AS content
+		rate,
+		actual_views as views,
+		engagement as engagements,
+		er_content,
+		1 AS content
   		FROM loreal-id-prod.loreal_storage.advocacy_campaign_df
     		WHERE EXTRACT(YEAR FROM date_post) = {year}
-	GROUP BY 
-		date,
-		month,
-		years,
-		brand,
-		sub_brand,
-		division,
-		category,
-		tier,
-		advocacy
   	"""
 
 	# Fetch data
@@ -744,8 +757,8 @@ if st.button("Generate Report", type="primary"):
 
 	# Add a title to the slide
 	format_title(ppt.slides[page_no], "MONTHLY SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
-	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
+	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(5), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
+	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 
 	# Filter the dataframe
 	df_m = df[(df['division'].isin(division)) & (df['category'].isin(category)) & (df['years'] == year_map) &  (df['month'] == month)]
@@ -868,10 +881,10 @@ if st.button("Generate Report", type="primary"):
 	pie_chart(ppt.slides[page_no], top_brands_sov.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], top_brands_soe.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
-	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_views_q, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 
-	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_engagement_q, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(11.7), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 	
 	st.write("Slide 3 of 17")
@@ -935,10 +948,10 @@ if st.button("Generate Report", type="primary"):
 	pie_chart(ppt.slides[page_no], top_brands_sov.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], top_brands_soe.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
-	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(5.3), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_views_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(5.3), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 
-	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(11.7), top=Inches(3), width=Inches(1.3), height=Inches(1.01), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format(total_engagement_y, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(11.7), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 
 	st.write("Slide 4 of 17")
@@ -1198,9 +1211,7 @@ if st.button("Generate Report", type="primary"):
 	df_12 = df2[(df2['brand'].isin(brands)) & (df2['years'] == year)]
 	df_12 = pd.pivot_table(df_12[['category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content']], index= ['category', 'brand', 'sub_brand'],
 			       values = ['rate', 'views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
-	st.write(df_12)
 	df_12 = df_12.reset_index()
-	st.write(df_12)
 	df_12['rate'] = df_12['rate'].fillna(0).astype(int)
 	df_12['eng_rate'] = np.where(df_12['views'] != 0, df_12['engagements'] / df_12['views'], 0)
 	df_12['eng_rate'] = df_12['eng_rate'].map('{:.1%}'.format)
@@ -1333,12 +1344,43 @@ if st.button("Generate Report", type="primary"):
 	
 #-----------PAGE 16---------------
 	page_no = page_no + 1
-	
-	st.write("Slide 16 of 17 - still in development process")
+	format_title(ppt.slides[page_no], "FYP and Trending Content", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=False,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
+	df_16 = df_15[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']]
+	df_16 = df_16.sort_values('er_content', ascending=False).head(4)
+	df_16_transpose = df_16.transpose()
+	df_16_transpose.reset_index(inplace=True)
+
+	st.write("df_16", df_16)
+	st.write("df_16_transpose", df_16_transpose)
+	st.write("df_16_transpose.iloc[:, 1]", df_16_transpose.iloc[:, [1]])
+
+	#table_default(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2), Inches(1), [Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTER)
+# Add bullets text
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [2]], Inches(6), Inches(6), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [3]], Inches(8.5), Inches(6), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [4]], Inches(11), Inches(6), Inches(2.36), Inches(1))
+
+	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
 
 #-----------PAGE 17---------------
 	page_no = page_no + 1	
+	format_title(ppt.slides[page_no], "WINNING FORMULA FOR BOOSTED CONTENTS ", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	df_17 = df_15[(df_15['advocacy']== 'Boosted')]
+	df_17 = df_17[['division', 'campaign', 'link_post', 'kol_name', 'kol_persona',  'views']]
+	df_17 = df_17.sort_values('views', ascending=False).head(6)
+	df_17_transpose = df_17.transpose()
+	df_17_transpose.reset_index(inplace=True)
 	
+# Add bullets text
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [1]], Inches(0.5), Inches(4), Inches(2.36), Inches(1))	
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [2]], Inches(2), Inches(4), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [3]], Inches(3.5), Inches(4), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [4]], Inches(7), Inches(4), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [5]], Inches(8.5), Inches(4), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [6]], Inches(10), Inches(4), Inches(2.36), Inches(1))
+
 	st.write("Slide 17 of 17 - still in development process")
 
 #-----------END OF SLIDE---------------
