@@ -45,7 +45,7 @@ year_range = (year_map -1, year_map)
 
 quarter_ = st.multiselect(
   'Please select the reporting quarter',
-  ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4']
+  ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'], max_selections=2
 )
 q_map = {
   'Quarter 1': 'Q1', 'Quarter 2': 'Q2', 'Quarter 3': 'Q3', 'Quarter 4': 'Q4'
@@ -1117,7 +1117,8 @@ if st.button("Generate Report", type="primary"):
 	if isinstance(quarter, list) and len(quarter) == 2:
 		quarter_compare = quarter
 	else:
-		quarter_mapping = {['Q1']: ['Q4', 'Q1'], ['Q2']: ['Q1', 'Q2'], ['Q3']: ['Q2', 'Q3'], ['Q4']: ['Q3', 'Q4']}
+		quarter = quarter[0]
+		quarter_mapping = {'Q1': ['Q4', 'Q1'], 'Q2': ['Q1', 'Q2'], 'Q3': ['Q2', 'Q3'], 'Q4': ['Q3', 'Q4']}
 		quarter_compare = quarter_mapping.get(quarter, [quarter])
 	title_q = quarter_compare[0] + " vs " + quarter_compare[1]
 
