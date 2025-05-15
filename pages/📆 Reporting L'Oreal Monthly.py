@@ -65,7 +65,7 @@ month_map = {
     "Sep": "9", "Oct": "10", "Nov": "11", "Dec": "12"
 }
 
-month_nums = [month_map[m] for m in month if m in month_map]
+month_num = [month_map[m] for m in month if m in month_map]
 
 division_selection = st.multiselect(
   "Please select the reporting L'Oreal Division",
