@@ -684,6 +684,8 @@ if st.button("Generate Report", type="primary"):
 			return None
 
 	def get_thumbnail(link, api_key):
+		if not link:
+			return None
 		if "tiktok.com" in link:
 			return get_tiktok_thumbnail(link, api_key)
 		elif "instagram.com" in link:
