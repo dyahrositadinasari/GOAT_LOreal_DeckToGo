@@ -7,6 +7,7 @@ from datetime import datetime
 import json
 import smtplib
 import pytz
+import requests
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
