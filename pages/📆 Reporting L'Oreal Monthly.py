@@ -659,7 +659,6 @@ if st.button("Generate Report", type="primary"):
 			p.font.color.rgb = RGBColor(0, 0, 0)
 			p.alignment = PP_ALIGN.CENTER
 
-	#-----------------
 	# --- TikTok API (RapidAPI)
 	def get_tiktok_thumbnail(tiktok_url, rapidapi_key):
 		url = "https://tiktok-download-without-watermark1.p.rapidapi.com/media-info/"
