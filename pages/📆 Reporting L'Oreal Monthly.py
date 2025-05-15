@@ -1392,7 +1392,7 @@ if st.button("Generate Report", type="primary"):
 				image_io = BytesIO(image_stream)
 				ppt.slides[page_no].shapes.add_picture(image_io, left=lefts[idx], top=top, width=width)
 			except Exception as e:
-				st.warning(f"Image insert failed for {row['link_post']]}: {e}")
+				st.warning(f"Image insert failed for {row['link_post']}: {e}")
 
 	df_16_transpose = df_16[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']].transpose()
 	df_16_transpose.reset_index(inplace=True)
