@@ -1114,8 +1114,11 @@ if st.button("Generate Report", type="primary"):
 	page_no = page_no + 1 
 	format_title(ppt.slides[page_no], "BAR CHART COMPARISON QTR VERSUS", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
-	quarter_mapping = {'Q1': ['Q4', 'Q1'], 'Q2': ['Q1', 'Q2'], 'Q3': ['Q2', 'Q3'], 'Q4': ['Q3', 'Q4']}
-	quarter_compare = quarter_mapping.get(quarter, [quarter])
+	if isinstance(quarter, list) and len(quarter) == 2:
+		quarter_compare = quarter
+	else:
+		quarter_mapping = {'Q1': ['Q4', 'Q1'], 'Q2': ['Q1', 'Q2'], 'Q3': ['Q2', 'Q3'], 'Q4': ['Q3', 'Q4']}
+		quarter_compare = quarter_mapping.get(quarter, [quarter])
 	title_q = quarter_compare[0] + " vs " + quarter_compare[1]
 
 	if quarter_ == "Quarter 1":
