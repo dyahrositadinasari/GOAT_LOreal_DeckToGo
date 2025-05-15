@@ -1359,7 +1359,6 @@ if st.button("Generate Report", type="primary"):
 	df_15 = df2[(df2['category'].isin(category)) & (df2['years'] == year) & (df2['month'] == month_num)]
 	df_15_ = pd.pivot_table(df_15[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
 	df_15_ = df_15_.sort_values(by=['tier'], ascending=False)
-	st.write("df_15_", df_15_)
 	df_15_ = df_15_[['views', 'engagements']]
 
 # Add combo stacked bar chart
@@ -1373,7 +1372,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "FYP and Trending Content", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=False,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 	df_16 = df_15[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']]
-	df_16 = df_16.sort_values('er_content', ascending=False).head(4)
+	df_16 = df_16.sort_values('er_content', ascending=False).head(2)
 	link_post = df_16['link_post']		
 	df_16_transpose = df_16.transpose()
 	df_16_transpose.reset_index(inplace=True)
@@ -1383,10 +1382,8 @@ if st.button("Generate Report", type="primary"):
 	st.write("df_16_transpose.iloc[:, 1]", df_16_transpose.iloc[:, [1]])
 		
 # Add bullets text
-	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2.36), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [2]], Inches(6), Inches(6), Inches(2.36), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [3]], Inches(8.5), Inches(6), Inches(2.36), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [4]], Inches(11), Inches(6), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(1), Inches(5), Inches(3), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [2]], Inches(3.5), Inches(5), Inches(3), Inches(1))
 
 # Add TikTok thumbnails (with hyperlink)
 	placeholder_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/TikTok_logo.svg/512px-TikTok_logo.svg.png"
@@ -1410,17 +1407,13 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "WINNING FORMULA FOR BOOSTED CONTENTS ", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 	df_17 = df_15[(df_15['advocacy']== 'Boosted')]
 	df_17 = df_17[['division', 'campaign', 'link_post', 'kol_name', 'kol_persona',  'views']]
-	df_17 = df_17.sort_values('views', ascending=False).head(6)
+	df_17 = df_17.sort_values('views', ascending=False).head(2)
 	df_17_transpose = df_17.transpose()
 	df_17_transpose.reset_index(inplace=True)
 	
 # Add bullets text
 	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [1]], Inches(0.5), Inches(4), Inches(2.36), Inches(1))	
 	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [2]], Inches(2), Inches(4), Inches(2.36), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [3]], Inches(3.5), Inches(4), Inches(2.36), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [4]], Inches(7), Inches(4), Inches(2.36), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [5]], Inches(8.5), Inches(4), Inches(2.36), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [6]], Inches(10), Inches(4), Inches(2.36), Inches(1))
 
 	st.write("Slide 17 of 17 - still in development process")
 
