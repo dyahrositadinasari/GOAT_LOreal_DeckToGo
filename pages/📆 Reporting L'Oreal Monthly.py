@@ -110,7 +110,8 @@ if uploaded_file is not None:
 	st.success("File uploaded successfully!")
 else:
 	uploaded_file = "pages/Template Deck to Go - L'Oreal Indonesia.pptx"
-	
+
+
 if st.button("Generate Report", type="primary"):
 
 #--- DATA PROCESSING ---
@@ -650,7 +651,10 @@ if st.button("Generate Report", type="primary"):
 			p.font.color.rgb = RGBColor(0, 0, 0)
 			p.alignment = PP_ALIGN.CENTER
 
-	# --- TikTok API (RapidAPI)
+	# ---------------
+	# --- Get thumbnails
+	api_key = st.secrets["rapidapi_key"]  # make sure your .streamlit/secrets.toml has this
+
 	def get_tiktok_thumbnail(tiktok_url, rapidapi_key):
 		url = "https://tiktok-download-without-watermark1.p.rapidapi.com/media-info/"
 		querystring = {"link": tiktok_url}
@@ -661,13 +665,11 @@ if st.button("Generate Report", type="primary"):
 		response = requests.get(url, headers=headers, params=querystring)
 		if response.status_code == 200:
 			try:
-				data = response.json()
-				return data['data']['origin_cover']
+				return response.json()['data']['origin_cover']
 			except:
 				return None
 		return None
 
-	# --- Instagram Thumbnail Scraper
 	def get_instagram_thumbnail(instagram_url):
 		try:
 			headers = {'User-Agent': 'Mozilla/5.0'}
@@ -678,27 +680,15 @@ if st.button("Generate Report", type="primary"):
 				if og_image:
 					return og_image['content']
 				return None
-			except:
-				return None
+		except:
+			return None
 
-	# --- Choose thumbnail logic
 	def get_thumbnail(link, api_key):
 		if "tiktok.com" in link:
 			return get_tiktok_thumbnail(link, api_key)
 		elif "instagram.com" in link:
 			return get_instagram_thumbnail(link)
 		else:
-			return None
-
-	# --- Download image for pptx
-	def download_image_from_url(url):
-		try:
-			response = requests.get(url)
-			if response.status_code == 200:
-				return BytesIO(response.content)
-			return None
-		except Exception as e:
-			print("Download error:", e)
 			return None
 	#-----------------
 
@@ -1395,7 +1385,6 @@ if st.button("Generate Report", type="primary"):
 	link_post = df_16['link_post'].tolist()
 	df_16['thumbnail_url'] = [get_thumbnail(link, api_key) for link in link_post]
 
-	api_key = st.secrets["rapidapi_key"]
 	for idx, row in df_16.iterrows():
 		if row['thumbnail_url']:
 			try:
