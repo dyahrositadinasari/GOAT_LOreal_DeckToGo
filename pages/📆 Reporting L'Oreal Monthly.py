@@ -855,7 +855,7 @@ if st.button("Generate Report", type="primary"):
 
 	
 	# Add pie chart
-	### st.write(top_brands_m.set_index('brand'))
+	
 	pie_chart(ppt.slides[page_no], top_brands_sov.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], top_brands_soe.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
@@ -923,7 +923,7 @@ if st.button("Generate Report", type="primary"):
 
 	
 	# Add pie chart
-	### st.write(top_brands_q.set_index('brand'))
+	
 	pie_chart(ppt.slides[page_no], top_brands_sov.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], top_brands_soe.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
@@ -990,7 +990,7 @@ if st.button("Generate Report", type="primary"):
 		others_row = pd.DataFrame([{"brand": "Others", "SOE%": others_soe}])
 		top_brands_soe = pd.concat([top_brands_soe, others_row], ignore_index=True)
 # Add pie chart
-	### st.write(top_brands_y.set_index('brand'))
+	
 	pie_chart(ppt.slides[page_no], top_brands_sov.set_index('brand'), Inches(0.5), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOV', fontsize_title = Pt(20), fontsize=9)
 	pie_chart(ppt.slides[page_no], top_brands_soe.set_index('brand'), Inches(7), Inches(1.5), Inches(6), Inches(6), chart_title=True, title='SOE', fontsize_title = Pt(20), fontsize=9)
 
@@ -1207,7 +1207,7 @@ if st.button("Generate Report", type="primary"):
 #------------PAGE 11--------------
 	page_no = page_no + 1 
 	format_title(ppt.slides[page_no], "QUARTERLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	st.write("quarter:", quarter)
+	
 	df_11 = df2[(df2['brand'].isin(brands)) & (df2['years'] == year) &  (df2['quarter'].isin(quarter))]
 	df_11_views = pd.pivot_table(df_11[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_eng = pd.pivot_table(df_11[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
@@ -1425,12 +1425,11 @@ if st.button("Generate Report", type="primary"):
 	df_16_transpose = df_16[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']].transpose()
 	df_16_transpose.reset_index(inplace=True)
 	
-	st.write("df_16", df_16)
-	st.write("df_16_transpose", df_16_transpose)
-	
 	# Add bullets text
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(1), Inches(5), Inches(3), Inches(1))
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [2]], Inches(3.5), Inches(5), Inches(3), Inches(1))
+
+	st.write("Slide 16 of 17")
 
 #-----------PAGE 17---------------
 	page_no = page_no + 1	
@@ -1465,7 +1464,7 @@ if st.button("Generate Report", type="primary"):
 	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [1]], Inches(0.5), Inches(4), Inches(2.36), Inches(1))	
 	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [2]], Inches(2), Inches(4), Inches(2.36), Inches(1))
 
-	st.write("Slide 17 of 17 - still in development process")
+	st.write("Slide 17 of 17")
 
 #-----------END OF SLIDE---------------
 	page_no = page_no + 1
