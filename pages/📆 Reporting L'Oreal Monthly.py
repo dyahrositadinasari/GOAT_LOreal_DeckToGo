@@ -1117,7 +1117,7 @@ if st.button("Generate Report", type="primary"):
 	if isinstance(quarter, list) and len(quarter) == 2:
 		quarter_compare = quarter
 	else:
-		quarter_mapping = {'Q1': ['Q4', 'Q1'], 'Q2': ['Q1', 'Q2'], 'Q3': ['Q2', 'Q3'], 'Q4': ['Q3', 'Q4']}
+		quarter_mapping = {['Q1']: ['Q4', 'Q1'], ['Q2']: ['Q1', 'Q2'], ['Q3']: ['Q2', 'Q3'], ['Q4']: ['Q3', 'Q4']}
 		quarter_compare = quarter_mapping.get(quarter, [quarter])
 	title_q = quarter_compare[0] + " vs " + quarter_compare[1]
 
