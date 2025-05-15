@@ -1389,48 +1389,44 @@ if st.button("Generate Report", type="primary"):
 	st.write("Slide 15 of 17")
 	
 #-----------PAGE 16---------------
-	page_no = page_no + 1
-	format_title(ppt.slides[page_no], "FYP and Trending Content", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=False,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-
+	page_no += 1
+	format_title(ppt.slides[page_no], "FYP and Trending Content", alignment=PP_ALIGN.LEFT,
+		     font_name='Neue Haas Grotesk Text Pro', font_size=28, font_bold=False,
+		     left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3),
+		     font_color=RGBColor(0, 0, 0))
+	
+	# Prepare data
 	df_16 = df_15[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']]
 	df_16 = df_16.sort_values('er_content', ascending=False).head(2)
 	link_post = df_16['link_post'].tolist()
+	
+	# Get thumbnails
 	df_16['thumbnail_url'] = [get_thumbnail(link, api_key) for link in link_post]
-
+	
+	# Insert thumbnails into slide
+	left_positions = [Inches(1), Inches(4.5)]
+	top = Inches(1.5)
+	width = Inches(3)
+	
 	for idx, row in df_16.iterrows():
 		if row['thumbnail_url']:
 			try:
 				image_stream = requests.get(row['thumbnail_url']).content
 				image_io = BytesIO(image_stream)
-				ppt.slides[page_no].shapes.add_picture(image_io, left=lefts[idx], top=top, width=width)
+				ppt.slides[page_no].shapes.add_picture(image_io, left=left_positions[idx], top=top, width=width)
 			except Exception as e:
 				st.warning(f"Image insert failed for {row['link_post']}: {e}")
-
+	
+	# Transpose and display
 	df_16_transpose = df_16[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']].transpose()
 	df_16_transpose.reset_index(inplace=True)
-
+	
 	st.write("df_16", df_16)
-	
-	thumbnail = get_tiktok_thumbnail(link_post, api_key)
-	st.write("Thumbnail URL:", thumbnail)
-	
 	st.write("df_16_transpose", df_16_transpose)
-	st.write("df_16_transpose.iloc[:, 1]", df_16_transpose.iloc[:, [1]])
-		
-# Add bullets text
+	
+	# Add bullets text
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(1), Inches(5), Inches(3), Inches(1))
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [2]], Inches(3.5), Inches(5), Inches(3), Inches(1))
-
-# Download images and insert into slide
-	left_positions = [Inches(1), Inches(4.5)]  # adjust x position for each image
-	top = Inches(1.5)
-	for idx, image_url in enumerate(link_post):
-		local_img = f"thumb_{idx}.jpg"
-		downloaded = download_image_from_url(image_url, local_img)
-		if downloaded:
-			ppt.slides[page_no].shapes.add_picture(downloaded, left=left_positions[idx], top=top, width=Inches(3), height=Inches(3))
-	    
-	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
 
 #-----------PAGE 17---------------
 	page_no = page_no + 1	
