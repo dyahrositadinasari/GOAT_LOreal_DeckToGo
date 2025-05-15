@@ -654,20 +654,21 @@ if st.button("Generate Report", type="primary"):
 	# --- Get thumbnails
 	api_key = st.secrets["rapidapi_key"]["rapidapi_key"]
 
-	def get_tiktok_thumbnail(tiktok_url, rapidapi_key):
-		url = "https://tiktok-download-without-watermark1.p.rapidapi.com/media-info/"
-		querystring = {"link": tiktok_url}
+	def get_tiktok_thumbnail(video_url, api_key):
+		url = "https://tiktok-video-downloader-api.p.rapidapi.com/media-info/"
+		querystring = {"url": video_url}
 		headers = {
-			"X-RapidAPI-Key": rapidapi_key,
-			"X-RapidAPI-Host": "tiktok-download-without-watermark1.p.rapidapi.com"
+			"X-RapidAPI-Key": api_key,
+			"X-RapidAPI-Host": "tiktok-video-downloader-api.p.rapidapi.com"
 		}
 		response = requests.get(url, headers=headers, params=querystring)
 		if response.status_code == 200:
-			try:
-				return response.json()['data']['origin_cover']
-			except:
-				return None
-		return None
+			data = response.json()
+			thumbnail_url = data.get("thumbnail_url")
+			return thumbnail_url
+		else:
+			print(f"Error: {response.status_code}")
+			return None
 
 	def get_instagram_thumbnail(instagram_url):
 		try:
