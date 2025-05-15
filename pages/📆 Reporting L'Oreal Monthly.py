@@ -1348,20 +1348,34 @@ if st.button("Generate Report", type="primary"):
 
 	df_16 = df_15[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']]
 	df_16 = df_16.sort_values('er_content', ascending=False).head(4)
+	link_post = df_16['link_post']		
 	df_16_transpose = df_16.transpose()
 	df_16_transpose.reset_index(inplace=True)
 
 	st.write("df_16", df_16)
 	st.write("df_16_transpose", df_16_transpose)
 	st.write("df_16_transpose.iloc[:, 1]", df_16_transpose.iloc[:, [1]])
-
-	#table_default(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2), Inches(1), [Inches(1)], Inches(0.5), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.CENTER)
+		
 # Add bullets text
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(3.5), Inches(6), Inches(2.36), Inches(1))
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [2]], Inches(6), Inches(6), Inches(2.36), Inches(1))
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [3]], Inches(8.5), Inches(6), Inches(2.36), Inches(1))
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [4]], Inches(11), Inches(6), Inches(2.36), Inches(1))
 
+# Add TikTok thumbnails (with hyperlink)
+	placeholder_url = "https://via.placeholder.com/180x320.png?text=TikTok"
+	for idx, link in enumerate(df_16['link_post']):
+		try:
+			response = requests.get(placeholder_url)
+			img_stream = BytesIO(response.content)
+			left = Inches(0.5 + idx * 3)
+			top = Inches(1.2)
+			height = Inches(4.5)
+			picture = ppt.slides[page_no].shapes.add_picture(img_stream, left, top, height=height)
+			picture.click_action.hyperlink.address = link
+		except Exception as e:
+			st.warning(f"Failed to load image for {link}: {e}")
+	
 	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
 
 #-----------PAGE 17---------------
