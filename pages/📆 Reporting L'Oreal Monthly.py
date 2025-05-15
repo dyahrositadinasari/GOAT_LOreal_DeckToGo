@@ -80,10 +80,10 @@ else: division = division_selection
 	
 category_selection = st.multiselect(
   "Please select the reporting L'Oreal Category",
-  ['Select All', 'Pro Hair', 'Skincare', 'Makeup', 'Fragrance', 'Men Skincare', 'Haircolor', 'Haircare'], default=['Select All']
+  ['Select All', 'Female Skin', 'Hair Care', 'Hair Color', 'Make Up', 'Men Skin', 'Fragrance', 'Pro Hair'], default=['Select All']
 )
 if 'Select All' in category_selection:
-    category = ['Pro Hair', 'Skincare', 'Makeup', 'Fragrance', 'Men Skincare', 'Haircolor', 'Haircare']
+    category = ['Female Skin', 'Hair Care', 'Hair Color', 'Make Up', 'Men Skin', 'Fragrance', 'Pro Hair']
 else: category = category_selection
 
 brands = st.multiselect(
