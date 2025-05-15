@@ -8,6 +8,7 @@ import json
 import smtplib
 import pytz
 import requests
+from bs4 import BeautifulSoup
 from io import BytesIO
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -657,6 +658,20 @@ if st.button("Generate Report", type="primary"):
 			p.font.size = Pt(font_size)
 			p.font.color.rgb = RGBColor(0, 0, 0)
 			p.alignment = PP_ALIGN.CENTER
+
+	#-----------------
+	def get_tiktok_thumbnail_url(video_url):
+		try:
+			headers = {'User-Agent': 'Mozilla/5.0'}
+			response = requests.get(video_url, headers=headers, timeout=10)
+			soup = BeautifulSoup(response.text, 'html.parser')
+			# Find meta property="og:image"
+			meta_img = soup.find("meta", property="og:image")
+			if meta_img:
+				return meta_img['content']
+		except Exception as e:
+			st.warning(f"Failed to extract thumbnail: {e}")
+		return None
 
 	#-----------------
 
@@ -1367,18 +1382,19 @@ if st.button("Generate Report", type="primary"):
 
 # Add TikTok thumbnails (with hyperlink)
 	placeholder_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/TikTok_logo.svg/512px-TikTok_logo.svg.png"
-	for idx, link in enumerate(df_16['link_post']):
-		try:
-			response = requests.get(placeholder_url)
+	for idx, video_url in enumerate(df_16['link_post']):
+		thumbnail_url = get_tiktok_thumbnail_url(video_url)
+		if thumbnail_url:
+			response = requests.get(thumbnail_url)
 			img_stream = BytesIO(response.content)
 			left = Inches(0.5 + idx * 3)
 			top = Inches(1.2)
 			height = Inches(4.5)
-			picture = ppt.slides[page_no].shapes.add_picture(img_stream, left, top, height=height)
-			picture.click_action.hyperlink.address = link
-		except Exception as e:
-			st.warning(f"Failed to load image for {link}: {e}")
-	
+			pic = ppt.slides[page_no].shapes.add_picture(img_stream, left, top, height=height)
+			pic.click_action.hyperlink.address = video_url
+		else:
+			st.warning(f"Could not get thumbnail for {video_url}")
+	    
 	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
 
 #-----------PAGE 17---------------
