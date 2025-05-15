@@ -10,6 +10,7 @@ import pytz
 import requests
 from bs4 import BeautifulSoup
 from io import BytesIO
+from PIL import Image
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
@@ -660,27 +661,13 @@ if st.button("Generate Report", type="primary"):
 			p.alignment = PP_ALIGN.CENTER
 
 	#-----------------
-	def get_tiktok_thumbnail_url(video_url):
-		try:
-			headers = {
-				'User-Agent': (
-					'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-					'AppleWebKit/537.36 (KHTML, like Gecko) '
-					'Chrome/120.0.0.0 Safari/537.36'
-				)
-			}
-			response = requests.get(video_url, headers=headers, timeout=10)
-			if response.status_code != 200:
-				st.warning(f"Failed to fetch page: {response.status_code}")
-				return None
-			soup = BeautifulSoup(response.text, 'html.parser')
-			meta_img = soup.find("meta", property="og:image")
-			if meta_img:
-				return meta_img['content']
-		except Exception as e:
-			st.warning(f"Failed to extract thumbnail for {video_url}: {e}")
+	def download_image_from_url(image_url, filename):
+		response = requests.get(image_url)
+		if response.status_code == 200:
+			image = Image.open(BytesIO(response.content))
+			image.save(filename)
+			return filename
 		return None
-
 	#-----------------
 
 	# Load credentials from Streamlit Secrets
@@ -1385,20 +1372,14 @@ if st.button("Generate Report", type="primary"):
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(1), Inches(5), Inches(3), Inches(1))
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [2]], Inches(3.5), Inches(5), Inches(3), Inches(1))
 
-# Add TikTok thumbnails (with hyperlink)
-	placeholder_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/TikTok_logo.svg/512px-TikTok_logo.svg.png"
-	for idx, video_url in enumerate(df_16['link_post']):
-		thumbnail_url = get_tiktok_thumbnail_url(video_url)
-		if thumbnail_url:
-			response = requests.get(thumbnail_url)
-			img_stream = BytesIO(response.content)
-			left = Inches(0.5 + idx * 3)
-			top = Inches(1.2)
-			height = Inches(4.5)
-			pic = ppt.slides[page_no].shapes.add_picture(img_stream, left, top, height=height)
-			pic.click_action.hyperlink.address = video_url
-		else:
-			st.warning(f"Could not get thumbnail for {video_url}")
+# Download images and insert into slide
+	left_positions = [Inches(1), Inches(4.5)]  # adjust x position for each image
+	top = Inches(1.5)
+	for idx, image_url in enumerate(link_post):
+		local_img = f"thumb_{idx}.jpg"
+		downloaded = download_image_from_url(image_url, local_img)
+		if downloaded:
+			ppt.slides[page_no].shapes.add_picture(downloaded, left=left_positions[idx], top=top, width=Inches(3), height=Inches(3))
 	    
 	st.write("Slide 16 of 17 - still in development process", df_16_transpose)
 
