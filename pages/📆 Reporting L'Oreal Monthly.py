@@ -690,7 +690,7 @@ if st.button("Generate Report", type="primary"):
 		else:
 			return None
 			
-	def download_image_from_url(image_url):
+	def download_image_from_url(image_url, save_path):
 		try:
 			response = requests.get(image_url)
 			response.raise_for_status()
