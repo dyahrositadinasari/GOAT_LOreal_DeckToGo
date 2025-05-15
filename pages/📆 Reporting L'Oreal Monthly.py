@@ -111,6 +111,7 @@ if uploaded_file is not None:
 else:
 	uploaded_file = "pages/Template Deck to Go - L'Oreal Indonesia.pptx"
 
+st.write("✅ RapidAPI Key:", st.secrets["rapidapi_key"])
 
 if st.button("Generate Report", type="primary"):
 
