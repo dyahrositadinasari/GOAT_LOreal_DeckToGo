@@ -52,16 +52,18 @@ quarter_months = {
 
 quarter_ = st.selectbox(
   'Please select the reporting quarter',
-  list(quarter_months.keys())
+  ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4']
 )
 q_map = {
   'Quarter 1': 'Q1', 'Quarter 2': 'Q2', 'Quarter 3': 'Q3', 'Quarter 4': 'Q4'
 }
 quarter = q_map.get(quarter_, "")  # Returns '' if quarter is not found
 
-month = st.selectbox(
+month = st.multiselect(
   'Please select the reporting month',
-  quarter_months[quarter_]
+  ["Jan", "Feb", "Mar", "Apr",
+    "May", "Jun", "Jul", "Aug",
+    "Sep", "Oct", "Nov", "Dec"]
 )
 
 month_map = {
