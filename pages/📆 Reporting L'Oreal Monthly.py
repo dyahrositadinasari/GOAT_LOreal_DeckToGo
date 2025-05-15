@@ -1207,7 +1207,7 @@ if st.button("Generate Report", type="primary"):
 #------------PAGE 11--------------
 	page_no = page_no + 1 
 	format_title(ppt.slides[page_no], "QUARTERLY PER BRAND CONTRIBUTION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-
+	st.write("quarter:", quarter)
 	df_11 = df2[(df2['brand'].isin(brands)) & (df2['years'] == year) &  (df2['quarter'].isin(quarter))]
 	df_11_views = pd.pivot_table(df_11[['brand', 'views']], index = 'brand', aggfunc = 'sum', fill_value = 0)
 	df_11_eng = pd.pivot_table(df_11[['brand', 'engagements']], index = 'brand', aggfunc = 'sum', fill_value = 0)
