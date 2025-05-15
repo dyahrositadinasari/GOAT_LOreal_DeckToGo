@@ -1479,12 +1479,12 @@ if st.button("Generate Report", type="primary"):
 
 ####### ------------- SAVE PPT -----------------
 	#st.info("Saving the PPT please wait...")
-	file = (f'{category_title.upper()} MONTHLY REPORT - {month} {year}')
-	filename = (f'{category_title.upper()} MONTHLY REPORT - {month} {year}.pptx')
+	file = (f'{category_title.upper()} MONTHLY REPORT - {str(month)} {year}')
+	filename = (f'{category_title.upper()} MONTHLY REPORT - {str(month)} {year}.pptx')
 	files = ppt.save(filename)
 
 # ✅ This code runs **only after clicking the submit button**
-	st.success(f"✅ Your report is ready : '{category_title} Monthly Report - {month} {year}.pptx'")
+	st.success(f"✅ Your report is ready : '{category_title} Monthly Report - {str(month)} {year}.pptx'")
 
 	# Store filename in session state for later use
 	st.session_state["report_filename"] = filename
