@@ -662,15 +662,23 @@ if st.button("Generate Report", type="primary"):
 	#-----------------
 	def get_tiktok_thumbnail_url(video_url):
 		try:
-			headers = {'User-Agent': 'Mozilla/5.0'}
+			headers = {
+				'User-Agent': (
+					'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+					'AppleWebKit/537.36 (KHTML, like Gecko) '
+					'Chrome/120.0.0.0 Safari/537.36'
+				)
+			}
 			response = requests.get(video_url, headers=headers, timeout=10)
+			if response.status_code != 200:
+				st.warning(f"Failed to fetch page: {response.status_code}")
+				return None
 			soup = BeautifulSoup(response.text, 'html.parser')
-			# Find meta property="og:image"
 			meta_img = soup.find("meta", property="og:image")
 			if meta_img:
 				return meta_img['content']
 		except Exception as e:
-			st.warning(f"Failed to extract thumbnail: {e}")
+			st.warning(f"Failed to extract thumbnail for {video_url}: {e}")
 		return None
 
 	#-----------------
