@@ -689,6 +689,11 @@ if st.button("Generate Report", type="primary"):
 			return get_instagram_thumbnail(link)
 		else:
 			return None
+	def download_image_from_url(image_url):
+		response = requests.get(image_url)
+		response.raise_for_status()
+		return Image.open(BytesIO(response.content))
+
 	#-----------------
 
 	# Load credentials from Streamlit Secrets
