@@ -1410,6 +1410,10 @@ if st.button("Generate Report", type="primary"):
 	df_16_transpose.reset_index(inplace=True)
 
 	st.write("df_16", df_16)
+	
+	thumbnail = get_tiktok_thumbnail(link_post, api_key)
+	st.write("Thumbnail URL:", thumbnail)
+	
 	st.write("df_16_transpose", df_16_transpose)
 	st.write("df_16_transpose.iloc[:, 1]", df_16_transpose.iloc[:, [1]])
 		
