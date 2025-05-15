@@ -8,6 +8,7 @@ import json
 import smtplib
 import pytz
 import requests
+from io import BytesIO
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
