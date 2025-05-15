@@ -689,11 +689,18 @@ if st.button("Generate Report", type="primary"):
 			return get_instagram_thumbnail(link)
 		else:
 			return None
+			
 	def download_image_from_url(image_url):
-		response = requests.get(image_url)
-		response.raise_for_status()
-		return Image.open(BytesIO(response.content))
-
+		try:
+			response = requests.get(image_url)
+			response.raise_for_status()
+			with open(save_path, 'wb') as f:
+				f.write(response.content)
+			return save_path
+		except Exception as e:
+			print(f"Error downloading image from {image_url}: {e}")
+			return None
+			
 	#-----------------
 
 	# Load credentials from Streamlit Secrets
