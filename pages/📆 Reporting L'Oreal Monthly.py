@@ -111,7 +111,6 @@ if uploaded_file is not None:
 else:
 	uploaded_file = "pages/Template Deck to Go - L'Oreal Indonesia.pptx"
 
-
 #st.write("Selected Year : ", year)
 #st.write("Selected Year_ : ", year_map)
 #st.write("Selected Month : ", month)
@@ -661,13 +660,56 @@ if st.button("Generate Report", type="primary"):
 			p.alignment = PP_ALIGN.CENTER
 
 	#-----------------
-	def download_image_from_url(image_url, filename):
-		response = requests.get(image_url)
+	# --- TikTok API (RapidAPI)
+	def get_tiktok_thumbnail(tiktok_url, rapidapi_key):
+		url = "https://tiktok-download-without-watermark1.p.rapidapi.com/media-info/"
+		querystring = {"link": tiktok_url}
+		headers = {
+			"X-RapidAPI-Key": rapidapi_key,
+			"X-RapidAPI-Host": "tiktok-download-without-watermark1.p.rapidapi.com"
+		}
+		response = requests.get(url, headers=headers, params=querystring)
 		if response.status_code == 200:
-			image = Image.open(BytesIO(response.content))
-			image.save(filename)
-			return filename
+			try:
+				data = response.json()
+				return data['data']['origin_cover']
+			except:
+				return None
 		return None
+
+	# --- Instagram Thumbnail Scraper
+	def get_instagram_thumbnail(instagram_url):
+		try:
+			headers = {'User-Agent': 'Mozilla/5.0'}
+			response = requests.get(instagram_url, headers=headers)
+			if response.status_code == 200:
+				soup = BeautifulSoup(response.text, 'html.parser')
+				og_image = soup.find('meta', property='og:image')
+				if og_image:
+					return og_image['content']
+				return None
+			except:
+				return None
+
+	# --- Choose thumbnail logic
+	def get_thumbnail(link, api_key):
+		if "tiktok.com" in link:
+			return get_tiktok_thumbnail(link, api_key)
+		elif "instagram.com" in link:
+			return get_instagram_thumbnail(link)
+		else:
+			return None
+
+	# --- Download image for pptx
+	def download_image_from_url(url):
+		try:
+			response = requests.get(url)
+			if response.status_code == 200:
+				return BytesIO(response.content)
+			return None
+		except Exception as e:
+			print("Download error:", e)
+			return None
 	#-----------------
 
 	# Load credentials from Streamlit Secrets
@@ -1360,8 +1402,20 @@ if st.button("Generate Report", type="primary"):
 
 	df_16 = df_15[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']]
 	df_16 = df_16.sort_values('er_content', ascending=False).head(2)
-	link_post = df_16['link_post']		
-	df_16_transpose = df_16.transpose()
+	link_post = df_16['link_post'].tolist()
+	df_16['thumbnail_url'] = [get_thumbnail(link, api_key) for link in link_post]
+
+	api_key = st.secrets["rapidapi_key"]
+	for idx, row in df_16.iterrows():
+		if row['thumbnail_url']:
+			try:
+				image_stream = requests.get(row['thumbnail_url']).content
+				image_io = BytesIO(image_stream)
+				ppt.slides[page_no].shapes.add_picture(image_io, left=lefts[idx], top=top, width=width)
+			except Exception as e:
+				st.warning(f"Image insert failed for {row['link_post']]}: {e}")
+
+	df_16_transpose = df_16[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']].transpose()
 	df_16_transpose.reset_index(inplace=True)
 
 	st.write("df_16", df_16)
