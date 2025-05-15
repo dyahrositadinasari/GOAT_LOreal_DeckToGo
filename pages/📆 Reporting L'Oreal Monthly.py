@@ -1336,6 +1336,7 @@ if st.button("Generate Report", type="primary"):
 	df_15 = df2[(df2['category'].isin(category)) & (df2['years'] == year) & (df2['month'] == month_num)]
 	df_15_ = pd.pivot_table(df_15[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
 	df_15_ = df_15_.sort_values(by=['tier'], ascending=False)
+	st.write("df_15_", df_15_)
 	df_15_ = df_15_[['views', 'engagements']]
 
 # Add combo stacked bar chart
