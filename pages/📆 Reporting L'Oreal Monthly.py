@@ -1364,7 +1364,7 @@ if st.button("Generate Report", type="primary"):
 	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [4]], Inches(11), Inches(6), Inches(2.36), Inches(1))
 
 # Add TikTok thumbnails (with hyperlink)
-	placeholder_url = "https://via.placeholder.com/180x320.png?text=TikTok"
+	placeholder_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/TikTok_logo.svg/512px-TikTok_logo.svg.png"
 	for idx, link in enumerate(df_16['link_post']):
 		try:
 			response = requests.get(placeholder_url)
