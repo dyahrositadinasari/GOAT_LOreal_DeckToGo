@@ -800,11 +800,13 @@ if st.button("Generate Report", type="primary"):
 
 	# Add a title to the slide
 	format_title(ppt.slides[page_no], "MONTHLY SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "selected month: " + month, alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=10, font_bold=False,left=Inches(0.5), top=Inches(1.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
 	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(5), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 
 	# Filter the dataframe
-	df_m = df[(df['division'].isin(division)) & (df['category'].isin(category)) & (df['years'] == year_map) &  (df['month'] == month)]
+	df_m = df[(df['division'].isin(division)) & (df['category'].isin(category)) & (df['years'] == year_map) &  (df['month'].isin(month))]
 
 	# Perform groupby and aggregation with handling for datetime64 columns
 	grouped_df_m = df_m.groupby('brand').agg({
@@ -869,9 +871,10 @@ if st.button("Generate Report", type="primary"):
 
 # Add a title to the slide
 	format_title(ppt.slides[page_no], "QUARTERLY SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "selected quarter: " + quarter, alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=10, font_bold=False,left=Inches(0.5), top=Inches(1.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
-	df_q = df[(df['division'].isin(division)) & (df['category'].isin(category)) & (df['years'] == year_map) & (df['quarter'] == quarter)]
+	df_q = df[(df['division'].isin(division)) & (df['category'].isin(category)) & (df['years'] == year_map) & (df['quarter'].isin(quarter))]
 
 # Perform groupby and aggregation with handling for datetime64 columns
 	grouped_df_q = df_q.groupby('brand').agg({
@@ -1431,7 +1434,27 @@ if st.button("Generate Report", type="primary"):
 	df_17 = df_15[(df_15['advocacy']== 'Boosted')]
 	df_17 = df_17[['division', 'campaign', 'link_post', 'kol_name', 'kol_persona',  'views']]
 	df_17 = df_17.sort_values('views', ascending=False).head(2)
-	df_17_transpose = df_17.transpose()
+
+	link_post = df_17['link_post'].tolist()
+	
+	# Get thumbnails
+	df_17['thumbnail_url'] = [get_thumbnail(link, api_key) for link in link_post]
+	
+	# Insert thumbnails into slide
+	left_positions = [Inches(1), Inches(4.5)]
+	top = Inches(1.5)
+	width = Inches(3)
+	
+	for idx, row in df_17.iterrows():
+		if row['thumbnail_url']:
+			try:
+				image_stream = requests.get(row['thumbnail_url']).content
+				image_io = BytesIO(image_stream)
+				ppt.slides[page_no].shapes.add_picture(image_io, left=left_positions[idx], top=top, width=width)
+			except Exception as e:
+				st.warning(f"Image insert failed for {row['link_post']}: {e}")
+	
+	df_17_transpose = df_17[['division', 'campaign', 'link_post', 'kol_name', 'kol_persona',  'views']].transpose()
 	df_17_transpose.reset_index(inplace=True)
 	
 # Add bullets text
