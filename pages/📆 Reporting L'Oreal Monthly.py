@@ -45,7 +45,7 @@ year_range = (year_map -1, year_map)
 
 quarter_ = st.multiselect(
   'Please select the reporting quarter',
-  ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'], max_selections=2
+  ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'], default = ['Quarter 1'], max_selections=2
 )
 q_map = {
   'Quarter 1': 'Q1', 'Quarter 2': 'Q2', 'Quarter 3': 'Q3', 'Quarter 4': 'Q4'
@@ -56,7 +56,7 @@ month = st.multiselect(
   'Please select the reporting month',
   ["Jan", "Feb", "Mar", "Apr",
     "May", "Jun", "Jul", "Aug",
-    "Sep", "Oct", "Nov", "Dec"]
+    "Sep", "Oct", "Nov", "Dec"], default = ["Jan"]
 )
 
 month_map = {
