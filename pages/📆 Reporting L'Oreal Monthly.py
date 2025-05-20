@@ -1256,7 +1256,7 @@ if st.button("Generate Report", type="primary"):
 	
 #------------PAGE 12--------------
 	page_no = page_no + 1
-	format_title(ppt.slides[page_no], "BRAND SCORE-CARD", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "BRAND SCORE-CARD by CATEGORY", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 	
 	df_12 = df2[(df2['brand'].isin(brands)) & (df2['years'] == year)]
 	df_12 = pd.pivot_table(df_12[['category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content']], index= ['category', 'brand', 'sub_brand'],
@@ -1286,15 +1286,48 @@ if st.button("Generate Report", type="primary"):
 		      [Inches(1)]*num_columns, Inches(0.5), header=True, upper=True, fontsize=10, alignment=PP_ALIGN.LEFT)
 	
 	st.write("Slide 12 of 17")
-	
+
 #------------PAGE 13--------------
+	page_no = page_no + 1
+	format_title(ppt.slides[page_no], "BRAND SCORE-CARD by DIVISION", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	
+	df_13= df2[(df2['brand'].isin(brands)) & (df2['years'] == year)]
+	df_13 = pd.pivot_table(df_13[['division', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content']], index= ['division', 'brand', 'sub_brand'],
+			       values = ['rate', 'views', 'engagements', 'content'], aggfunc = 'sum', fill_value = 0)
+	df_13 = df_13.reset_index()
+	df_13['rate'] = df_13['rate'].fillna(0).astype(int)
+	df_13['eng_rate'] = np.where(df_13['views'] != 0, df_13['engagements'] / df_13['views'], 0)
+	df_13['eng_rate'] = df_13['eng_rate'].map('{:.1%}'.format)
+	df_13['CPV'] =  np.where(df_13['views'] != 0, df_13['rate'] / df_13['views'], 0)
+	df_13['CPV'] = np.ceil(df_13['CPV'] * 100) / 100
+	df_13['CPE'] = np.where(df_13['engagements'] != 0, df_13['rate'] / df_13['engagements'], 0)
+	df_13['CPE'] = np.ceil(df_13['CPE'] * 100) / 100
+	
+	df_13['category'] = df_13['category'].where(
+	~df_13['category'].duplicated(keep='first'), df_13['category'] + '_' + df_13.groupby('category').cumcount().astype(str))
+	df_13 = df_13[['category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate', 'CPE']]
+	df_13_transpose = df_13.transpose()
+	df_13_transpose.reset_index(inplace=True)
+	
+	df_13_transpose.columns = df_13_transpose.iloc[0]
+	df_13_transpose = df_13_transpose[1:].reset_index(drop=True)
+	df_13_transpose.rename(columns={'category': 'Market'}, inplace=True)
+	num_columns = df_13_transpose.shape[1]
+	
+# Add table	
+	table_default(ppt.slides[page_no], df_13_transpose, Inches(0.5), Inches(1.2), Inches(12.2), Inches(7),
+		      [Inches(1)]*num_columns, Inches(0.5), header=True, upper=True, fontsize=10, alignment=PP_ALIGN.LEFT)
+	
+	st.write("Slide 13 of 17")	
+	
+#------------PAGE 14--------------
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "---TITLE---", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 	
-	df_13 = df_y # data TDK YTD
+	df_14 = df_y # data TDK YTD
 	
 # Aggregate total views per brand and rank them
-	rank_view = df_13.groupby('brand')['views'].sum().reset_index()
+	rank_view = df_14.groupby('brand')['views'].sum().reset_index()
 	rank_view['views'] = np.ceil(rank_view['views'] * 10) / 10
 	rank_view['Rank'] = rank_view['views'].rank(method='dense', ascending=False)
 	rank_view['SOV%'] = (rank_view['views'] / total_views_y).map('{:.1%}'.format)
@@ -1304,7 +1337,7 @@ if st.button("Generate Report", type="primary"):
 	top10_views_brands = rank_view[rank_view['Rank'] <= 10]['brand']
 
 # Aggregate total engagements per brand and rank them
-	rank_eng = df_13.groupby('brand')['engagements'].sum().reset_index()
+	rank_eng = df_14.groupby('brand')['engagements'].sum().reset_index()
 	rank_eng['engagements'] = np.ceil(rank_eng['engagements'] * 10) / 10
 	rank_eng['Rank'] = rank_eng['engagements'].rank(method='dense', ascending=False)
 	rank_eng['SOE%'] = (rank_eng['engagements'] / total_engagement_y).map('{:.1%}'.format)
@@ -1314,7 +1347,7 @@ if st.button("Generate Report", type="primary"):
 	top10_eng_brands = rank_eng[rank_eng['Rank'] <= 10]['brand']
 
 # Aggregate total content per brand and rank them
-	rank_content = df_13.groupby('brand')['content'].sum().reset_index()
+	rank_content = df_14.groupby('brand')['content'].sum().reset_index()
 	rank_content['content'] = np.ceil(rank_content['content'] * 10) / 10
 	rank_content['Rank'] = rank_content['content'].rank(method='dense', ascending=False)
 	rank_content['SOC%'] = (rank_content['content'] / total_content_y).map('{:.1%}'.format)
@@ -1323,23 +1356,23 @@ if st.button("Generate Report", type="primary"):
 # Keep only the top 10 brands
 	top10_content_brands = rank_content[rank_content['Rank'] <= 10]['brand']
 
-	df_13_views = pd.pivot_table(df_13[(df_13['brand'].isin(top10_views_brands))], index = 'brand', values= 'views', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
-	df_13_views['views'] = np.ceil(df_13_views['views'] * 10) / 10 # Round up with 1 decimal place
+	df_14_views = pd.pivot_table(df_14[(df_14['brand'].isin(top10_views_brands))], index = 'brand', values= 'views', aggfunc = 'sum', fill_value = 0).sort_values('views', ascending=True)
+	df_14_views['views'] = np.ceil(df_14_views['views'] * 10) / 10 # Round up with 1 decimal place
 	
-	df_13_eng = pd.pivot_table(df_13[(df_13['brand'].isin(top10_eng_brands))], index = 'brand', values= 'engagements', aggfunc = 'sum', fill_value = 0).sort_values('engagements', ascending=True)
-	df_13_eng['engagements'] = np.ceil(df_13_eng['engagements'] * 10) / 10 # Round up with 1 decimal place
+	df_14_eng = pd.pivot_table(df_14[(df_14['brand'].isin(top10_eng_brands))], index = 'brand', values= 'engagements', aggfunc = 'sum', fill_value = 0).sort_values('engagements', ascending=True)
+	df_14_eng['engagements'] = np.ceil(df_14_eng['engagements'] * 10) / 10 # Round up with 1 decimal place
 
-	df_13_content = pd.pivot_table(df_13[(df_13['brand'].isin(top10_content_brands))], index = 'brand', values= 'content', aggfunc = 'sum', fill_value = 0).sort_values('content', ascending=True)
-	df_13_content['content'] = np.ceil(df_13_content['content'] * 10) / 10 # Round up with 1 decimal place
+	df_14_content = pd.pivot_table(df_14[(df_14['brand'].isin(top10_content_brands))], index = 'brand', values= 'content', aggfunc = 'sum', fill_value = 0).sort_values('content', ascending=True)
+	df_14_content['content'] = np.ceil(df_14_content['content'] * 10) / 10 # Round up with 1 decimal place
 
 	# Add horizontal bar chart views
-	horizontal_bar_chart(ppt.slides[page_no], df_13_views, Inches(0.5), Inches(1.9), Inches(3.5), Inches(5),
+	horizontal_bar_chart(ppt.slides[page_no], df_14_views, Inches(0.5), Inches(1.9), Inches(3.5), Inches(5),
                      chart_title = True, title= "SOV", fontsize_title = Pt(16),
                      legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
-	horizontal_bar_chart(ppt.slides[page_no], df_13_eng, Inches(4.5), Inches(1.9), Inches(3.5), Inches(5),
+	horizontal_bar_chart(ppt.slides[page_no], df_14_eng, Inches(4.5), Inches(1.9), Inches(3.5), Inches(5),
                      chart_title = True, title= "SOE", fontsize_title = Pt(16),
                      legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
-	horizontal_bar_chart(ppt.slides[page_no], df_13_content, Inches(8.5), Inches(1.9), Inches(3.5), Inches(5),
+	horizontal_bar_chart(ppt.slides[page_no], df_14_content, Inches(8.5), Inches(1.9), Inches(3.5), Inches(5),
                      chart_title = True, title= "SOC", fontsize_title = Pt(16),
                      legend=False, bar_width = Pt(8), percentage=False, fontsize=Pt(10))
 
@@ -1353,9 +1386,9 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "Contents", alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=10.5, font_italic=False,left=Inches(12), top=Inches(6.5), width=Inches(1), height=Inches(0.6), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], format_number_kmb(total_content_y), alignment=PP_ALIGN.CENTER, font_name= 'Poppins', font_size=14, font_bold=True,left=Inches(12), top=Inches(6.2), width=Inches(1), height=Inches(0.6), font_color=RGBColor(146, 39, 143))
 
-	st.write("Slide 13 of 17")
+	st.write("Slide 14 of 17")
 	
-#-----------PAGE 14---------------
+#-----------PAGE 15---------------
 	page_no = page_no + 1
 	format_title(ppt.slides[page_no], "appendix - BRAND RANK", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(0.5), top=Inches(0.3), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
@@ -1371,9 +1404,9 @@ if st.button("Generate Report", type="primary"):
 	table_default(ppt.slides[page_no], rank_content[rank_content['Rank'] <= 20], Inches(8.5), Inches(1.2), Inches(4), Inches(7),
 		      [Inches(0.9)]*4, Inches(0.3), header=True, upper=True, fontsize=9, alignment=PP_ALIGN.LEFT)	
 	
-	st.write("Slide 14 of 17")
+	st.write("Slide 15 of 17")
 	
-#------------PAGE 15--------------
+#------------PAGE 16--------------
 	page_no = page_no + 1
 	if 'Select All' in category_selection:
 		category_title = "All"
@@ -1383,18 +1416,18 @@ if st.button("Generate Report", type="primary"):
 
 # Filter the dataframe
 
-	df_15 = df2[(df2['category'].isin(category)) & (df2['years'] == year) & (df2['month'].isin(month_num))]
-	df_15_ = pd.pivot_table(df_15[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
-	df_15_ = df_15_.sort_values(by=['tier'], ascending=False)
-	df_15_ = df_15_[['views', 'engagements']]
+	df_16 = df2[(df2['category'].isin(category)) & (df2['years'] == year) & (df2['month'].isin(month_num))]
+	df_16_ = pd.pivot_table(df_16[['tier', 'views', 'engagements']], index = 'tier', values=['views', 'engagements'], aggfunc = 'sum', fill_value = 0)
+	df_16_ = df_16_.sort_values(by=['tier'], ascending=False)
+	df_16_ = df_16_[['views', 'engagements']]
 
 # Add combo stacked bar chart
-	combo2_chart(ppt.slides[page_no], df_15_, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title} Category",
+	combo2_chart(ppt.slides[page_no], df_16_, Inches(1), Inches(1.7), Inches(11), Inches(5), chart_title=True, title= f"{category_title} Category",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
 	
-	st.write("Slide 15 of 17")
+	st.write("Slide 16 of 17")
 	
-#-----------PAGE 16---------------
+#-----------PAGE 17---------------
 	page_no += 1
 	format_title(ppt.slides[page_no], "FYP and Trending Content", alignment=PP_ALIGN.LEFT,
 		     font_name='Neue Haas Grotesk Text Pro', font_size=28, font_bold=False,
@@ -1402,69 +1435,37 @@ if st.button("Generate Report", type="primary"):
 		     font_color=RGBColor(0, 0, 0))
 	
 	# Prepare data
-	df_16 = df_15[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']]
-	df_16 = df_16.sort_values('er_content', ascending=False).head(2)
-	link_post = df_16['link_post'].tolist()
-	
-	# Get thumbnails
-	df_16['thumbnail_url'] = [get_thumbnail(link, api_key) for link in link_post]
-	
-	# Insert thumbnails into slide
-	left_positions = [Inches(1), Inches(4.5)]
-	top = Inches(1.5)
-	width = Inches(3)
-	
-	for idx, row in df_16.iterrows():
-		if row['thumbnail_url']:
-			try:
-				image_stream = requests.get(row['thumbnail_url']).content
-				image_io = BytesIO(image_stream)
-				ppt.slides[page_no].shapes.add_picture(image_io, left=left_positions[idx], top=top, width=width)
-			except Exception as e:
-				st.warning(f"Image insert failed for {row['link_post']}: {e}")
+	df_17 = df_16[['division', 'campaign', 'kol_name', 'link_post', 'views', 'engagements', 'er_content', 'followers']]
+	df_17 = df_17.sort_values('er_content', ascending=False).head(2)
+	df_17['blank'] = null
+	df_17['vr'] = null
+	df_17['eng_score'] = np.where(df_17['followers'] != 0, df_17['engagements'] / df_17['followers'], 0))
+	df_17['eng_score'] = np.ceil(df_17['eng_score'] * 100) / 100
 	
 	# Transpose and display
-	df_16_transpose = df_16[['division', 'campaign', 'kol_name', 'link_post', 'views', 'er_content']].transpose()
-	df_16_transpose.reset_index(inplace=True)
-	
-	# Add bullets text
-	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [1]], Inches(1), Inches(5), Inches(3), Inches(1))
-	df_to_bullets(ppt.slides[page_no], df_16_transpose.iloc[:, [2]], Inches(3.5), Inches(5), Inches(3), Inches(1))
-
-	st.write("Slide 16 of 17")
-
-#-----------PAGE 17---------------
-	page_no = page_no + 1	
-	format_title(ppt.slides[page_no], "WINNING FORMULA FOR BOOSTED CONTENTS ", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	df_17 = df_15[(df_15['advocacy']== 'Boosted')]
-	df_17 = df_17[['division', 'campaign', 'link_post', 'kol_name', 'kol_persona',  'views']]
-	df_17 = df_17.sort_values('views', ascending=False).head(2)
-
-	link_post = df_17['link_post'].tolist()
-	
-	# Get thumbnails
-	df_17['thumbnail_url'] = [get_thumbnail(link, api_key) for link in link_post]
-	
-	# Insert thumbnails into slide
-	left_positions = [Inches(1), Inches(4.5)]
-	top = Inches(1.5)
-	width = Inches(3)
-	
-	for idx, row in df_17.iterrows():
-		if row['thumbnail_url']:
-			try:
-				image_stream = requests.get(row['thumbnail_url']).content
-				image_io = BytesIO(image_stream)
-				ppt.slides[page_no].shapes.add_picture(image_io, left=left_positions[idx], top=top, width=width)
-			except Exception as e:
-				st.warning(f"Image insert failed for {row['link_post']}: {e}")
-	
-	df_17_transpose = df_17[['division', 'campaign', 'link_post', 'kol_name', 'kol_persona',  'views']].transpose()
+	df_17_transpose = df_17[['kol_name', 'blank', 'views', 'engagements', 'vr', 'er_content', 'eng_score', 'link_post']].transpose()
 	df_17_transpose.reset_index(inplace=True)
 	
+	# Add bullets text
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [1]], Inches(1), Inches(5), Inches(3), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [2]], Inches(3.5), Inches(5), Inches(3), Inches(1))
+
+###-----------PAGE 17 (2) ---------------
+
+	df_17_ = df_16[(df_16['advocacy']== 'Boosted')]
+	df_17_ = df_17_[['division', 'campaign', 'kol_name', 'link_post', 'views', 'engagements', 'er_content', 'followers']]
+	df_17_ = df_17_.sort_values('views', ascending=False).head(2)
+	df_17_['blank'] = null
+	df_17_['vr'] = null
+	df_17_['eng_score'] = np.where(df_17_['followers'] != 0, df_17_['engagements'] / df_17_['followers'], 0))
+	df_17_['eng_score'] = np.ceil(df_17_['eng_score'] * 100) / 100	
+
+	df_17_transpose_ = df_17_[['kol_name', 'blank', 'views', 'engagements', 'vr', 'er_content', 'eng_score', 'link_post']].transpose()
+	df_17_transpose_.reset_index(inplace=True)
+	
 # Add bullets text
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [1]], Inches(0.5), Inches(4), Inches(2.36), Inches(1))	
-	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[:, [2]], Inches(2), Inches(4), Inches(2.36), Inches(1))
+	df_to_bullets(ppt.slides[page_no], df_17_transpose_.iloc[:, [1]], Inches(7), Inches(4), Inches(3), Inches(1))	
+	df_to_bullets(ppt.slides[page_no], df_17_transpose_.iloc[:, [2]], Inches(9.5), Inches(4), Inches(3), Inches(1))
 
 	st.write("Slide 17 of 17")
 
