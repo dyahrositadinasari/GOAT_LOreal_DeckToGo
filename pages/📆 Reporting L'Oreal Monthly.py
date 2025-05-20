@@ -1465,6 +1465,7 @@ if st.button("Generate Report", type="primary"):
 	df_17_ = df_17_.sort_values('views', ascending=False).head(2)
 	
 	df_17_join = pd.concat([df_17, df_17_], ignore_index=True)
+	st.write(df_17_join)
 
 	df_17_join['blank'] = ""
 	df_17_join['blank2'] = ""
