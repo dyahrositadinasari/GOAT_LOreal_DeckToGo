@@ -1303,15 +1303,15 @@ if st.button("Generate Report", type="primary"):
 	df_13['CPE'] = np.where(df_13['engagements'] != 0, df_13['rate'] / df_13['engagements'], 0)
 	df_13['CPE'] = np.ceil(df_13['CPE'] * 100) / 100
 	
-	df_13['category'] = df_13['category'].where(
-	~df_13['category'].duplicated(keep='first'), df_13['category'] + '_' + df_13.groupby('category').cumcount().astype(str))
-	df_13 = df_13[['category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate', 'CPE']]
+	df_13['division'] = df_13['division'].where(
+	~df_13['division'].duplicated(keep='first'), df_13['division'] + '_' + df_13.groupby('division').cumcount().astype(str))
+	df_13 = df_13[['division', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate', 'CPE']]
 	df_13_transpose = df_13.transpose()
 	df_13_transpose.reset_index(inplace=True)
 	
 	df_13_transpose.columns = df_13_transpose.iloc[0]
 	df_13_transpose = df_13_transpose[1:].reset_index(drop=True)
-	df_13_transpose.rename(columns={'category': 'Market'}, inplace=True)
+	df_13_transpose.rename(columns={'division': 'Division'}, inplace=True)
 	num_columns = df_13_transpose.shape[1]
 	
 # Add table	
