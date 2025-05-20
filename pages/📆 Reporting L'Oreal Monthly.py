@@ -1475,6 +1475,7 @@ if st.button("Generate Report", type="primary"):
 
 	df_17_transpose = df_17_join[['kol_name', 'blank', 'views', 'engagements', 'vr', 'er_content', 'eng_score', 'blank2', 'link_post']].transpose()
 	df_17_transpose.reset_index(inplace=True)
+	st.write('df_17_transpose', df_17_transpose)
 	
 # Add bullets text (kol name, pt 12, bold=True)
 	format_title(ppt.slides[page_no], df_17_transpose.iloc[0,1], alignment=PP_ALIGN.CENTER, font_name='Arial', font_size=12, font_bold=True, 
