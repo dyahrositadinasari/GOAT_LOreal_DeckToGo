@@ -1484,10 +1484,10 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], df_17_transpose.iloc[0,4], alignment=PP_ALIGN.CENTER, font_name='Arial', font_size=12, font_bold=True, 
 		     left=Inches(9.5), top=Inches(5), width=Inches(2), height=Inches(1))
 # Add labeled_bullets text (kol name, pt 10, bold=True)
-	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [0,1]], Inches(1), Inches(5.5), Inches(2), Inches(1), font_size=10, font_bold = True)
-	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [0,2]], Inches(3.5), Inches(5.5), Inches(2), Inches(1), font_size=10, font_bold = True)
-	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [0,3]], Inches(7), Inches(5.5), Inches(2), Inches(1), font_size=10, font_bold = True)
-	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [0,4]], Inches(9.5), Inches(5.5), Inches(2), Inches(1), font_size=10, font_bold = True)
+	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [0,1]], Inches(1), Inches(5.25), Inches(2), Inches(1), font_size=10, font_bold = True)
+	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [0,2]], Inches(3.5), Inches(5.25), Inches(2), Inches(1), font_size=10, font_bold = True)
+	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [0,3]], Inches(7), Inches(5.25), Inches(2), Inches(1), font_size=10, font_bold = True)
+	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [0,4]], Inches(9.5), Inches(5.25), Inches(2), Inches(1), font_size=10, font_bold = True)
 # Add bullets text (kol name, pt 9, bold=False)
 	format_title(ppt.slides[page_no], df_17_transpose.iloc[-1,1], alignment=PP_ALIGN.CENTER, font_name='Arial', font_size=9, font_bold=False, 
 		     left=Inches(1), top=Inches(6.75), width=Inches(2), height=Inches(1))
