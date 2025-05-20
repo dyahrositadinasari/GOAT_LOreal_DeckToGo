@@ -1451,9 +1451,19 @@ if st.button("Generate Report", type="primary"):
 	
 #-----------PAGE 17---------------
 	page_no += 1
-	format_title(ppt.slides[page_no], "FYP and Trending Content", alignment=PP_ALIGN.LEFT,
-		     font_name='Neue Haas Grotesk Text Pro', font_size=28, font_bold=False,
+	format_title(ppt.slides[page_no], "Best Performing Content", alignment=PP_ALIGN.LEFT,
+		     font_name='Montserrat', font_size=24, font_bold=True, 
 		     left=Inches(0.5), top=Inches(0.5), width=Inches(12.3), height=Inches(0.3),
+		     font_color=RGBColor(0, 0, 0))
+	
+	format_title(ppt.slides[page_no], "Trending Content", alignment=PP_ALIGN.CENTER,
+		     font_name='Montserrat', font_size=18, font_bold=True,
+		     left=Inches(0.5), top=Inches(1.5), width=Inches(12.3), height=Inches(0.3),
+		     font_color=RGBColor(0, 0, 0))
+	
+	format_title(ppt.slides[page_no], "(based on Engagement)", alignment=PP_ALIGN.CENTER,
+		     font_name='Montserrat', font_size=12, font_bold=False, font_italic = True
+		     left=Inches(0.5), top=Inches(1.25), width=Inches(12.3), height=Inches(0.3),
 		     font_color=RGBColor(0, 0, 0))
 	
 	# Prepare data TOP 2 by er_content
