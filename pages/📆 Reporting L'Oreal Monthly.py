@@ -525,7 +525,6 @@ if st.button("Generate Report", type="primary"):
 		
 		return chart
 
-
 	#----------------
 	def combo2_chart(slide, df, x, y, cx, cy, legend=True, legend_position=XL_LEGEND_POSITION.TOP,
 			 data_show=False, chart_title=False, title="", fontsize=Pt(10), fontsize_title=Pt(12),
@@ -888,6 +887,7 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], format(total_engagement_m, ","), alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=18, font_bold=True,left=Inches(11.7), top=Inches(2.7), width=Inches(1.3), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 
 	st.write("Slide 2 of 17")
+	
 #------------PAGE 3--------------
 	page_no = page_no + 1 #PAGE3
 
@@ -1468,13 +1468,11 @@ if st.button("Generate Report", type="primary"):
 	df_17_join = pd.concat([df_17, df_17_], ignore_index=True)
 	st.write(df_17_join)
 
-	df_17_join['blank'] = ""
-	df_17_join['blank2'] = ""
-	df_17_join['vr'] = ""
+	df_17_join['vr'] = ". . ."
 	df_17_join['eng_score'] = np.where(df_17_join['followers'] != 0, df_17_join['engagements'] / df_17_join['followers'], 0)
 	df_17_join['eng_score'] = np.ceil(df_17_join['eng_score'] * 100) / 100
 
-	df_17_transpose = df_17_join[['kol_name', 'blank', 'views', 'engagements', 'vr', 'er_content', 'eng_score', 'blank2', 'link_post']].transpose()
+	df_17_transpose = df_17_join[['kol_name', 'views', 'engagements', 'vr', 'er_content', 'eng_score', 'link_post']].transpose()
 	df_17_transpose.reset_index(inplace=True)
 	st.write('df_17_transpose', df_17_transpose)
 	
