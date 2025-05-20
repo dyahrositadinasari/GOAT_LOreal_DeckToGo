@@ -1267,10 +1267,12 @@ if st.button("Generate Report", type="primary"):
 	df_12['eng_rate'] = df_12['eng_rate'].map('{:.1%}'.format)
 	df_12['CPV'] =  np.where(df_12['views'] != 0, df_12['rate'] / df_12['views'], 0)
 	df_12['CPV'] = np.ceil(df_12['CPV'] * 100) / 100
+	df_12['CPE'] = np.where(df_12['engagements'] != 0, df_12['rate'] / df_12['engagements'], 0)
+	df_12['CPE'] = np.ceil(df_12['CPE'] * 100) / 100
 	
 	df_12['category'] = df_12['category'].where(
 	~df_12['category'].duplicated(keep='first'), df_12['category'] + '_' + df_12.groupby('category').cumcount().astype(str))
-	df_12 = df_12[['category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate']]
+	df_12 = df_12[['category', 'brand', 'sub_brand', 'rate', 'views', 'engagements', 'content',  'CPV', 'eng_rate', 'CPE']]
 	df_12_transpose = df_12.transpose()
 	df_12_transpose.reset_index(inplace=True)
 	
