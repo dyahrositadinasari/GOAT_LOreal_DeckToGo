@@ -1466,7 +1466,6 @@ if st.button("Generate Report", type="primary"):
 	df_17_ = df_17_.sort_values('views', ascending=False).head(2)
 	
 	df_17_join = pd.concat([df_17, df_17_], ignore_index=True)
-	st.write(df_17_join)
 
 	df_17_join['vr'] = ". . ."
 	df_17_join['eng_score'] = np.where(df_17_join['followers'] != 0, df_17_join['engagements'] / df_17_join['followers'], 0)
@@ -1474,7 +1473,6 @@ if st.button("Generate Report", type="primary"):
 
 	df_17_transpose = df_17_join[['kol_name', 'views', 'engagements', 'vr', 'er_content', 'eng_score', 'link_post']].transpose()
 	df_17_transpose.reset_index(inplace=True)
-	st.write('df_17_transpose', df_17_transpose)
 	
 # Add bullets text (kol name, pt 12, bold=True)
 	format_title(ppt.slides[page_no], df_17_transpose.iloc[0,1], alignment=PP_ALIGN.CENTER, font_name='Arial', font_size=12, font_bold=True, 
