@@ -644,6 +644,26 @@ if st.button("Generate Report", type="primary"):
 			p.font.size = Pt(font_size)
 			p.font.color.rgb = RGBColor(0, 0, 0)
 			p.alignment = PP_ALIGN.CENTER
+	
+	#----------------
+	
+	def df_to_labeled_bullets(slide, df, left=Inches(1), top=Inches(1), width=Inches(5), height=Inches(4), font_size=9):
+	# Add textbox
+		textbox = slide.shapes.add_textbox(left, top, width, height)
+		text_frame = textbox.text_frame
+		text_frame.word_wrap = True
+		text_frame.clear()  # Clear default paragraph
+	
+	# Combine label (first column) and value (second column)
+		for i in range(len(df)):
+			label = str(df.iloc[i, 0])
+			value = str(df.iloc[i, 1])
+			p = text_frame.add_paragraph()
+			p.text = f"{label}: {value}"
+			p.level = 0
+			p.font.size = Pt(font_size)
+			p.font.color.rgb = RGBColor(0, 0, 0)
+			p.alignment = PP_ALIGN.CENTER
 
 	# ---------------
 	# --- Get thumbnails
