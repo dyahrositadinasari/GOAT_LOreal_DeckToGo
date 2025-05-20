@@ -758,6 +758,7 @@ if st.button("Generate Report", type="primary"):
 		tier,
   		kol_name,
     		kol_persona,
+      		followers,
   		link_post,
 		campaign,
 		spark_ads AS advocacy,
