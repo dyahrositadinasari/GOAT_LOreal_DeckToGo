@@ -1439,7 +1439,7 @@ if st.button("Generate Report", type="primary"):
 	df_17 = df_17.sort_values('er_content', ascending=False).head(2)
 	df_17['blank'] = null
 	df_17['vr'] = null
-	df_17['eng_score'] = np.where(df_17['followers'] != 0, df_17['engagements'] / df_17['followers'], 0))
+	df_17['eng_score'] = np.where(df_17['followers'] != 0, df_17['engagements'] / df_17['followers'], 0)
 	df_17['eng_score'] = np.ceil(df_17['eng_score'] * 100) / 100
 	
 	# Transpose and display
@@ -1457,7 +1457,7 @@ if st.button("Generate Report", type="primary"):
 	df_17_ = df_17_.sort_values('views', ascending=False).head(2)
 	df_17_['blank'] = null
 	df_17_['vr'] = null
-	df_17_['eng_score'] = np.where(df_17_['followers'] != 0, df_17_['engagements'] / df_17_['followers'], 0))
+	df_17_['eng_score'] = np.where(df_17_['followers'] != 0, df_17_['engagements'] / df_17_['followers'], 0)
 	df_17_['eng_score'] = np.ceil(df_17_['eng_score'] * 100) / 100	
 
 	df_17_transpose_ = df_17_[['kol_name', 'blank', 'views', 'engagements', 'vr', 'er_content', 'eng_score', 'link_post']].transpose()
