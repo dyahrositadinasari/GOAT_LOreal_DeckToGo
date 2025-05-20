@@ -1486,10 +1486,10 @@ if st.button("Generate Report", type="primary"):
 	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [3]], Inches(7), Inches(5.5), Inches(2), Inches(1), font_size=10, font_bold = True)
 	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [4]], Inches(9.5), Inches(5.5), Inches(2), Inches(1), font_size=10, font_bold = True)
 # Add bullets text (kol name, pt 9, bold=False)
-	format_title(ppt.slides[page_no], df_17_transpose.iloc[-1,1], alignment=PP_ALIGN.CENTER, font_size=9, font_bold=False, Inches(1), Inches(6.75), Inches(2), Inches(1))
-	format_title(ppt.slides[page_no], df_17_transpose.iloc[-1,2], alignment=PP_ALIGN.CENTER, font_size=9, font_bold=False, Inches(3.5), Inches(6.75), Inches(2), Inches(1))
-	format_title(ppt.slides[page_no], df_17_transpose.iloc[-1,3], alignment=PP_ALIGN.CENTER, font_size=9, font_bold=False, Inches(7), Inches(6.75), Inches(2), Inches(1))
-	format_title(ppt.slides[page_no], df_17_transpose.iloc[-1,4], alignment=PP_ALIGN.CENTER, font_size=9, font_bold=False, Inches(9.5), Inches(6.75), Inches(2), Inches(1))
+	format_title(ppt.slides[page_no], df_17_transpose.iloc[-1,1], alignment=PP_ALIGN.CENTER, 'Arial', font_size=9, font_bold=False, Inches(1), Inches(6.75), Inches(2), Inches(1))
+	format_title(ppt.slides[page_no], df_17_transpose.iloc[-1,2], alignment=PP_ALIGN.CENTER, 'Arial', font_size=9, font_bold=False, Inches(3.5), Inches(6.75), Inches(2), Inches(1))
+	format_title(ppt.slides[page_no], df_17_transpose.iloc[-1,3], alignment=PP_ALIGN.CENTER, 'Arial', font_size=9, font_bold=False, Inches(7), Inches(6.75), Inches(2), Inches(1))
+	format_title(ppt.slides[page_no], df_17_transpose.iloc[-1,4], alignment=PP_ALIGN.CENTER, 'Arial', font_size=9, font_bold=False, Inches(9.5), Inches(6.75), Inches(2), Inches(1))
 	
 	st.write("Slide 17 of 17")
 
