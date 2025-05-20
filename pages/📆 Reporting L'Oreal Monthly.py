@@ -1438,8 +1438,8 @@ if st.button("Generate Report", type="primary"):
 	# Prepare data
 	df_17 = df_16[['division', 'campaign', 'kol_name', 'link_post', 'views', 'engagements', 'er_content', 'followers']]
 	df_17 = df_17.sort_values('er_content', ascending=False).head(2)
-	df_17['blank'] = null
-	df_17['vr'] = null
+	df_17['blank'] = None
+	df_17['vr'] = None
 	df_17['eng_score'] = np.where(df_17['followers'] != 0, df_17['engagements'] / df_17['followers'], 0)
 	df_17['eng_score'] = np.ceil(df_17['eng_score'] * 100) / 100
 	
@@ -1456,8 +1456,8 @@ if st.button("Generate Report", type="primary"):
 	df_17_ = df_16[(df_16['advocacy']== 'Boosted')]
 	df_17_ = df_17_[['division', 'campaign', 'kol_name', 'link_post', 'views', 'engagements', 'er_content', 'followers']]
 	df_17_ = df_17_.sort_values('views', ascending=False).head(2)
-	df_17_['blank'] = null
-	df_17_['vr'] = null
+	df_17_['blank'] = None
+	df_17_['vr'] = None
 	df_17_['eng_score'] = np.where(df_17_['followers'] != 0, df_17_['engagements'] / df_17_['followers'], 0)
 	df_17_['eng_score'] = np.ceil(df_17_['eng_score'] * 100) / 100	
 
