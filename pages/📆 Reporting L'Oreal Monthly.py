@@ -1462,7 +1462,7 @@ if st.button("Generate Report", type="primary"):
 		     font_color=RGBColor(0, 0, 0))
 	
 	format_title(ppt.slides[page_no], "(based on Engagement)", alignment=PP_ALIGN.CENTER,
-		     font_name='Montserrat', font_size=12, font_bold=False, font_italic = True
+		     font_name='Montserrat', font_size=12, font_bold=False, font_italic = True,
 		     left=Inches(0.5), top=Inches(1.25), width=Inches(12.3), height=Inches(0.3),
 		     font_color=RGBColor(0, 0, 0))
 	
