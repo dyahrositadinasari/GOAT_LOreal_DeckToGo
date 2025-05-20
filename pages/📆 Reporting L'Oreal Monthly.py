@@ -1458,23 +1458,19 @@ if st.button("Generate Report", type="primary"):
 	# Prepare data TOP 2 by er_content
 	df_17 = df_16[['division', 'campaign', 'kol_name', 'link_post', 'views', 'engagements', 'er_content', 'followers']]
 	df_17 = df_17.sort_values('er_content', ascending=False).head(2)
-	df_17['blank'] = ""
-	df_17['blank2'] = ""
-	df_17['vr'] = ""
-	df_17['eng_score'] = np.where(df_17['followers'] != 0, df_17['engagements'] / df_17['followers'], 0)
-	df_17['eng_score'] = np.ceil(df_17['eng_score'] * 100) / 100
 	
 	# Prepare data TOP 2 by views
 	df_17_ = df_16[(df_16['advocacy']== 'Boosted')]
 	df_17_ = df_17_[['division', 'campaign', 'kol_name', 'link_post', 'views', 'engagements', 'er_content', 'followers']]
 	df_17_ = df_17_.sort_values('views', ascending=False).head(2)
-	df_17_['blank'] = ""
-	df_17_['blank2'] = ""
-	df_17_['vr'] = ""
-	df_17_['eng_score'] = np.where(df_17_['followers'] != 0, df_17_['engagements'] / df_17_['followers'], 0)
-	df_17_['eng_score'] = np.ceil(df_17_['eng_score'] * 100) / 100	
-
+	
 	df_17_join = pd.concat([df_17, df_17_], ignore_index=True)
+
+	df_17_join['blank'] = ""
+	df_17_join['blank2'] = ""
+	df_17_join['vr'] = ""
+	df_17_join['eng_score'] = np.where(df_17_join['followers'] != 0, df_17_join['engagements'] / df_17_join['followers'], 0)
+	df_17_join['eng_score'] = np.ceil(df_17_join['eng_score'] * 100) / 100
 
 	df_17_transpose = df_17_join[['kol_name', 'blank', 'views', 'engagements', 'vr', 'er_content', 'eng_score', 'blank2', 'link_post']].transpose()
 	df_17_transpose.reset_index(inplace=True)
@@ -1482,8 +1478,8 @@ if st.button("Generate Report", type="primary"):
 # Add bullets text (kol name, pt 12, bold=True)
 	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[[0], [1]], Inches(1), Inches(5), Inches(2), Inches(1), font_size=12, font_bold = True)
 	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[[0], [2]], Inches(3.5), Inches(5), Inches(2), Inches(1), font_size=12, font_bold = True)
-	df_to_bullets(ppt.slides[page_no], df_17_transpose_.iloc[[0], [3]], Inches(7), Inches(5), Inches(2), Inches(1), font_size=12, font_bold = True)	
-	df_to_bullets(ppt.slides[page_no], df_17_transpose_.iloc[[0], [4]], Inches(9.5), Inches(5), Inches(2), Inches(1), font_size=12, font_bold = True)
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[[0], [3]], Inches(7), Inches(5), Inches(2), Inches(1), font_size=12, font_bold = True)	
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[[0], [4]], Inches(9.5), Inches(5), Inches(2), Inches(1), font_size=12, font_bold = True)
 # Add labeled_bullets text (kol name, pt 10, bold=True)
 	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [1]], Inches(1), Inches(5.5), Inches(2), Inches(1), font_size=10, font_bold = True)
 	df_to_labeled_bullets(ppt.slides[page_no], df_17_transpose.iloc[1:-1, [2]], Inches(3.5), Inches(5.5), Inches(2), Inches(1), font_size=10, font_bold = True)
@@ -1492,8 +1488,8 @@ if st.button("Generate Report", type="primary"):
 # Add bullets text (kol name, pt 9, bold=False)
 	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[-1, [1]], Inches(1), Inches(6.75), Inches(2), Inches(1), font_size=9, font_bold = False)
 	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[-1, [2]], Inches(3.5), Inches(6.75), Inches(2), Inches(1), font_size=9, font_bold = False)
-	df_to_bullets(ppt.slides[page_no], df_17_transpose_.iloc[-1, [3]], Inches(7), Inches(6.75), Inches(2), Inches(1), font_size=9, font_bold = False)	
-	df_to_bullets(ppt.slides[page_no], df_17_transpose_.iloc[-1, [4]], Inches(9.5), Inches(6.75), Inches(2), Inches(1), font_size=9, font_bold = False)
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[-1, [3]], Inches(7), Inches(6.75), Inches(2), Inches(1), font_size=9, font_bold = False)	
+	df_to_bullets(ppt.slides[page_no], df_17_transpose.iloc[-1, [4]], Inches(9.5), Inches(6.75), Inches(2), Inches(1), font_size=9, font_bold = False)
 	
 	st.write("Slide 17 of 17")
 
