@@ -1457,12 +1457,12 @@ if st.button("Generate Report", type="primary"):
 	format_title(ppt.slides[page_no], "Trending Content", alignment=PP_ALIGN.CENTER, font_name='Montserrat', font_size=18, font_bold=True,
 		     left=Inches(0.5), top=Inches(1.5), width=Inches(6), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], "(based on Engagement)", alignment=PP_ALIGN.CENTER, font_name='Montserrat', font_size=12, font_bold=False, font_italic = True,
-		     left=Inches(0.5), top=Inches(1.25), width=Inches(6), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
+		     left=Inches(0.5), top=Inches(1.75), width=Inches(6), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 
 	format_title(ppt.slides[page_no], "Best Boosted Content", alignment=PP_ALIGN.CENTER, font_name='Montserrat', font_size=18, font_bold=True,
 		     left=Inches(6.5), top=Inches(1.5), width=Inches(6), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 	format_title(ppt.slides[page_no], "(based on actual views)", alignment=PP_ALIGN.CENTER, font_name='Montserrat', font_size=12, font_bold=False, font_italic = True,
-		     left=Inches(6.5), top=Inches(1.25), width=Inches(6), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
+		     left=Inches(6.5), top=Inches(1.75), width=Inches(6), height=Inches(0.5), font_color=RGBColor(0, 0, 0))
 	
 	# Prepare data TOP 2 by er_content
 	df_17 = df_16[['division', 'campaign', 'kol_name', 'link_post', 'views', 'engagements', 'er_content', 'followers']]
