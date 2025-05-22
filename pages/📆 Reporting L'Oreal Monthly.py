@@ -1046,7 +1046,7 @@ if st.button("Generate Report", type="primary"):
 	loreal_df = df_y[df_y['advertiser_name'] == "L'Oreal"]
 # Calculate SOV
 	loreal_views = loreal_df['views'].sum()
-	total_views = stacked_data_views['views'].sum()
+	total_views = df_y['views'].sum()
 	SOV = np.ceil((loreal_views/total_views) * 100) / 100
 # Calculate SOC
 	loreal_content = loreal_df['content'].sum()
