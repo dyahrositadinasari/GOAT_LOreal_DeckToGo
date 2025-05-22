@@ -1043,7 +1043,7 @@ if st.button("Generate Report", type="primary"):
 	stacked_data_eng = stacked_data_eng.reindex(month_order)
 	stacked_data_views = stacked_data_views.reindex(month_order)
 
-	loreal_df = df_y[df_y['advertiser_name']="L'Oreal"]
+	loreal_df = df_y[df_y['advertiser_name'] == "L'Oreal"]
 # Calculate SOV
 	loreal_views = loreal_df['views'].sum()
 	total_views = stacked_data_views['views'].sum()
@@ -1064,7 +1064,13 @@ if st.button("Generate Report", type="primary"):
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
 	combo_chart(ppt.slides[page_no], stacked_data_eng, Inches(.1), Inches(4.5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Engagements",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True)
-	
+
+# Add SOV, SOC, SOE, SOI
+	format_title(ppt.slides[page_no], SOV, alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(9), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], SOC, alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(10), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], SOE, alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(11), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], SOI, alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(10), top=Inches(5.5), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+
 	st.write("Slide 5 of 17")
 	
 #------------PAGE 6--------------
