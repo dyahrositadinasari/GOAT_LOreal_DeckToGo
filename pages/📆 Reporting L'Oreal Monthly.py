@@ -1034,7 +1034,7 @@ if st.button("Generate Report", type="primary"):
 	stacked_data_views = df_y.pivot_table(index="month", columns="manufacturer", values="views", aggfunc="sum", fill_value=0)
 	stacked_data_views['Total'] = stacked_data_views.sum(axis=1)
 
-# Aggregate Views by Month and Manufacturer
+# Aggregate Engagements by Month and Manufacturer
 	stacked_data_eng = df_y.pivot_table(index="month", columns="manufacturer", values="engagements", aggfunc="sum", fill_value=0)
 	stacked_data_eng['Total'] = stacked_data_eng.sum(axis=1)
 
@@ -1043,6 +1043,22 @@ if st.button("Generate Report", type="primary"):
 	stacked_data_eng = stacked_data_eng.reindex(month_order)
 	stacked_data_views = stacked_data_views.reindex(month_order)
 
+	loreal_df = df_y[df_y['advertiser_name']="L'Oreal"]
+# Calculate SOV
+	loreal_views = loreal_df['views'].sum()
+	total_views = stacked_data_views['views'].sum()
+	SOV = np.ceil((loreal_views/total_views) * 100) / 100
+# Calculate SOC
+	loreal_content = loreal_df['content'].sum()
+	total_content = df_y['content'].sum()
+	SOC = np.ceil((loreal_content/total_content) * 100) / 100
+# Calculate SOE
+	loreal_eng = loreal_df['engagements'].sum()
+	total_eng = df_y['engagements'].sum()
+	SOE = np.ceil((loreal_eng/total_eng) * 100) / 100
+# Calculate SOI
+	SOI = (SOV + SOC + SOE)/3
+	
 # Add combo stacked bar chart
 	combo_chart(ppt.slides[page_no], stacked_data_views, Inches(.1), Inches(1.5), Inches(9), Inches(2.8), chart_title=True, title="Market Movement - Views",
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True, data_show=True)
