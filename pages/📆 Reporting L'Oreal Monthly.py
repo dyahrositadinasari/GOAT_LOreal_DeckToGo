@@ -1047,15 +1047,15 @@ if st.button("Generate Report", type="primary"):
 # Calculate SOV
 	loreal_views = loreal_df['views'].sum()
 	total_views = df_y['views'].sum()
-	SOV = np.ceil((loreal_views/total_views) * 100) / 100
+	SOV = np.ceil((loreal_views/total_views) * 10000) / 10000
 # Calculate SOC
 	loreal_content = loreal_df['content'].sum()
 	total_content = df_y['content'].sum()
-	SOC = np.ceil((loreal_content/total_content) * 100) / 100
+	SOC = np.ceil((loreal_content/total_content) * 10000) / 10000
 # Calculate SOE
 	loreal_eng = loreal_df['engagements'].sum()
 	total_eng = df_y['engagements'].sum()
-	SOE = np.ceil((loreal_eng/total_eng) * 100) / 100
+	SOE = np.ceil((loreal_eng/total_eng) * 10000) / 10000
 # Calculate SOI
 	SOI = (SOV + SOC + SOE)/3
 	
@@ -1066,10 +1066,10 @@ if st.button("Generate Report", type="primary"):
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True)
 
 # Add SOV, SOC, SOE, SOI
-	format_title(ppt.slides[page_no], f"{SOV * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(9), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], f"{SOC * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(10), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], f"{SOE * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(11), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], f"{SOI * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(10), top=Inches(5.5), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], f"{SOV * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(8.75), top=Inches(3), width=Inches(2), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], f"{SOC * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(10.1), top=Inches(3), width=Inches(2), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], f"{SOE * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(11.35), top=Inches(3), width=Inches(2), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], f"{SOI * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(10.1), top=Inches(5.5), width=Inches(2), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 	st.write("Slide 5 of 17")
 	
