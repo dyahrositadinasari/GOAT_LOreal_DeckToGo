@@ -821,7 +821,7 @@ if st.button("Generate Report", type="primary"):
 
 	# Add a title to the slide
 	format_title(ppt.slides[page_no], "MONTHLY SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], "selected month: " + str(month), alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=10, font_bold=False,left=Inches(0.5), top=Inches(1.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "selected month: " + str(month), alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=10, font_bold=False,left=Inches(0.5), top=Inches(1.25), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 	format_title(ppt.slides[page_no], "Total Views", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(5), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
 	format_title(ppt.slides[page_no], "Total Eng.", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=14, font_italic=True,left=Inches(11), top=Inches(2), width=Inches(1.43), height=Inches(1.01), font_color=RGBColor(255, 255, 255))
@@ -893,7 +893,7 @@ if st.button("Generate Report", type="primary"):
 
 # Add a title to the slide
 	format_title(ppt.slides[page_no], "QUARTERLY SOV & SOE", alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=28, font_bold=True,left=Inches(0.5), top=Inches(0.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], "selected quarter: " + str(quarter), alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=10, font_bold=False,left=Inches(0.5), top=Inches(1.5), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], "selected quarter: " + str(quarter), alignment=PP_ALIGN.LEFT, font_name= 'Neue Haas Grotesk Text Pro', font_size=10, font_bold=False,left=Inches(0.5), top=Inches(1.25), width=Inches(12), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 # Filter the dataframe
 	df_q = df[(df['division'].isin(division)) & (df['category'].isin(category)) & (df['years'] == year_map) & (df['quarter'].isin(quarter))]
