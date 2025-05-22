@@ -4,3 +4,4 @@ python-pptx
 pandas
 db-dtypes
 datetime
+beautifulsoup4
