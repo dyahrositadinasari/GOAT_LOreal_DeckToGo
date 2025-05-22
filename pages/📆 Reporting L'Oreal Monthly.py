@@ -1066,10 +1066,10 @@ if st.button("Generate Report", type="primary"):
             fontsize=Pt(10), fontsize_title=Pt(12), smooth=True)
 
 # Add SOV, SOC, SOE, SOI
-	format_title(ppt.slides[page_no], SOV, alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(9), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], SOC, alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(10), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], SOE, alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(11), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
-	format_title(ppt.slides[page_no], SOI, alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(10), top=Inches(5.5), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], f"{SOV * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(9), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], f"{SOC * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(10), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], f"{SOE * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(11), top=Inches(3), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
+	format_title(ppt.slides[page_no], f"{SOI * 100:.2f}%", alignment=PP_ALIGN.CENTER, font_name= 'Neue Haas Grotesk Text Pro', font_size=11, font_bold=True,left=Inches(10), top=Inches(5.5), width=Inches(1), height=Inches(0.3), font_color=RGBColor(0, 0, 0))
 
 	st.write("Slide 5 of 17")
 	
