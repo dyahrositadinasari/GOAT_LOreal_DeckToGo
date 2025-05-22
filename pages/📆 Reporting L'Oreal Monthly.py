@@ -1501,7 +1501,7 @@ if st.button("Generate Report", type="primary"):
 	df_17_join['eng_score'] = np.where(df_17_join['followers'] != 0, df_17_join['engagements'] / df_17_join['followers'], 0)
 	df_17_join['eng_score'] = np.ceil(df_17_join['eng_score'] * 100) / 100
 	df_17_join = df_17_join[['kol_name', 'views', 'engagements', 'vr', 'er_content', 'eng_score', 'link_post']]
-	df_17_join.column = ['kol_name', 'View', 'Engagement', 'VR', 'ER', 'Eng_Score', 'link_post']
+	df_17_join.columns = ['kol_name', 'View', 'Engagement', 'VR', 'ER', 'Eng_Score', 'link_post']
 	df_17_transpose = df_17_join.transpose()
 	df_17_transpose.reset_index(inplace=True)
 	
